@@ -98,4 +98,4 @@ Project Scope
   Interface
 - Responsive Website with Provision to integrate the newly developed system with any future enhancements.
   Project Structure Project team should determine the structure and internal roles according to Agile Methodology.
-  Client Meeting Client Meeting to be arranged weekly/fortnightly
+  Client Meeting Client Meeting to be arranged weekly/fortnightly.
