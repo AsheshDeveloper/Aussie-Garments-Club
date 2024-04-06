@@ -257,6 +257,10 @@ footer hr {
   text-decoration: none;
 }
 
+.description-container .button-fav:hover {
+  color: #ffd700;
+}
+
 /* product detail - user review */
 .product-review-container .user-image {
   width: 56px;
