@@ -1,0 +1,281 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  font-family: "Montserrat", sans-serif;
+}
+:root {
+  --primary-text-color: #2e2e2e;
+  --description-color: #676767;
+  --primary-ancor-hover: #2f8ff7;
+
+  --primary-button-color: #007bff;
+}
+
+.navbar-custom-top {
+  color: var(--primary-text-color, #2e2e2e) !important;
+}
+
+.navbar-custom-top .phone-number {
+  letter-spacing: 0.1em;
+}
+
+.navbar-custom-top .navbar-nav a {
+  color: var(--primary-text-color, #2e2e2e) !important;
+}
+.navbar-custom-top .navbar-nav a:hover {
+  color: var(--primary-ancor-hover, #2e2e2e) !important;
+}
+
+.navbar-custom-main .navbar-nav .nav-link {
+  color: var(--primary-text-color, #2e2e2e) !important;
+  margin-right: 10px;
+}
+
+.navbar-custom-main .navbar-nav .nav-link:hover {
+  color: var(--primary-ancor-hover, #2e2e2e) !important;
+  margin-right: 10px;
+}
+
+.navbar-custom-main .nav-item .search-form {
+  display: none;
+}
+.navbar-custom-main .nav-item.active .search-form {
+  display: block;
+}
+
+.modalButton {
+  background-color: var(--primary-button-color, #2e2e2e) !important;
+}
+
+/* slider part */
+.left-content-slider .quote-text {
+  color: var(--primary-text-color, #2e2e2e) !important;
+}
+
+.left-content-slider p {
+  color: var(--primary-button-color, #007bff);
+  letter-spacing: 0.1em;
+}
+
+.left-content-slider p a {
+  text-decoration: none !important;
+}
+
+.right-content-slider img {
+  height: 100% !important;
+  border-radius: 20px !important;
+}
+/* suggestion container */
+.suggestion-container .row-suggestion-items img {
+  border-radius: 20px !important;
+  width: 100%;
+  /* height: %; */
+  color: var(--primary-text-color, #2e2e2e);
+}
+
+.suggestion-container .row-suggestion-items a {
+  text-decoration: none !important;
+}
+/* products */
+/* for men section (similare for (women/ kids and baby)*/
+.section-for-men {
+  color: var(--primary-text-color, #2e2e2e);
+}
+
+.section-for-men .section-for-men-row img {
+  border-radius: 20px !important;
+  width: 100%;
+  height: 68%;
+  color: var(--primary-text-color, #2e2e2e);
+}
+
+.section-for-men .for-men-heading img {
+  width: 25px !important;
+  height: 25px !important;
+}
+
+.square-button {
+  background-color: #c3defd;
+  color: #096dd9;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: box-shadow 0.3s;
+}
+.square-button:hover {
+  box-shadow: 1px 7px 16px 1px rgba(0, 119, 255, 0.22);
+}
+
+/* footer section */
+footer {
+  /* background-color: #e0eefe !important; */
+  color: var(--primary-text-color, #2e2e2e) !important;
+}
+
+footer a {
+  text-decoration: none;
+  color: var(--primary-text-color, #2e2e2e) !important;
+}
+
+footer a:hover {
+  text-decoration: none;
+  color: var(--primary-ancor-hover, #2e2e2e) !important;
+}
+
+footer hr {
+  border-top: 1px solid #525252 !important;
+}
+
+/* login page */
+.shadowed-card {
+  border-radius: 20px;
+  /* box-shadow: 2px 7px 18px 17px rgba(220, 220, 220, 0.22); */
+  box-shadow: 1px 7px 16px 1px rgba(0, 119, 255, 0.22);
+  border: none;
+  /* padding: 50px !important; */
+  color: var(--primary-text-color, #2e2e2e) !important;
+}
+
+.shadowed-card a {
+  text-decoration: none !important;
+}
+
+.shadowed-card .google-login {
+  color: var(--primary-text-color, #2e2e2e) !important;
+}
+
+.shadowed-card .google-login:hover {
+  color: var(--primary-ancor-hover, #2e2e2e) !important;
+}
+
+.shadowed-card .google-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* User profile */
+.user-profile-info {
+  color: var(--primary-text-color, #2e2e2e) !important;
+}
+
+.user-profile-info .label {
+  font-weight: 600;
+}
+.user-profile-info a:hover {
+  color: var(--primary-ancor-hover, #007bff);
+}
+
+.user-profile-info .profile-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  object-fit: cover;
+}
+.user-profile-info input {
+  /* outline: none !important; */
+  border: none;
+}
+
+/* user profiile (user controls section) */
+
+.profile-card {
+  margin-bottom: 20px;
+  transition: box-shadow 0.3s ease-in-out;
+  border: 1px solid var(--primary-button-color, #007bff);
+  border-radius: 20px;
+  color: var(--primary-text-color, #2e2e2e) !important;
+  text-decoration: none;
+}
+.profile-card:hover {
+  box-shadow: 1px 7px 15px 2px rgba(9, 109, 217, 0.33);
+  border: none;
+}
+.profile-img {
+  width: 50px;
+  height: 50px;
+}
+.profile-details {
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* product details */
+.product-image {
+  width: 100% !important;
+  height: 800px !important;
+  object-fit: cover;
+  border-radius: 20px;
+}
+.image-selector-container {
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 10px;
+}
+
+.image-selector-container .image-selector {
+  border-radius: 20px;
+  width: 140px;
+  height: 185px;
+  cursor: pointer;
+}
+.description-container {
+  list-style: none !important;
+}
+.description-container ul {
+  margin: 0;
+  padding: 0;
+}
+.description-container li {
+  margin-bottom: 5px; /* Added margin-bottom */
+  display: flex;
+  justify-content: space-between;
+}
+.description-container li span {
+  flex: 1; /* Added flex property */
+}
+
+.description-container .color-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 3px solid #82bcfa;
+  display: inline-block;
+  margin-right: 10px;
+}
+.description-container .size-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* product detail - user review */
+.product-review-container .user-image {
+  width: 56px;
+  height: 55px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.product-review-container .stars {
+  color: #ffd700; /* Yellow color for active stars */
+}
+.product-review-container .reviews-container {
+  margin-top: 20px;
+}
+.product-review-container .review {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
+}
+
+.product-review-container .view-more-reviews a {
+  text-decoration: none;
+}
