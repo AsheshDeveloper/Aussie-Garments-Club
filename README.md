@@ -1,4 +1,4 @@
-Project Brief : Aussie Garments Club Web Portal
+Project Brief : Aussie Garments Club Web Portal.
 
 The Garments Club 99
 Acropolis Avenue
