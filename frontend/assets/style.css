@@ -283,3 +283,16 @@ footer hr {
 .product-review-container .view-more-reviews a {
   text-decoration: none;
 }
+
+/* product page */
+.product-filter-container {
+  border-radius: 20px;
+}
+
+/* wishlist */
+.class-table-image {
+  height: 50px;
+  width: 100px;
+
+  object-fit: cover;
+}

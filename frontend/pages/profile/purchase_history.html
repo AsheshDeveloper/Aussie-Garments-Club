@@ -33,9 +33,9 @@
       crossorigin="anonymous"
     />
     <!-- app icon -->
-    <link rel="icon" href="../images/favicon.png" />
+    <link rel="icon" href="../../images/favicon.png" />
     <!-- custom css -->
-    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="stylesheet" href="../../assets/style.css" />
 
     <title>Aussie Garments</title>
   </head>
@@ -57,9 +57,9 @@
 
           <!-- Right side content -->
           <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link" href="../Pages/login.html">Login | </a></li>
+            <li class="nav-item"><a class="nav-link" href="../../Pages/login.html">Login | </a></li>
             <li class="nav-item">
-              <a class="nav-link" href="../Pages/signup.html">Signup |</a>
+              <a class="nav-link" href="../../Pages/signup.html">Signup |</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Guest</a>
@@ -71,7 +71,7 @@
       <!-- main nav bar -->
       <nav class="navbar navbar-expand-lg navbar-light bg-none navbar-custom-main">
         <div class="container">
-          <a class="navbar-brand" href="../index.html"><img src="../images/AussieGarmentsLogo.svg" alt="Logo" /></a>
+          <a class="navbar-brand" href="../../index.html"><img src="../../images/AussieGarmentsLogo.svg" alt="Logo" /></a>
           <button
             class="navbar-toggler"
             type="button"
@@ -86,7 +86,7 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
               <li class="nav-item">
-                <a class="nav-link" href="#">Product</a>
+                <a class="nav-link" href="../products.html">Product</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Catalog</a>
@@ -104,6 +104,30 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a>
+              </li>
+              <li class="nav-item">
+                <div class="dropdown">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    href="#"
+                  >
+                    <i class="fas fa-user"></i>
+                  </a>
+
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li>
+                      <a class="dropdown-item" href="./Pages/login.html">Login</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="user_profile.html">Profile</a>
+                    </li>
+                    <li><a class="dropdown-item" href="#">Logout</a></li>
+                  </ul>
+                </div>
               </li>
             </ul>
           </div>
@@ -134,131 +158,94 @@
     </div>
 
     <div class="container-fluid">
-      <div class="container mt-5 user-profile-info">
-        <div class="row">
-          <div class="col-md-4 mb-5">
-            <img src="../images/profile/stefan-stefancik-QXevDflbl8A-unsplash.jpg" alt="Profile Image" class="profile-image" />
-          </div>
-          <div class="col-md-8">
-            <h3 class="text-primary font-weight-bold mb-5">Someone Someone</h3>
+      <div class="container mt-5">
+        <h5 class="mb-3">
+          Your Purchase History <span><i class="fa-solid fa-arrow-rotate-right text-success"></i></span>
+        </h5>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">SN.</th>
+              <th scope="col">Order Number</th>
+              <th scope="col">Tracking ID</th>
+              <th scope="col">Image</th>
+              <th scope="col">Product Name</th>
+              <th scope="col">Category</th>
+              <th scope="col">action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>123647</td>
+              <td>1KDJALHKJDSA2</td>
+              <td><img class="class-table-image rounded" src="../../images/suggestions/suggestion2.png" alt="product image" /></td>
+              <td>Air Jordan</td>
+              <td>Shoes</td>
 
-            <div class="mb-3">
-              <span class="label text-primary">Address</span>
-              <p class="text-muted">Unit 58 28 Durmoyne street, Lidcombe NSW 2234Unit 58 28 Durmoyne street, Lidcombe NSW 2234</p>
-            </div>
-            <div class="mb-3">
-              <span class="label text-primary">Email</span>
-              <p class="text-muted">someone@someone.com</p>
-            </div>
-            <div class="mb-3">
-              <span class="label text-primary">Birth Day</span>
-              <p class="text-muted">10/01/1997</p>
-            </div>
-            <div class="mb-3">
-              <span class="label text-primary">Phone</span>
-              <p class="text-muted">+797878787878</p>
-            </div>
-            <div class="mb-3">
-              <span class="label text-primary">Gender</span>
-              <p class="text-muted">FEMALE</p>
-            </div>
-            <div class="mb-3">
-              <p class="label text-primary">Password</p>
-              <input class="password-label" type="password" id="password" value="thisispassword" readonly />
-              <a class="btn" id="showPassword"><i class="far fa-eye"></i></a>
-              <a class="btn" id="editPassword"><i class="fas fa-pencil-alt"></i></a>
-            </div>
-            <button class="btn btn-primary mt-5">Edit Profile</button>
-          </div>
-        </div>
-      </div>
-      <!-- user controls for user profile -->
-      <div class="container">
-        <div class="row">
-          <!-- First Column -->
-          <div class="col-md-3">
-            <a href="" class="card profile-card text-center pt-3 pb-3">
-              <div class="card-body profile-details">
-                <img src="../images/profile/wishlist.png" alt="Profile Picture" class="card-img-top profile-img" />
-                <h5 class="card-title text-muted mt-3">Wishlist</h5>
-              </div>
-            </a>
-          </div>
-          <!-- Second Column -->
-          <div class="col-md-3">
-            <a href="" class="card profile-card text-center pt-3 pb-3">
-              <div class="card-body profile-details">
-                <img src="../images/profile/delivery-truck.png" alt="Profile Picture" class="card-img-top profile-img" />
-                <h5 class="card-title text-muted mt-3">Track Orders</h5>
-              </div>
-            </a>
-          </div>
-          <!-- Third Column -->
-          <div class="col-md-3">
-            <a href="" class="card profile-card text-center pt-3 pb-3">
-              <div class="card-body profile-details">
-                <img src="../images/profile/history.png" alt="Profile Picture" class="card-img-top profile-img" />
-                <h5 class="card-title text-muted mt-3">Purchase History</h5>
-              </div>
-            </a>
-          </div>
-          <!-- Fourth Column -->
-          <div class="col-md-3">
-            <a href="" class="card profile-card text-center pt-3 pb-3">
-              <div class="card-body profile-details">
-                <img src="../images/profile/invoice.png" alt="Profile Picture" class="card-img-top profile-img" />
-                <h5 class="card-title text-muted mt-3">Invoice</h5>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
-      <!-- suggestion for you -->
-      <div class="container mt-5 mb-5 suggestion-container">
-        <div class="row">
-          <div class="col-md-6">
-            <h5 class="mb-4">Suggestion for you <img src="../images/assets/refresh 1.png" alt="Suggestion" /></h5>
+              <td>
+                <!-- <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button> -->
+                <a type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#purchaseHistoryModal"
+                  ><i class="fas fa-eye"></i
+                ></a>
+              </td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>123647</td>
+              <td>1KDJALHKJDSA2</td>
+              <td><img class="class-table-image rounded" src="../../images/suggestions/suggestion2.png" alt="product image" /></td>
+              <td>Air Jordan</td>
+              <td>Shoes</td>
 
-            <div class="row-suggestion-items">
-              <div class="row">
-                <div class="col">
-                  <img src="../images/suggestions/suggestion1.png" alt="Image 1" class="img-fluid" />
-                </div>
-                <div class="col">
-                  <img src="../images/suggestions/suggestion2.png" alt="Image 2" class="img-fluid" />
-                </div>
-              </div>
-              <div class="row mt-3">
-                <div class="col">
-                  <img src="../images/suggestions/suggestion3.png" alt="Image 3" class="img-fluid" />
-                </div>
-                <div class="col">
-                  <img src="../images/suggestions/suggedtion3.1.png" alt="Image 4" class="img-fluid" />
-                </div>
-              </div>
-              <p class="mt-3"><a href="#more-suggestions">More in suggestions</a></p>
-            </div>
+              <td>
+                <!-- <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button> -->
+                <a type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#purchaseHistoryModal"
+                  ><i class="fas fa-eye"></i
+                ></a>
+              </td>
+            </tr>
+            <!-- Add more rows as needed -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Filter Modal -->
+    <div
+      class="modal modal-lg fade product-filter-modal"
+      id="purchaseHistoryModal"
+      tabindex="-1"
+      aria-labelledby="purchaseHistoryModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-end">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="purchaseHistoryModalLabel">Purchase History Informations</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="col-md-6">
-            <h5 class="mb-4">Purchase again <img src="../images/assets/clock 1.png" alt="Purchase" /></h5>
-            <div class="row-suggestion-items">
-              <div class="row">
+          <div class="modal-body">
+            <div class="container">
+              <div class="row mb-3">
                 <div class="col">
-                  <img src="../images/suggestions/suggestion5.png" alt="Image 1" class="img-fluid" />
+                  <span class="label text-primary">Order Number</span>
+                  <p class="text-muted">213131</p>
                 </div>
                 <div class="col">
-                  <img src="../images/suggestions/suggestion1.png" alt="Image 2" class="img-fluid" />
+                  <span class="label text-primary">Tracking ID</span>
+                  <p class="text-muted">12KJDLSJALKD</p>
+                </div>
+                <div class="col">
+                  <span class="label text-primary">Order Carier</span>
+                  <p class="text-muted">DHL</p>
+                </div>
+                <div class="col">
+                  <span class="label text-primary">To</span>
+                  <p class="text-muted">6 east street 1107</p>
                 </div>
               </div>
-              <div class="row mt-3">
-                <div class="col">
-                  <img src="../images/suggestions/suggestion3.png" alt="Image 3" class="img-fluid" />
-                </div>
-                <div class="col">
-                  <img src="../images/suggestions/suggestion2.png" alt="Image 4" class="img-fluid" />
-                </div>
-              </div>
-              <p class="mt-3"><a href="#more-purchases">More in purchase again</a></p>
+              <div class="row"></div>
             </div>
           </div>
         </div>
@@ -292,12 +279,12 @@
           <!-- Column 3 -->
           <div class="col-md-3">
             <h5>We Support</h5>
-            <img src="../images/footer/pngimg.svg" alt="Support Image 1" />
-            <img src="../images/footer/mastercard-og-image.svg" alt="Support Image 2" />
+            <img src="../../images/footer/pngimg.svg" alt="Support Image 1" />
+            <img src="../../images/footer/mastercard-og-image.svg" alt="Support Image 2" />
           </div>
           <!-- Column 4 -->
           <div class="col-md-3">
-            <img src="../images/footer/Group 87.svg" alt="Main Image" class="img-fluid" />
+            <img src="../../images/footer/Group 87.svg" alt="Main Image" class="img-fluid" />
           </div>
         </div>
         <!-- lower section -->
@@ -342,22 +329,5 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-    <!-- <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
-      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-      crossorigin="anonymous"
-    ></script> -->
-
-    <script>
-      const passwordInput = document.getElementById("password");
-      const showPasswordButton = document.getElementById("showPassword");
-      const editPasswordButton = document.getElementById("editPassword");
-
-      showPasswordButton.addEventListener("click", () => {
-        const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
-        passwordInput.setAttribute("type", type);
-        showPasswordButton.querySelector("i").classList.toggle("fa-eye-slash");
-      });
-    </script>
   </body>
 </html>
