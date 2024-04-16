@@ -85,6 +85,11 @@ html {
   color: var(--primary-text-color, #2e2e2e);
 }
 
+.section-for-men .for-men-heading img {
+  width: 25px !important;
+  height: 25px !important;
+}
+
 .section-for-men .section-for-men-row img {
   border-radius: 20px !important;
   width: 100%;
@@ -92,9 +97,10 @@ html {
   color: var(--primary-text-color, #2e2e2e);
 }
 
-.section-for-men .for-men-heading img {
-  width: 25px !important;
-  height: 25px !important;
+.section-for-men .section-for-men-row .badge-floating-stock {
+  position: absolute;
+  top: 1rem;
+  left: 2rem;
 }
 
 .square-button {
@@ -261,6 +267,14 @@ footer hr {
   color: #ffd700;
 }
 
+/* popup */
+.custom-popover-content {
+  display: none;
+}
+.custom-popover-content a {
+  text-decoration: none !important;
+}
+
 /* product detail - user review */
 .product-review-container .user-image {
   width: 56px;
@@ -269,7 +283,7 @@ footer hr {
   object-fit: cover;
 }
 .product-review-container .stars {
-  color: #ffd700; /* Yellow color for active stars */
+  color: #ffd700;
 }
 .product-review-container .reviews-container {
   margin-top: 20px;
@@ -291,8 +305,15 @@ footer hr {
 
 /* wishlist */
 .class-table-image {
-  height: 50px;
-  width: 100px;
-
+  height: 60px;
+  width: 110px;
   object-fit: cover;
+}
+
+/* cart */
+.cart-item-container a {
+  text-decoration: none;
+}
+.vertical-line {
+  padding: 0 10px 0 10px;
 }

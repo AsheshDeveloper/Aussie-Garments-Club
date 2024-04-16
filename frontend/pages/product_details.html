@@ -216,8 +216,13 @@
 
               <div class="button-group mt-4">
                 <button type="button" class="btn btn-primary me-3 px-4 py-2">Buy Now</button>
-                <button type="button" class="btn btn-outline-primary me-4 px-4 py-2">Add To Cart</button>
+                <button type="button" id="popoverButton" class="btn btn-outline-primary me-4 px-4 py-2">Add To Cart</button>
               </div>
+              <!-- add to cart placeholder -->
+              <div id="popoverContent" class="custom-popover-content">
+                <a href="./cart.html">View cart</a>
+              </div>
+
               <h5 class="mt-4">Technical Information</h5>
               <ul style="list-style: none">
                 <li><span class="text-primary">Style</span> <span class="text-muted">Casual</span></li>
@@ -529,6 +534,17 @@
           // Add 'active' class to the corresponding product image
           productImages[index].classList.add("active");
         });
+      });
+      // placeholder
+      // Initialize popover
+      var popover = new bootstrap.Popover(document.getElementById("popoverButton"), {
+        container: "body",
+        placement: "bottom",
+        trigger: "click",
+        html: true,
+        content: function () {
+          return document.getElementById("popoverContent").innerHTML;
+        },
       });
     </script>
   </body>

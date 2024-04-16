@@ -291,6 +291,8 @@ require_once("php/database_connect.php");
             </div>
         </div>
 
+
+
         <!-- for men section -->
         <div class="container mb-5 section-for-men">
             <h5 class="for-men-heading mb-4">For Men<img src="./images/assets/bussiness-man.png" alt="Heading" /></h5>
@@ -303,14 +305,18 @@ require_once("php/database_connect.php");
                   $price = $row['Price'];              
                   $imageOne = $row['ImageOne'];
                   $imageTwo = $row['ImageTwo'];
-                  echo "<div class='col'>
-                          <img src='../backend/src/pages/products/images/$imageOne' alt='Image 1' class='img-fluid mb-3' />
-                          <h5>Suit Set</h5>
-                          <p class='text-muted'>$product_name</p>
-                          <p class='text-muted'><span>$</span>$price</p>
-                          <p>
-                            <a href='./pages/product_details.html' class='btn btn-outline-primary'><i class='fas fa-arrow-right'></i></a>
-                          </p>
+                  
+                  echo "<div class='col' style='position: relative'>
+                            <a href='./Pages/product_details.html'>
+                                <img src='../backend/src/pages/products/images/$imageOne' alt='Image 1' class='img-fluid mb-3' />
+                                <div class='badge text-bg-success badge-floating-stock'>50/100</div>
+                            </a>
+                            <h5>Suit Set</h5>
+                            <p class='text-muted'>$product_name</p>
+                            <p class='text-muted'><span>$</span>$price</p>
+                            <p>
+                                <a href='./pages/product_details.html' class='btn btn-outline-primary'><i class='fas fa-arrow-right'></i></a>
+                            </p>
                         </div>";
         }
         ?>
