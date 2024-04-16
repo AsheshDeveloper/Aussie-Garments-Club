@@ -180,7 +180,7 @@ include __DIR__ .'../../php/auth/auth_login.php';
                                     Login with Google
                                 </a>
                             </form>
-                            <small class="mt-5">Don't have an account yet? <a href="signup.php">Sign
+                            <small class="mt-5">Don't have an account yet? <a href="./thirdPartySignup.html">Sign
                                     Up</a></small>
                         </div>
                     </div>
