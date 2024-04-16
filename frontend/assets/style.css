@@ -298,6 +298,25 @@ footer hr {
   text-decoration: none;
 }
 
+.click-and-collect {
+  border: 1px solid #c4c4c4 !important;
+  border-radius: 10px;
+}
+
+.click-and-collect a {
+  text-decoration: none;
+}
+
+.click-and-collect .clickable-div {
+  cursor: pointer;
+}
+
+.click-and-collect .clickable-div:hover {
+  background-color: #eeeeee;
+
+  border-radius: 10px;
+}
+
 /* product page */
 .product-filter-container {
   border-radius: 20px;
