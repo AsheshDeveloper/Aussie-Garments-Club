@@ -134,109 +134,108 @@
     </div>
 
     <div class="container-fluid">
-      <div class="container cart-item-container mt-5 mb-5">
+      <div class="container mt-5 mb-5">
+        <h5 class="mb-3">
+          Add New Address
+          <span>
+            <i class="fas fa-address-card"></i>
+          </span>
+        </h5>
+
         <div class="row">
-          <div class="col-md-8">
-            <h5 class="mb-2">Your Profile</h5>
-            <div class="row">
-              <!-- First Column -->
-              <div class="col-md-4">
-                <a href="./wishlist.html" class="card profile-card text-center pt-3 pb-3">
-                  <div class="card-body profile-details">
-                    <img src="../../images/profile/wishlist.png" alt="Profile Picture" class="card-img-top profile-img" />
-                    <h5 class="card-title text-muted mt-3">Wishlist</h5>
-                  </div>
-                </a>
-              </div>
-              <!-- Second Column -->
-              <div class="col-md-4">
-                <a href="./track_order.html" class="card profile-card text-center pt-3 pb-3">
-                  <div class="card-body profile-details">
-                    <img src="../../images/profile/delivery-truck.png" alt="Profile Picture" class="card-img-top profile-img" />
-                    <h5 class="card-title text-muted mt-3">Track Orders</h5>
-                  </div>
-                </a>
-              </div>
-              <!-- Third Column -->
-              <div class="col-md-4">
-                <a href="./purchase_history.html" class="card profile-card text-center pt-3 pb-3">
-                  <div class="card-body profile-details">
-                    <img src="../../images/profile/history.png" alt="Profile Picture" class="card-img-top profile-img" />
-                    <h5 class="card-title text-muted mt-3">Purchase History</h5>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div class="row">
-              <!-- Fourth Column -->
-              <div class="col-md-4">
-                <a href="./invoice.html" class="card profile-card text-center pt-3 pb-3">
-                  <div class="card-body profile-details">
-                    <img src="../../images/profile/invoice.png" alt="Profile Picture" class="card-img-top profile-img" />
-                    <h5 class="card-title text-muted mt-3">Invoice</h5>
-                  </div>
-                </a>
-              </div>
+          <div class="col-md-6 mx-auto">
+            <div class="card p-2 mt-4 mb-5">
+              <div class="card-body">
+                <form class="" action="" method="post">
+                  <div class="mb-3">
+                    <label class="form-check-label mb-1" for="email"> Country/Region </label>
 
-              <div class="col-md-4">
-                <a href="./address.html" class="card profile-card text-center pt-3 pb-3">
-                  <div class="card-body profile-details">
-                    <img src="../../images/profile/location-pin.png" alt="Profile Picture" class="card-img-top profile-img" />
-                    <h5 class="card-title text-muted mt-3">Address</h5>
-                  </div>
-                </a>
-              </div>
-
-              <div class="col-md-4">
-                <a href="./message.html" class="card profile-card text-center pt-3 pb-3">
-                  <div class="card-body profile-details">
-                    <img src="../../images/profile/mail.png" alt="Profile Picture" class="card-img-top profile-img" />
-                    <h5 class="card-title text-muted mt-3">Your Messages</h5>
-                  </div>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Total Section -->
-          <div class="col-md-4">
-            <div class="card">
-              <div class="card-body user-profile-info">
-                <div class="text-center">
-                  <img class="profile-image" src="../../images/profile/stefan-stefancik-QXevDflbl8A-unsplash.jpg" alt="Logo" />
-                  <h5 class="text-primary font-weight-bold mt-3">Someone Someone</h5>
-                </div>
-
-                <div class="d-grid col mt-3 mb-3">
-                  <div class="mb-3">
-                    <span class="label text-primary">Address</span>
-                    <p class="text-muted">Unit 58 28 Durmoyne street, Lidcombe NSW 2234</p>
-                  </div>
-                  <div class="mb-3">
-                    <span class="label text-primary">Email</span>
-                    <p class="text-muted">someone@someone.com</p>
-                  </div>
-                  <div class="mb-3">
-                    <span class="label text-primary">Birth Day</span>
-                    <p class="text-muted">10/01/1997</p>
-                  </div>
-                  <div class="mb-3">
-                    <span class="label text-primary">Phone</span>
-                    <p class="text-muted">+797878787878</p>
-                  </div>
-                  <div class="mb-3">
-                    <span class="label text-primary">Gender</span>
-                    <p class="text-muted">FEMALE</p>
-                  </div>
-                  <div class="mb-3">
-                    <p class="label text-primary">Password</p>
-                    <input class="password-label" type="password" id="password" value="thisispassword" readonly />
-                    <a class="btn" id="showPassword"><i class="far fa-eye"></i></a>
-                    <a class="btn" id="editPassword"><i class="fas fa-pencil-alt"></i></a>
+                    <select class="form-select" aria-label="Default select example">
+                      <option selected>Choose County or Region</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                    <small> just example guys: generate all country via api </small>
                   </div>
 
-                  <a href="#" class="btn btn-primary px-5 py-2">Edit Your Profile</a>
-                </div>
+                  <div class="mb-3">
+                    <label class="form-check-label mb-1" for="fullName"> Full name (Address For)</label>
+
+                    <input type="name" class="form-control" name="fullName" id="fullName" placeholder="eg: harry kane" required />
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-check-label mb-1" for="phoneNumber">Phone number</label>
+
+                    <input type="number" class="form-control" name="phoneNumber" id="phoneNumber" placeholder="eg: 0978482453" required />
+                    <small>printed on level to assist delivery.</small>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-check-label mb-1" for="address">Address</label>
+
+                    <input
+                      type="name"
+                      class="form-control mb-2"
+                      name="address"
+                      id="address"
+                      placeholder="eg: Apt, Unit, Suite, Building, Floor"
+                      required
+                    />
+
+                    <input
+                      type="name"
+                      class="form-control"
+                      name="address1"
+                      id="address1"
+                      placeholder="eg: Street, PO Box, Company, c/o"
+                      required
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-check-label mb-1" for="Postcode">Postcode</label>
+
+                    <input type="number" class="form-control" name="Postcode" id="Postcode" placeholder="eg: 2245" required />
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-check-label mb-1" for="citySuburb"> City/Suburb </label>
+
+                    <select class="form-select" aria-label="citySuburb">
+                      <option selected>Choose City or Suburb</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                    <small> just example guys: generate all city and suburb via api </small>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-check-label mb-1" for="countryRegion"> State/Territory </label>
+
+                    <select class="form-select" aria-label="countryRegion">
+                      <option selected>Choose state or Territory</option>
+                      <option value="">New South Wales(NSW)</option>
+                      <option value="">Victoria(VCT)</option>
+                      <option value="">Queensland(QLD)</option>
+                      <option value="">Western Australia(WA)</option>
+                      <option value="">South Australia(SA)</option>
+                      <option value="">Tasmania(Tas)</option>
+                      <option value="">Northern Territory(NT)</option>
+                      <option value="">Australian Capital Territory(ACT)</option>
+                    </select>
+                    <small> just example guys: generate all country via api </small>
+                  </div>
+
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="defaultAddress" />
+                    <label class="form-check-label" for="defaultAddress">Make Default Address ?</label>
+                  </div>
+
+                  <a href="./address.html" type="submit" type="button" class="btn btn-primary w-100 p-2 mb-3 mt-4">Add Address</a>
+                </form>
               </div>
             </div>
           </div>
