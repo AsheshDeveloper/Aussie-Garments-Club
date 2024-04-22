@@ -90,7 +90,7 @@ require_once("php/database_connect.php");
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="./pages/products.html">Product</a>
+                            <a class="nav-link" href="./pages/product/products.html">Product</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Catalog</a>
@@ -102,12 +102,14 @@ require_once("php/database_connect.php");
                             <a class="nav-link" href="#">Site Map</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#">
+                            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                href="./pages/product/products.html">
                                 <i class="fas fa-search"></i>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a>
+                            <a class="nav-link" href="./pages/checkout/cart.html"><i
+                                    class="fas fa-shopping-cart"></i></a>
                         </li>
                         <li class="nav-item">
                             <div class="dropdown">
@@ -163,8 +165,7 @@ require_once("php/database_connect.php");
                 <!-- Left Side Content -->
                 <div class="col-md-6 left-content-slider">
                     <h2 class="quote-text mb-4 mt-5">Where style meets convenience, and savings meet satisfaction</h2>
-                    <a href="./Pages/authentication/thirdPartySignup.html" class="btn btn-primary me-4 px-5 py-2">Get
-                        Started</a>
+                    <a href="" class="btn btn-primary me-4 px-5 py-2">Get Started</a>
                     <a class="btn btn-outline-primary px-4 py-2" href="./pages/products.html">View Products</a>
                     <p class="mt-2 contacts-info">
                         +610403876990 |

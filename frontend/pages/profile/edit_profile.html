@@ -136,106 +136,117 @@
     <div class="container-fluid">
       <div class="container cart-item-container mt-5 mb-5">
         <div class="row">
-          <div class="col-md-8">
-            <h5 class="mb-2">Your Profile</h5>
-            <div class="row">
-              <!-- First Column -->
-              <div class="col-md-4">
-                <a href="./wishlist.html" class="card profile-card text-center pt-3 pb-3">
-                  <div class="card-body profile-details">
-                    <img src="../../images/profile/wishlist.png" alt="Profile Picture" class="card-img-top profile-img" />
-                    <h5 class="card-title text-muted mt-3">Wishlist</h5>
-                  </div>
-                </a>
-              </div>
-              <!-- Second Column -->
-              <div class="col-md-4">
-                <a href="./track_order.html" class="card profile-card text-center pt-3 pb-3">
-                  <div class="card-body profile-details">
-                    <img src="../../images/profile/delivery-truck.png" alt="Profile Picture" class="card-img-top profile-img" />
-                    <h5 class="card-title text-muted mt-3">Track Orders</h5>
-                  </div>
-                </a>
-              </div>
-              <!-- Third Column -->
-              <div class="col-md-4">
-                <a href="./purchase_history.html" class="card profile-card text-center pt-3 pb-3">
-                  <div class="card-body profile-details">
-                    <img src="../../images/profile/history.png" alt="Profile Picture" class="card-img-top profile-img" />
-                    <h5 class="card-title text-muted mt-3">Purchase History</h5>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div class="row">
-              <!-- Fourth Column -->
-              <div class="col-md-4">
-                <a href="./invoice.html" class="card profile-card text-center pt-3 pb-3">
-                  <div class="card-body profile-details">
-                    <img src="../../images/profile/invoice.png" alt="Profile Picture" class="card-img-top profile-img" />
-                    <h5 class="card-title text-muted mt-3">Invoice</h5>
-                  </div>
-                </a>
+          <div class="col-md-7">
+            <h5 class="mb-3">Edit Your Profile</h5>
+
+            <form class="mb-5" action="" method="post">
+              <div class="mb-3">
+                <div class="d-flex">
+                  <label class="form-check-label mb-1" for="address">Address</label>
+                </div>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="address"
+                    id="address"
+                    placeholder="Unit 58 28 Durmoyne street, Lidcombe NSW 2234"
+                    disabled
+                  />
+                </div>
+                <span class="text-info">you can update your address in address section(go back)</span>
               </div>
 
-              <div class="col-md-4">
-                <a href="./address.html" class="card profile-card text-center pt-3 pb-3">
-                  <div class="card-body profile-details">
-                    <img src="../../images/profile/location-pin.png" alt="Profile Picture" class="card-img-top profile-img" />
-                    <h5 class="card-title text-muted mt-3">Address</h5>
-                  </div>
-                </a>
+              <div class="mb-3">
+                <div class="d-flex">
+                  <label class="form-check-label mb-1" for="email">Email</label>
+                </div>
+                <div class="input-group">
+                  <input type="text" class="form-control" name="email" id="email" placeholder="enter your email" />
+                </div>
               </div>
 
-              <div class="col-md-4">
-                <a href="./message.html" class="card profile-card text-center pt-3 pb-3">
-                  <div class="card-body profile-details">
-                    <img src="../../images/profile/mail.png" alt="Profile Picture" class="card-img-top profile-img" />
-                    <h5 class="card-title text-muted mt-3">Your Messages</h5>
-                  </div>
-                </a>
+              <div class="mb-3">
+                <div class="d-flex">
+                  <label class="form-check-label mb-1" for="dob">Date of Birth</label>
+                </div>
+                <div class="input-group">
+                  <input type="date" class="form-control" name="dob" id="dob" placeholder="" />
+                </div>
               </div>
-            </div>
+
+              <div class="mb-3">
+                <div class="d-flex">
+                  <label class="form-check-label mb-1" for="phone">Phone</label>
+                </div>
+                <div class="input-group">
+                  <input type="number" class="form-control" name="phone" id="phone" placeholder="enter your phone number" />
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <div class="d-flex">
+                  <label class="form-check-label mb-1" for="dob">Gender</label>
+                </div>
+                <div class="input-group">
+                  <input type="date" class="form-control" name="dob" id="dob" placeholder="Female" disabled />
+                </div>
+              </div>
+
+              <button type="submit" type="name" class="btn btn-primary p-2">Update Your Profile</button>
+            </form>
           </div>
 
           <!-- Total Section -->
-          <div class="col-md-4">
+          <div class="col-md-5">
             <div class="card">
-              <div class="card-body user-profile-info">
-                <div class="text-center">
-                  <img class="profile-image" src="../../images/profile/stefan-stefancik-QXevDflbl8A-unsplash.jpg" alt="Logo" />
-                  <h5 class="text-primary font-weight-bold mt-3">Someone Someone</h5>
-                </div>
+              <div class="card-body">
+                <h6 class="mt-3">Update Your Password</h6>
 
-                <div class="d-grid col mt-3 mb-3">
+                <form class="mt-5 mb-5" action="" method="post">
                   <div class="mb-3">
-                    <span class="label text-primary">Address</span>
-                    <p class="text-muted">Unit 58 28 Durmoyne street, Lidcombe NSW 2234</p>
+                    <div class="d-flex">
+                      <label class="form-check-label mb-1" for="oldPassword">Old Password <span class="text-danger">*</span></label>
+                    </div>
+                    <div class="input-group">
+                      <input type="password" class="form-control" name="oldPassword" id="oldPassword" placeholder="**********" required />
+                      <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                        <i class="fa-solid fa-eye"></i>
+                      </button>
+                    </div>
                   </div>
                   <div class="mb-3">
-                    <span class="label text-primary">Email</span>
-                    <p class="text-muted">someone@someone.com</p>
+                    <div class="d-flex">
+                      <label class="form-check-label mb-1" for="newPassword">New Password <span class="text-danger">*</span></label>
+                    </div>
+                    <div class="input-group">
+                      <input type="password" class="form-control" name="newPassword" id="newPassword" placeholder="new password" required />
+                      <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                        <i class="fa-solid fa-eye"></i>
+                      </button>
+                    </div>
                   </div>
-                  <div class="mb-3">
-                    <span class="label text-primary">Birth Day</span>
-                    <p class="text-muted">10/01/1997</p>
-                  </div>
-                  <div class="mb-3">
-                    <span class="label text-primary">Phone</span>
-                    <p class="text-muted">+797878787878</p>
-                  </div>
-                  <div class="mb-3">
-                    <span class="label text-primary">Gender</span>
-                    <p class="text-muted">FEMALE</p>
-                  </div>
-                  <div class="mb-3">
-                    <p class="label text-primary">Password</p>
-                    <input class="password-label" type="password" id="password" value="thisispassword" readonly />
-                    <a class="btn" id="showPassword"><i class="far fa-eye"></i></a>
+                  <div class="mb-4">
+                    <div class="d-flex">
+                      <label class="form-check-label mb-1" for="confirmPassword">Confirm Password <span class="text-danger">*</span></label>
+                    </div>
+                    <div class="input-group">
+                      <input
+                        type="password"
+                        class="form-control"
+                        name="confirmPassword"
+                        id="confirmPassword"
+                        placeholder="confirm new pasword"
+                        required
+                      />
+                      <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                        <i class="fa-solid fa-eye"></i>
+                      </button>
+                    </div>
                   </div>
 
-                  <a href="./edit_profile.html" class="btn btn-primary px-5 py-2">Edit Your Profile</a>
-                </div>
+                  <button type="submit" type="name" class="btn btn-primary w-100 p-2">Update Your Pasword</button>
+                </form>
               </div>
             </div>
           </div>

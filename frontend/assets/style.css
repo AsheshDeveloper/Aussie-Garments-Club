@@ -175,9 +175,9 @@ footer hr {
 }
 
 .user-profile-info .profile-image {
-  width: 100%;
-  height: 100%;
-  border-radius: 20px;
+  width: 120px;
+  height: 120px;
+  border-radius: 100px;
   object-fit: cover;
 }
 .user-profile-info input {
@@ -207,6 +207,7 @@ footer hr {
   text-align: center;
   margin-top: 10px;
 }
+/* profile - add address */
 
 /* product details */
 .product-image {
