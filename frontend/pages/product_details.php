@@ -1,5 +1,9 @@
 <?php 
 include '../php/database_connect.php';
+include '../php/function/functions.php';
+
+//$ip = getIPAddress();  
+//echo 'User Real IP Address - '.$ip; 
 ?>
 <!DOCTYPE html>
 <html lang="en">
