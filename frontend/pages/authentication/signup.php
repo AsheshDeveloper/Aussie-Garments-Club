@@ -1,5 +1,5 @@
 <?php 
-include __DIR__ .'../../php/auth/auth_signup.php'; 
+include '../../php/auth/auth_signup.php'; 
 ?>
 <!DOCTYPE html>
 <html lang="en">

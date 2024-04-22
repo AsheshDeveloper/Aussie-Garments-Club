@@ -1,3 +1,6 @@
+<?php 
+include '../php/database_connect.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -135,20 +138,43 @@
 
     <div class="container-fluid">
       <div class="container mt-5">
+      <?php 
+            require_once "../php/database_connect.php";
+            $sql_query = "SELECT * FROM product WHERE productID = ".$_GET["id"];
+            if ($result = $connect ->query($sql_query)) {
+                while ($row = $result -> fetch_assoc()) { 
+                    $product_id = $row['ProductID'];
+                    $product_name = $row['Name'];
+                    $description = $row['Description'];
+                    $price = $row['Price'];
+                    $stock = $row['QuantityInStock'];
+                    $category = $row['CategoryID'];
+                    $brand = $row['BrandID'];
+                    $size = $row['SizeID'];
+                    $imageOne = $row['ImageOne'];
+                    $imageTwo = $row['ImageTwo'];
+                    $imageThree = $row['ImageThree'];
+        ?>
         <div class="row">
           <div class="col-md-6">
             <!-- Image Slider -->
             <d iv id="imageSlider" class="carousel slide" data-bs-ride="carousel">
               <div class="carousel-inner product-carousel">
                 <div class="carousel-item active">
-                  <img src="../images/product_details/mohmad1.jpg" class="d-block w-100 product-image" alt="Product Image 1" />
+                  <img src="../../backend/src/pages/products/images/<?php echo $imageOne ?>" class="d-block w-100 product-image" alt="Product Image 1" />
                 </div>
-
                 <div class="carousel-item">
                   <img
-                    src="../images/product_details/mohamad-khosravi-vS0Kya7E5V4-unsplash.png"
+                    src="../../backend/src/pages/products/images/<?php echo $imageTwo ?>"
                     class="d-block w-100 product-image"
                     alt="Product Image 2"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="../../backend/src/pages/products/images/<?php echo $imageThree ?>"
+                    class="d-block w-100 product-image"
+                    alt="Product Image 3"
                   />
                 </div>
               </div>
@@ -164,24 +190,14 @@
             <!-- Image Selector -->
             <div class="mt-3 image-selector-container">
               <img
-                src="../images/product_details/mohamad-khosravi-Uw3OfKz2J-0-unsplash.png"
+                src="../../backend/src/pages/products/images/<?php echo $imageOne ?>"
                 class="d-inline-block image-selector"
                 alt="Image Selector 1"
               />
-              <img src="../images/product_details/mohamad-khosravi-5KyzZbonwqQ-unsplash.png"" class="d-inline-block image-selector mx-2"
-              alt="Image Selector 2" />
-              <img
-                src="../images/product_details/mohamad-khosravi-Uw3OfKz2J-0-unsplash.png"
-                class="d-inline-block image-selector"
-                alt="Image Selector 1"
-              />
-              <img src="../images/product_details/mohamad-khosravi-5KyzZbonwqQ-unsplash.png"" class="d-inline-block image-selector mx-2"
-              alt="Image Selector 2" />
-              <img
-                src="../images/product_details/mohamad-khosravi-Uw3OfKz2J-0-unsplash.png"
-                class="d-inline-block image-selector"
-                alt="Image Selector 1"
-              />
+              <img src="../../backend/src/pages/products/images/<?php echo $imageTwo ?>" class="d-inline-block image-selector mx-2"
+              alt="Image Selector 2" />              
+              <img src="../../backend/src/pages/products/images/<?php echo $imageThree ?>" class="d-inline-block image-selector mx-2"
+              alt="Image Selector 2" />              
               <img src="../images/product_details/mohamad-khosravi-5KyzZbonwqQ-unsplash.png"" class="d-inline-block image-selector mx-2"
               alt="Image Selector 2" />
             </div>
@@ -191,14 +207,12 @@
               <!-- Right Column (Empty for now) -->
               <!-- Right Column -->
               <h3 class="mt-3 text-primary">
-                Suit Set <a class="button-fav" href=""> <i class="fas fa-heart"></i></a>
+                <?php echo $product_name ?> <a class="button-fav" href=""> <i class="fas fa-heart"></i></a>
               </h3>
-              <h5 class="text-primary">$8000</h5>
-              <div class="badge text-bg-success badge-floating-stock mb-1">stock: 50/100</div>
+              <h5 class="text-primary"><?php echo $price ?></h5>
+              <div class="badge text-bg-success badge-floating-stock mb-1">stock: <?php echo $stock ?></div>
               <p class="text-muted">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae
-                consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque
-                rerum! Provident similique accusantium nemo autem.
+                <?php echo $description ?>
               </p>
               <h5 class="mt-4">Colors</h5>
               <p>
@@ -266,6 +280,10 @@
             </div>
           </div>
         </div>
+        <?php 
+                }
+            }
+        ?>
       </div>
       <div class="container mt-5">
         <div class="row product-review-container">

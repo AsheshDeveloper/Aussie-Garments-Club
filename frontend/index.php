@@ -68,7 +68,7 @@ require_once("php/database_connect.php");
                 <?php if(!empty($_SESSION['username'])){ ?>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <p>Welcome</p>
+                        <p>Welcome <?php echo $_SESSION['username'] ?></p>
                     </li>
 
                     <li class="nav-item">
@@ -231,7 +231,8 @@ require_once("php/database_connect.php");
                             <?php
                 $fetch_product = "Select * from product";
                 $results = mysqli_query($connect, $fetch_product);
-                while($row=mysqli_fetch_assoc($results) ){                  
+                while($row=mysqli_fetch_assoc($results) ){   
+                    $product_id = $row['ProductID'];               
                   $imageOne = $row['ImageOne'];
                   $imageTwo = $row['ImageTwo'];
                   echo "<div class='col'>
@@ -245,7 +246,8 @@ require_once("php/database_connect.php");
                             <?php 
                 $fetch_product = "Select * from product Limit 2";
                 $results = mysqli_query($connect, $fetch_product);
-                while($row=mysqli_fetch_assoc($results) ){                  
+                while($row=mysqli_fetch_assoc($results) ){         
+                    $product_id = $row['ProductID'];         
                   $imageOne = $row['ImageOne'];
                   $imageTwo = $row['ImageTwo'];
                   echo "<div class='col'>
@@ -264,7 +266,8 @@ require_once("php/database_connect.php");
                             <?php 
                 $fetch_product = "Select * from product";
                 $results = mysqli_query($connect, $fetch_product);
-                while($row=mysqli_fetch_assoc($results) ){                  
+                while($row=mysqli_fetch_assoc($results) ){            
+                    $product_id = $row['ProductID'];      
                   $imageOne = $row['ImageOne'];
                   $imageTwo = $row['ImageTwo'];
                   echo "<div class='col'>
@@ -277,7 +280,8 @@ require_once("php/database_connect.php");
                             <?php 
                 $fetch_product = "Select * from product Limit 2";
                 $results = mysqli_query($connect, $fetch_product);
-                while($row=mysqli_fetch_assoc($results) ){                  
+                while($row=mysqli_fetch_assoc($results) ){       
+                    $product_id = $row['ProductID'];           
                   $imageOne = $row['ImageOne'];
                   $imageTwo = $row['ImageTwo'];
                   echo "<div class='col'>
@@ -302,13 +306,14 @@ require_once("php/database_connect.php");
                 $fetch_product = "Select * from product Limit 4";
                 $results = mysqli_query($connect, $fetch_product);
                 while($row=mysqli_fetch_assoc($results) ){  
+                    $product_id = $row['ProductID'];
                   $product_name = $row['Name']; 
                   $price = $row['Price'];              
                   $imageOne = $row['ImageOne'];
                   $imageTwo = $row['ImageTwo'];
                   
                   echo "<div class='col' style='position: relative'>
-                            <a href='./Pages/product_details.html'>
+                            <a href='./pages/product_details.php?id=$product_id'>
                                 <img src='../backend/src/pages/products/images/$imageOne' alt='Image 1' class='img-fluid mb-3' />
                                 <div class='badge text-bg-success badge-floating-stock'>50/100</div>
                             </a>
@@ -316,7 +321,7 @@ require_once("php/database_connect.php");
                             <p class='text-muted'>$product_name</p>
                             <p class='text-muted'><span>$</span>$price</p>
                             <p>
-                                <a href='./pages/product_details.html' class='btn btn-outline-primary'><i class='fas fa-arrow-right'></i></a>
+                                <a href='./pages/product_details.php?id=$product_id' class='btn btn-outline-primary'><i class='fas fa-arrow-right'></i></a>
                             </p>
                         </div>";
         }
@@ -332,6 +337,7 @@ require_once("php/database_connect.php");
                 $fetch_product = "Select * from product Limit 4";
                 $results = mysqli_query($connect, $fetch_product);
                 while($row=mysqli_fetch_assoc($results) ){  
+                    $product_id = $row['ProductID'];
                   $product_name = $row['Name']; 
                   $price = $row['Price'];              
                   $imageOne = $row['ImageOne'];
@@ -342,7 +348,7 @@ require_once("php/database_connect.php");
                           <p class='text-muted'>$product_name</p>
                           <p class='text-muted'><span>$</span>$price</p>
                           <p>
-                            <a href='./pages/product_details.html' class='btn btn-outline-primary'><i class='fas fa-arrow-right'></i></a>
+                            <a href='./pages/product_details.php?id=$product_id' class='btn btn-outline-primary'><i class='fas fa-arrow-right'></i></a>
                           </p>
                         </div>";
         }
@@ -357,6 +363,7 @@ require_once("php/database_connect.php");
                 $fetch_product = "Select * from product Limit 4";
                 $results = mysqli_query($connect, $fetch_product);
                 while($row=mysqli_fetch_assoc($results) ){  
+                    $product_id = $row['ProductID'];
                   $product_name = $row['Name']; 
                   $price = $row['Price'];              
                   $imageOne = $row['ImageOne'];
@@ -367,7 +374,7 @@ require_once("php/database_connect.php");
                           <p class='text-muted'>$product_name</p>
                           <p class='text-muted'><span>$</span>$price</p>
                           <p>
-                            <a href='./pages/product_details.html' class='btn btn-outline-primary'><i class='fas fa-arrow-right'></i></a>
+                            <a href='./pages/product_details.php?id=$product_id' class='btn btn-outline-primary'><i class='fas fa-arrow-right'></i></a>
                           </p>
                         </div>";
         }
@@ -382,6 +389,7 @@ require_once("php/database_connect.php");
                 $fetch_product = "Select * from product Limit 4";
                 $results = mysqli_query($connect, $fetch_product);
                 while($row=mysqli_fetch_assoc($results) ){  
+                    $product_id = $row['ProductID'];
                   $product_name = $row['Name']; 
                   $price = $row['Price'];              
                   $imageOne = $row['ImageOne'];
@@ -392,7 +400,7 @@ require_once("php/database_connect.php");
                           <p class='text-muted'>$product_name</p>
                           <p class='text-muted'><span>$</span>$price</p>
                           <p>
-                            <a href='./pages/product_details.html' class='btn btn-outline-primary'><i class='fas fa-arrow-right'></i></a>
+                            <a href='./pages/product_details.php?id=$product_id' class='btn btn-outline-primary'><i class='fas fa-arrow-right'></i></a>
                           </p>
                         </div>";
         }
