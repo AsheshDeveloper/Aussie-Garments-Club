@@ -134,69 +134,122 @@
     </div>
 
     <div class="container-fluid">
-      <div class="container">
-        <div class="container mt-5 mb-5">
-          <h5 class="mb-3">
-            Your Address
-            <span>
-              <i class="fas fa-address-card"></i>
-            </span>
-          </h5>
-          <a href="./add_address.html" class="btn btn-primary px-5 py-2">Add a new address</a>
-          <table class="table mt-4">
-            <thead>
-              <tr>
-                <th scope="col">SN.</th>
-                <th scope="col">Country</th>
-                <th scope="col">Apt, Unit, Suite, Building, Floor</th>
-                <th scope="col">Street, PO Box, Company, c/o</th>
-                <th scope="col">City/Suburb</th>
-                <th scope="col">State/Territory</th>
-                <th scope="col">Postcode</th>
-                <th scope="col">User</th>
+      <div class="container cart-item-container mt-5 mb-5">
+        <div class="row">
+          <div class="col-md-7">
+            <h5 class="mb-3">Edit Your Profile</h5>
 
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="">
-                <td>1 <span class="ml-2 badge text-bg-warning">Default</span></td>
-                <td>Australia</td>
-                <td>Unit 58</td>
-                <td>28 Durmoyne street</td>
-                <td>Lidcombe</td>
-                <td>NSW</td>
-                <td>2234</td>
-                <td><span class="ml-2 badge text-bg-primary">Someone</span></td>
+            <form class="mb-5" action="" method="post">
+              <div class="mb-3">
+                <div class="d-flex">
+                  <label class="form-check-label mb-1" for="address">Address</label>
+                </div>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="address"
+                    id="address"
+                    placeholder="Unit 58 28 Durmoyne street, Lidcombe NSW 2234"
+                    disabled
+                  />
+                </div>
+                <span class="text-info">you can update your address in address section(go back)</span>
+              </div>
 
-                <td>
-                  <!-- <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button> -->
-                  <a href="" type="button" class="btn btn-outline-success">
-                    <i class="fa-solid fa-pen"></i>
-                  </a>
-                  <a href="" type="button" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i></a>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Australia</td>
-                <td>Unit 58</td>
-                <td>28 Durmoyne street</td>
-                <td>Lidcombe</td>
-                <td>NSW</td>
-                <td>2234</td>
-                <td><span class="ml-2 badge text-bg-primary">Jack</span></td>
+              <div class="mb-3">
+                <div class="d-flex">
+                  <label class="form-check-label mb-1" for="email">Email</label>
+                </div>
+                <div class="input-group">
+                  <input type="text" class="form-control" name="email" id="email" placeholder="enter your email" />
+                </div>
+              </div>
 
-                <td>
-                  <!-- <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button> -->
-                  <a href="" type="button" class="btn btn-outline-success">
-                    <i class="fa-solid fa-pen"></i>
-                  </a>
-                  <a href="" type="button" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i></a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+              <div class="mb-3">
+                <div class="d-flex">
+                  <label class="form-check-label mb-1" for="dob">Date of Birth</label>
+                </div>
+                <div class="input-group">
+                  <input type="date" class="form-control" name="dob" id="dob" placeholder="" />
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <div class="d-flex">
+                  <label class="form-check-label mb-1" for="phone">Phone</label>
+                </div>
+                <div class="input-group">
+                  <input type="number" class="form-control" name="phone" id="phone" placeholder="enter your phone number" />
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <div class="d-flex">
+                  <label class="form-check-label mb-1" for="dob">Gender</label>
+                </div>
+                <div class="input-group">
+                  <input type="date" class="form-control" name="dob" id="dob" placeholder="Female" disabled />
+                </div>
+              </div>
+
+              <button type="submit" type="name" class="btn btn-primary p-2">Update Your Profile</button>
+            </form>
+          </div>
+
+          <!-- Total Section -->
+          <div class="col-md-5">
+            <div class="card">
+              <div class="card-body">
+                <h6 class="mt-3">Update Your Password</h6>
+
+                <form class="mt-5 mb-5" action="" method="post">
+                  <div class="mb-3">
+                    <div class="d-flex">
+                      <label class="form-check-label mb-1" for="oldPassword">Old Password <span class="text-danger">*</span></label>
+                    </div>
+                    <div class="input-group">
+                      <input type="password" class="form-control" name="oldPassword" id="oldPassword" placeholder="**********" required />
+                      <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                        <i class="fa-solid fa-eye"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <div class="d-flex">
+                      <label class="form-check-label mb-1" for="newPassword">New Password <span class="text-danger">*</span></label>
+                    </div>
+                    <div class="input-group">
+                      <input type="password" class="form-control" name="newPassword" id="newPassword" placeholder="new password" required />
+                      <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                        <i class="fa-solid fa-eye"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="mb-4">
+                    <div class="d-flex">
+                      <label class="form-check-label mb-1" for="confirmPassword">Confirm Password <span class="text-danger">*</span></label>
+                    </div>
+                    <div class="input-group">
+                      <input
+                        type="password"
+                        class="form-control"
+                        name="confirmPassword"
+                        id="confirmPassword"
+                        placeholder="confirm new pasword"
+                        required
+                      />
+                      <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                        <i class="fa-solid fa-eye"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <button type="submit" type="name" class="btn btn-primary w-100 p-2">Update Your Pasword</button>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
