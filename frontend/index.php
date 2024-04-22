@@ -230,32 +230,32 @@ require_once("php/database_connect.php");
                     <div class="row-suggestion-items">
                         <div class="row">
                             <?php
-                $fetch_product = "Select * from product";
-                $results = mysqli_query($connect, $fetch_product);
-                while($row=mysqli_fetch_assoc($results) ){   
-                    $product_id = $row['ProductID'];               
-                  $imageOne = $row['ImageOne'];
-                  $imageTwo = $row['ImageTwo'];
-                  echo "<div class='col'>
-                  <img src='../backend/src/pages/products/images/$imageOne' alt='Image 1' class='img-fluid' />
-                </div>";
-                }
-              ?>
+                                $fetch_product = "Select * from product Limit 2";
+                                $results = mysqli_query($connect, $fetch_product);
+                                while($row=mysqli_fetch_assoc($results) ){   
+                                    $product_id = $row['ProductID'];               
+                                $imageOne = $row['ImageOne'];
+                                $imageTwo = $row['ImageTwo'];
+                                echo "<div class='col'>
+                                <img src='../backend/src/pages/products/images/$imageOne' alt='Image 1' class='img-fluid' />
+                                </div>";
+                                }
+                            ?>
 
                         </div>
                         <div class="row mt-3">
                             <?php 
-                $fetch_product = "Select * from product Limit 2";
-                $results = mysqli_query($connect, $fetch_product);
-                while($row=mysqli_fetch_assoc($results) ){         
-                    $product_id = $row['ProductID'];         
-                  $imageOne = $row['ImageOne'];
-                  $imageTwo = $row['ImageTwo'];
-                  echo "<div class='col'>
-                          <img src='../backend/src/pages/products/images/$imageOne' alt='Image 3' class='img-fluid' />
-                        </div>";
-                }
-                ?>
+                                $fetch_product = "Select * from product Limit 2";
+                                $results = mysqli_query($connect, $fetch_product);
+                                while($row=mysqli_fetch_assoc($results) ){         
+                                    $product_id = $row['ProductID'];         
+                                $imageOne = $row['ImageOne'];
+                                $imageTwo = $row['ImageTwo'];
+                                echo "<div class='col'>
+                                        <img src='../backend/src/pages/products/images/$imageOne' alt='Image 3' class='img-fluid' />
+                                        </div>";
+                                }
+                            ?>
                         </div>
                         <p class="mt-3"><a href="#more-suggestions">More in suggestions</a></p>
                     </div>
@@ -265,31 +265,31 @@ require_once("php/database_connect.php");
                     <div class="row-suggestion-items">
                         <div class="row">
                             <?php 
-                $fetch_product = "Select * from product";
-                $results = mysqli_query($connect, $fetch_product);
-                while($row=mysqli_fetch_assoc($results) ){            
-                    $product_id = $row['ProductID'];      
-                  $imageOne = $row['ImageOne'];
-                  $imageTwo = $row['ImageTwo'];
-                  echo "<div class='col'>
-                  <img src='../backend/src/pages/products/images/$imageOne' alt='Image 1' class='img-fluid' />
-                </div>";
-                }
-              ?>
+                                $fetch_product = "Select * from product Limit 2";
+                                $results = mysqli_query($connect, $fetch_product);
+                                while($row=mysqli_fetch_assoc($results) ){            
+                                    $product_id = $row['ProductID'];      
+                                $imageOne = $row['ImageOne'];
+                                $imageTwo = $row['ImageTwo'];
+                                echo "<div class='col'>
+                                <img src='../backend/src/pages/products/images/$imageOne' alt='Image 1' class='img-fluid' />
+                                </div>";
+                                }
+                            ?>
                         </div>
                         <div class="row mt-3">
                             <?php 
-                $fetch_product = "Select * from product Limit 2";
-                $results = mysqli_query($connect, $fetch_product);
-                while($row=mysqli_fetch_assoc($results) ){       
-                    $product_id = $row['ProductID'];           
-                  $imageOne = $row['ImageOne'];
-                  $imageTwo = $row['ImageTwo'];
-                  echo "<div class='col'>
-                          <img src='../backend/src/pages/products/images/$imageOne' alt='Image 3' class='img-fluid' />
-                        </div>";
-                }
-                ?>
+                                $fetch_product = "Select * from product Limit 2";
+                                $results = mysqli_query($connect, $fetch_product);
+                                while($row=mysqli_fetch_assoc($results) ){       
+                                    $product_id = $row['ProductID'];           
+                                $imageOne = $row['ImageOne'];
+                                $imageTwo = $row['ImageTwo'];
+                                echo "<div class='col'>
+                                        <img src='../backend/src/pages/products/images/$imageOne' alt='Image 3' class='img-fluid' />
+                                        </div>";
+                                }
+                            ?>
                         </div>
                         <p class="mt-3"><a href="#more-purchases">More in purchase again</a></p>
                     </div>
@@ -314,7 +314,7 @@ require_once("php/database_connect.php");
                   $imageTwo = $row['ImageTwo'];
                   
                   echo "<div class='col' style='position: relative'>
-                            <a href='./pages/product_details.php?id=$product_id'>
+                            <a href='./pages/product/product_details.php?id=$product_id'>
                                 <img src='../backend/src/pages/products/images/$imageOne' alt='Image 1' class='img-fluid mb-3' />
                                 <div class='badge text-bg-success badge-floating-stock'>50/100</div>
                             </a>
@@ -322,7 +322,7 @@ require_once("php/database_connect.php");
                             <p class='text-muted'>$product_name</p>
                             <p class='text-muted'><span>$</span>$price</p>
                             <p>
-                                <a href='./pages/product_details.php?id=$product_id' class='btn btn-outline-primary'><i class='fas fa-arrow-right'></i></a>
+                                <a href='./pages/product/product_details.php?id=$product_id' class='btn btn-outline-primary'><i class='fas fa-arrow-right'></i></a>
                             </p>
                         </div>";
         }
