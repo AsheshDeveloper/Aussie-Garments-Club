@@ -1,9 +1,5 @@
 <?php 
 include '../../php/database_connect.php';
-include '../../php/function/functions.php';
-
-//$ip = getIPAddress();  
-//echo 'User Real IP Address - '.$ip; 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -218,8 +214,8 @@ include '../../php/function/functions.php';
 
                         <div class="button-group mt-4">
                             <button type="button" class="btn btn-primary me-3 px-4 py-2">Buy Now</button>
-                            <button type="button" id="popoverButton" class="btn btn-outline-primary me-4 px-4 py-2">Add
-                                To Cart</button>
+                            <button type="button" data-id="<?php echo $product_id ?>" name ="submit" class="btn btn-outline-primary me-4 px-4 py-2 addToCart">Add to Cart</button>                           
+                            </a>
                         </div>
                         <!-- add to cart placeholder -->
                         <div id="popoverContent" class="custom-popover-content">
@@ -584,6 +580,7 @@ include '../../php/function/functions.php';
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
     </script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
     </script>
@@ -637,6 +634,28 @@ include '../../php/function/functions.php';
         });
     });
     </script>
+
+<!---Cart Script--->
+    <script type="text/javascript">      
+          $(document).on('click', '.addToCart', function (e) {
+            e.preventDefault();
+            let $error = $('#error');
+            var product_id = parseInt($(this).data('id'));
+            if (isNaN(product_id)) {
+                return;
+            }else{
+                $.ajax({
+                    url: "../../php/function/functions.php",
+                    method: "POST",
+                    data: {
+                        product_id: product_id,
+                        _token: $('[name="csrf-token"]').attr('content'),
+                    },
+                });                
+            }
+            return;
+          });
+      </script>
 </body>
 
 </html>

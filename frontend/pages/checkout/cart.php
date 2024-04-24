@@ -149,15 +149,33 @@
               </tr>
             </thead>
             <tbody>
+            <?php 
+                    require_once "../../php/database_connect.php";
+                    $getCart = "SELECT ProductID FROM Cart";      
+                    $fetch = "SELECT * FROM Product";            
+                    if ($result = $connect ->query($fetch)) {
+                        while ($row = $result -> fetch_assoc()) { 
+                            //print_r($row);
+                            $product_id = $row['ProductID'];
+                            $product_name = $row['Name'];
+                            $description = $row['Description'];
+                            $price = $row['Price'];
+                            $stock = $row['QuantityInStock'];
+                            $category = $row['CategoryID'];
+                            $brand = $row['BrandID'];
+                            $size = $row['SizeID'];
+                            $imageOne = $row['ImageOne'];
+
+                ?>            
               <tr class="">
                 <td><input type="checkbox" /></td>
                 <td>
-                  <img src="../../images/suggestions/suggestion3.png" alt="Product Image" class="class-table-image rounded" />
+                  <img src="../../../backend/src/pages/products/images/<?php echo $imageOne ?>" alt="Product Image" class="class-table-image rounded" />
                 </td>
                 <td>
-                  <h6>Product Title</h6>
-                  <p class="text-success">In stock</p>
-                  <p>Shipped from DHL and sold by Aussie Garments</p>
+                  <h6><?php echo $product_name; ?></h6>
+                  <p class="text-success"><?php echo $stock; ?></p>
+                  <p><?php echo $description; ?></p>
                   <p>Size:</p>
                   <p>Color:</p>
                   <div class="col-auto">
@@ -170,33 +188,20 @@
                     <a class="text-danger" href="">Remove</a>
                   </div>
                 </td>
-                <td>$30</td>
+                <td>$ <?php echo $price; ?></td>
                 <td>$60</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" /></td>
-                <td>
-                  <img src="../../images/suggestions/suggestion3.png" alt="Product Image" class="class-table-image rounded" />
-                </td>
-                <td>
-                  <h6>Product Title</h6>
-                  <p class="text-success">In stock</p>
-                  <p>Shipped from DHL and sold by Aussie Garments</p>
-                  <p>Size:</p>
-                  <p>Color:</p>
-                  <div class="col-auto">
-                    <button class="btn btn-sm btn-outline-secondary">-</button>
-                    <span class="vertical-line">2</span>
-                    <button class="btn btn-sm btn-outline-secondary">+</button>
-                    <span class="vertical-line"> | </span>
-                    <a href="">Save for Later</a>
-                    <span class="vertical-line"> | </span>
-                    <a class="text-danger" href="">Remove</a>
-                  </div>
-                </td>
-                <td>$30</td>
-                <td>$60</td>
-              </tr>
+              </tr>              
+              <?php
+                    } 
+                    ?>
+            <?php } else{  ?>
+                <tr class="trow">
+                    <td colspan="5">No data found!</td>
+                </tr>
+                    
+            <?php
+            }
+            ?>
             </tbody>
           </table>
         </div>
