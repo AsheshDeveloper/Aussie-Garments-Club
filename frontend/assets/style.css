@@ -181,7 +181,6 @@ footer hr {
   object-fit: cover;
 }
 .user-profile-info input {
-  /* outline: none !important; */
   border: none;
 }
 
@@ -336,4 +335,9 @@ footer hr {
 }
 .vertical-line {
   padding: 0 10px 0 10px;
+}
+
+/* checkout */
+.checkout-modal-add-payment a {
+  text-decoration: none;
 }
