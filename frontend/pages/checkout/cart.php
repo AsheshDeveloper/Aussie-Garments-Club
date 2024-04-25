@@ -187,13 +187,14 @@
                   <p>Size:</p>
                   <p>Color:</p>
                   <div class="col-auto">
-                    <button class="btn btn-sm btn-outline-secondary">-</button>
-                    <span class="vertical-line">2</span>
-                    <button class="btn btn-sm btn-outline-secondary">+</button>
+                    <input type="text" name="product_id" value="<?php echo $product_id ?>" hidden>
+                    <button class="btn btn-sm btn-outline-secondary decrease-quantity">-</button>
+                    <span class="vertical-line quantity">1</span>
+                    <button class="btn btn-sm btn-outline-secondary increase-quantity">+</button>
                     <span class="vertical-line"> | </span>
                     <a href="">Save for Later</a>
                     <span class="vertical-line"> | </span>
-                    <a class="text-danger" href="">Remove</a>
+                    <a class="text-danger delete-item" href="#" data-id="<?php echo $product_id ?>" >Remove</a>
                   </div>
                 </td>
                 <td>$ <?php echo $price; ?></td>
@@ -381,6 +382,7 @@
       integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
       crossorigin="anonymous"
     ></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
       integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
@@ -391,6 +393,87 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
+
+    <!---Ajax to handle cart CRUD---->
+    <script>
+        $(document).on('click', '.decrease-quantity, .increase-quantity', function () {
+          updateQuantity(this.parentElement);
+        });
+
+        $(document).on('click', '.delete-item', function () {
+            deleteItem(this.parentElement);
+        });
+
+        function updateQuantity(parentElement) {
+            const quantityElement = parentElement.querySelector('.quantity');
+            let currentQuantity = parseInt(quantityElement.textContent);
+            const productId = parentElement.querySelector('[name="product_id"]').value;
+
+            if (parentElement.contains(event.target) && event.target.classList.contains('decrease-quantity')) {
+              // Check if the current quantity is already 1
+              if (currentQuantity > 1) {  
+                  currentQuantity -= 1;
+              }
+            } else if (parentElement.contains(event.target) && event.target.classList.contains('increase-quantity')) {
+                currentQuantity += 1;
+            }
+            quantityElement.textContent = currentQuantity;
+            // AJAX request to update cart item
+            const newQuantity = currentQuantity;
+            $.ajax({
+                url: '../../php/function/functions.php',
+                method: 'POST',
+                data: {
+                    action: 'update', // Set action to 'update'
+                    product_id: productId,
+                    quantity: newQuantity
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        // Update successful, you can handle the response as needed
+                        console.log(response.success);
+                    } else {
+                        // Handle error
+                        console.error(response.error);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Handle AJAX error
+                    console.error(error);
+                }
+            });
+        }
+
+
+        function deleteItem(parentElement) {
+            const productId = parentElement.querySelector('[name="product_id"]').value;
+            $.ajax({
+                url: '../../php/function/functions.php',
+                method: 'POST',
+                data: {
+                    action: 'delete', // Set action to 'delete'
+                    product_id: productId
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        // Item deleted successfully, you can handle the response as needed
+                        console.log(response.success);
+                        // Optionally, you can remove the HTML element corresponding to the deleted item from the DOM
+                        parentElement.remove();
+                    } else {
+                        // Handle error
+                        console.error(response.error);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Handle AJAX error
+                    console.error(error);
+                }
+            });
+        }
+    </script>
     <!-- <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
       integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"

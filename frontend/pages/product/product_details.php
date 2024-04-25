@@ -648,9 +648,21 @@ include '../../php/database_connect.php';
                     url: "../../php/function/functions.php",
                     method: "POST",
                     data: {
+                        action: 'insert', // Set action to 'insert'
                         product_id: product_id,
                         _token: $('[name="csrf-token"]').attr('content'),
                     },
+                    success: function(response) {
+                        // Check if response contains an error message
+                        if (response.error) {
+                            // Product already exists in the cart, show error message
+                            //$error.text(response.error);
+                            $('.addToCart').text(response.error).removeClass('btn-outline-primary').addClass('btn-danger');
+                        } else {
+                            // Product added to cart successfully, update button text and color
+                            $('.addToCart').text(response.success).removeClass('btn-outline-primary').addClass('btn-success');
+                        }
+                }
                 });                
             }
             return;
