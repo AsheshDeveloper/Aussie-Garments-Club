@@ -235,19 +235,23 @@
                   $inClause = implode(',', $productIDs);                    
                   // Build the query to fetch products based on the retrieved IDs
                   $fetch = "SELECT * FROM Product WHERE ProductID IN ($inClause)"; 
-                  if($fetch > 0)
-                  {
-                    $result = $connect->query($fetch);
-                    while ($row = $result->fetch_array()) {
-                        $price = array($row['Price']);
-                        $total_price = array_sum($price);
-                        $grand_total += $total_price;
-                        $count++;
-                    }
+                  $result = $connect->query($fetch);
+                  if ($result && $result->num_rows > 0) { 
+                      while ($row = $result->fetch_array()) {
+                          $price = array($row['Price']); 
+                          $count++; 
+                          // Calculate total price
+                          $total = array_sum($price);
+                          $grand_total += $total;
+                      }                      
+                  } else {
+                      // Handle case where no rows are returned
+                      $grand_total = 0;
                   }
+
               ?>
-              <p>Total Items: <?php print ($count > 0) ?  $count : 0 ?>  </p>
-              <p>Total Price: $ <?php print ($grand_total > 0) ? $grand_total : 0 ?></p>
+              <p>Total Items: <?php echo $count  ?>  </p>
+              <p>Total Price: $ <?php echo $grand_total  ?></p>
               <div class="d-grid col">
                 <a href="./checkout.html" class="btn btn-primary px-5 py-2">Proceed to Checkout</a>
               </div>
