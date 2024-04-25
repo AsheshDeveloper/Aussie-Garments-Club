@@ -349,7 +349,7 @@ require_once("php/database_connect.php");
                           <p class='text-muted'>$product_name</p>
                           <p class='text-muted'><span>$</span>$price</p>
                           <p>
-                            <a href='./pages/product_details.php?id=$product_id' class='btn btn-outline-primary'><i class='fas fa-arrow-right'></i></a>
+                            <a href='./pages/product/product_details.php?id=$product_id' class='btn btn-outline-primary'><i class='fas fa-arrow-right'></i></a>
                           </p>
                         </div>";
         }
@@ -375,7 +375,7 @@ require_once("php/database_connect.php");
                           <p class='text-muted'>$product_name</p>
                           <p class='text-muted'><span>$</span>$price</p>
                           <p>
-                            <a href='./pages/product_details.php?id=$product_id' class='btn btn-outline-primary'><i class='fas fa-arrow-right'></i></a>
+                            <a href='./pages/product/product_details.php?id=$product_id' class='btn btn-outline-primary'><i class='fas fa-arrow-right'></i></a>
                           </p>
                         </div>";
         }
@@ -401,7 +401,7 @@ require_once("php/database_connect.php");
                           <p class='text-muted'>$product_name</p>
                           <p class='text-muted'><span>$</span>$price</p>
                           <p>
-                            <a href='./pages/product_details.php?id=$product_id' class='btn btn-outline-primary'><i class='fas fa-arrow-right'></i></a>
+                            <a href='./pages/product/product_details.php?id=$product_id' class='btn btn-outline-primary'><i class='fas fa-arrow-right'></i></a>
                           </p>
                         </div>";
         }

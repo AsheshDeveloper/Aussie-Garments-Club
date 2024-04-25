@@ -150,23 +150,31 @@
             </thead>
             <tbody>
             <?php 
-                    require_once "../../php/database_connect.php";
-                    $getCart = "SELECT ProductID FROM Cart";      
-                    $fetch = "SELECT * FROM Product";            
-                    if ($result = $connect ->query($fetch)) {
-                        while ($row = $result -> fetch_assoc()) { 
-                            //print_r($row);
-                            $product_id = $row['ProductID'];
-                            $product_name = $row['Name'];
-                            $description = $row['Description'];
-                            $price = $row['Price'];
-                            $stock = $row['QuantityInStock'];
-                            $category = $row['CategoryID'];
-                            $brand = $row['BrandID'];
-                            $size = $row['SizeID'];
-                            $imageOne = $row['ImageOne'];
+              require_once "../../php/database_connect.php";
+              $getCart = "SELECT * FROM Cart";                     
+              if ($cart = $connect->query($getCart)) {
+                  $productIDs = array(); // Initialize an array to store product IDs                        
+                  while ($r = $cart->fetch_assoc()) {
+                      $productIDs[] = $r['ProductID']; // Store the ProductID from each row
+                  }                        
+                  // Construct the IN clause for the query
+                  $inClause = implode(',', $productIDs);                    
+                  // Build the query to fetch products based on the retrieved IDs
+                  $fetch = "SELECT * FROM Product WHERE ProductID IN ($inClause)"; 
+                  $result = $connect ->query($fetch);
+                  if($result){                    
+                  while ($row = $result -> fetch_assoc()) { 
+                      $product_id = $row['ProductID'];
+                      $product_name = $row['Name'];
+                      $description = $row['Description'];
+                      $price = $row['Price'];
+                      $stock = $row['QuantityInStock'];
+                      $category = $row['CategoryID'];
+                      $brand = $row['BrandID'];
+                      $size = $row['SizeID'];
+                      $imageOne = $row['ImageOne'];
 
-                ?>            
+            ?>                 
               <tr class="">
                 <td><input type="checkbox" /></td>
                 <td>
@@ -201,6 +209,7 @@
                     
             <?php
             }
+          }
             ?>
             </tbody>
           </table>
@@ -211,8 +220,34 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Total</h5>
-              <p>Total Items: 4</p>
-              <p>Total Price: $120</p>
+              <?php 
+                require_once "../../php/database_connect.php";
+                $count = 0;
+                $grand_total = 0;
+                $getCart = "SELECT * FROM Cart";     
+                if ($cart = $connect->query($getCart)) {
+                  $productIDs = array(); // Initialize an array to store product IDs                        
+                  while ($r = $cart->fetch_assoc()) {
+                      $productIDs[] = $r['ProductID']; // Store the ProductID from each row
+                  }  
+                }  
+                  // Construct the IN clause for the query
+                  $inClause = implode(',', $productIDs);                    
+                  // Build the query to fetch products based on the retrieved IDs
+                  $fetch = "SELECT * FROM Product WHERE ProductID IN ($inClause)"; 
+                  if($fetch > 0)
+                  {
+                    $result = $connect->query($fetch);
+                    while ($row = $result->fetch_array()) {
+                        $price = array($row['Price']);
+                        $total_price = array_sum($price);
+                        $grand_total += $total_price;
+                        $count++;
+                    }
+                  }
+              ?>
+              <p>Total Items: <?php print ($count > 0) ?  $count : 0 ?>  </p>
+              <p>Total Price: $ <?php print ($grand_total > 0) ? $grand_total : 0 ?></p>
               <div class="d-grid col">
                 <a href="./checkout.html" class="btn btn-primary px-5 py-2">Proceed to Checkout</a>
               </div>
