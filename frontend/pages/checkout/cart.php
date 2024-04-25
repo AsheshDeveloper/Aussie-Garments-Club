@@ -149,54 +149,69 @@
               </tr>
             </thead>
             <tbody>
+            <?php 
+              require_once "../../php/database_connect.php";
+              $getCart = "SELECT * FROM Cart";                     
+              if ($cart = $connect->query($getCart)) {
+                  $productIDs = array(); // Initialize an array to store product IDs                        
+                  while ($r = $cart->fetch_assoc()) {
+                      $productIDs[] = $r['ProductID']; // Store the ProductID from each row
+                  }                        
+                  // Construct the IN clause for the query
+                  $inClause = implode(',', $productIDs);                    
+                  // Build the query to fetch products based on the retrieved IDs
+                  $fetch = "SELECT * FROM Product WHERE ProductID IN ($inClause)"; 
+                  $result = $connect ->query($fetch);
+                  if($result){                    
+                  while ($row = $result -> fetch_assoc()) { 
+                      $product_id = $row['ProductID'];
+                      $product_name = $row['Name'];
+                      $description = $row['Description'];
+                      $price = $row['Price'];
+                      $stock = $row['QuantityInStock'];
+                      $category = $row['CategoryID'];
+                      $brand = $row['BrandID'];
+                      $size = $row['SizeID'];
+                      $imageOne = $row['ImageOne'];
+
+            ?>                 
               <tr class="">
                 <td><input type="checkbox" /></td>
                 <td>
-                  <img src="../../images/suggestions/suggestion3.png" alt="Product Image" class="class-table-image rounded" />
+                  <img src="../../../backend/src/pages/products/images/<?php echo $imageOne ?>" alt="Product Image" class="class-table-image rounded" />
                 </td>
                 <td>
-                  <h6>Product Title</h6>
-                  <p class="text-success">In stock</p>
-                  <p>Shipped from DHL and sold by Aussie Garments</p>
+                  <h6><?php echo $product_name; ?></h6>
+                  <p class="text-success"><?php echo $stock; ?></p>
+                  <p><?php echo $description; ?></p>
                   <p>Size:</p>
                   <p>Color:</p>
                   <div class="col-auto">
-                    <button class="btn btn-sm btn-outline-secondary">-</button>
-                    <span class="vertical-line">2</span>
-                    <button class="btn btn-sm btn-outline-secondary">+</button>
+                    <input type="text" name="product_id" value="<?php echo $product_id ?>" hidden>
+                    <button class="btn btn-sm btn-outline-secondary decrease-quantity">-</button>
+                    <span class="vertical-line quantity">1</span>
+                    <button class="btn btn-sm btn-outline-secondary increase-quantity">+</button>
                     <span class="vertical-line"> | </span>
                     <a href="">Save for Later</a>
                     <span class="vertical-line"> | </span>
-                    <a class="text-danger" href="">Remove</a>
+                    <a class="text-danger delete-item" href="#" data-id="<?php echo $product_id ?>" >Remove</a>
                   </div>
                 </td>
-                <td>$30</td>
+                <td>$ <?php echo $price; ?></td>
                 <td>$60</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" /></td>
-                <td>
-                  <img src="../../images/suggestions/suggestion3.png" alt="Product Image" class="class-table-image rounded" />
-                </td>
-                <td>
-                  <h6>Product Title</h6>
-                  <p class="text-success">In stock</p>
-                  <p>Shipped from DHL and sold by Aussie Garments</p>
-                  <p>Size:</p>
-                  <p>Color:</p>
-                  <div class="col-auto">
-                    <button class="btn btn-sm btn-outline-secondary">-</button>
-                    <span class="vertical-line">2</span>
-                    <button class="btn btn-sm btn-outline-secondary">+</button>
-                    <span class="vertical-line"> | </span>
-                    <a href="">Save for Later</a>
-                    <span class="vertical-line"> | </span>
-                    <a class="text-danger" href="">Remove</a>
-                  </div>
-                </td>
-                <td>$30</td>
-                <td>$60</td>
-              </tr>
+              </tr>              
+              <?php
+                    } 
+                    ?>
+            <?php } else{  ?>
+                <tr class="trow">
+                    <td colspan="5">No data found!</td>
+                </tr>
+                    
+            <?php
+            }
+          }
+            ?>
             </tbody>
           </table>
         </div>
@@ -206,8 +221,38 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Total</h5>
-              <p>Total Items: 4</p>
-              <p>Total Price: $120</p>
+              <?php 
+                require_once "../../php/database_connect.php";
+                $count = 0;
+                $grand_total = 0;
+                $getCart = "SELECT * FROM Cart";     
+                if ($cart = $connect->query($getCart)) {
+                  $productIDs = array(); // Initialize an array to store product IDs                        
+                  while ($r = $cart->fetch_assoc()) {
+                      $productIDs[] = $r['ProductID']; // Store the ProductID from each row
+                  }  
+                }  
+                  // Construct the IN clause for the query
+                  $inClause = implode(',', $productIDs);                    
+                  // Build the query to fetch products based on the retrieved IDs
+                  $fetch = "SELECT * FROM Product WHERE ProductID IN ($inClause)"; 
+                  $result = $connect->query($fetch);
+                  if ($result && $result->num_rows > 0) { 
+                      while ($row = $result->fetch_array()) {
+                          $price = array($row['Price']); 
+                          $count++; 
+                          // Calculate total price
+                          $total = array_sum($price);
+                          $grand_total += $total;
+                      }                      
+                  } else {
+                      // Handle case where no rows are returned
+                      $grand_total = 0;
+                  }
+
+              ?>
+              <p>Total Items: <?php echo $count  ?>  </p>
+              <p>Total Price: $ <?php echo $grand_total  ?></p>
               <div class="d-grid col">
                 <a href="./checkout.html" class="btn btn-primary px-5 py-2">Proceed to Checkout</a>
               </div>
@@ -353,6 +398,7 @@
       integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
       crossorigin="anonymous"
     ></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
       integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
@@ -363,6 +409,87 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
+
+    <!---Ajax to handle cart CRUD---->
+    <script>
+        $(document).on('click', '.decrease-quantity, .increase-quantity', function () {
+          updateQuantity(this.parentElement);
+        });
+
+        $(document).on('click', '.delete-item', function () {
+            deleteItem(this.parentElement);
+        });
+
+        function updateQuantity(parentElement) {
+            const quantityElement = parentElement.querySelector('.quantity');
+            let currentQuantity = parseInt(quantityElement.textContent);
+            const productId = parentElement.querySelector('[name="product_id"]').value;
+
+            if (parentElement.contains(event.target) && event.target.classList.contains('decrease-quantity')) {
+              // Check if the current quantity is already 1
+              if (currentQuantity > 1) {  
+                  currentQuantity -= 1;
+              }
+            } else if (parentElement.contains(event.target) && event.target.classList.contains('increase-quantity')) {
+                currentQuantity += 1;
+            }
+            quantityElement.textContent = currentQuantity;
+            // AJAX request to update cart item
+            const newQuantity = currentQuantity;
+            $.ajax({
+                url: '../../php/function/functions.php',
+                method: 'POST',
+                data: {
+                    action: 'update', // Set action to 'update'
+                    product_id: productId,
+                    quantity: newQuantity
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        // Update successful, you can handle the response as needed
+                        console.log(response.success);
+                    } else {
+                        // Handle error
+                        console.error(response.error);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Handle AJAX error
+                    console.error(error);
+                }
+            });
+        }
+
+
+        function deleteItem(parentElement) {
+            const productId = parentElement.querySelector('[name="product_id"]').value;
+            $.ajax({
+                url: '../../php/function/functions.php',
+                method: 'POST',
+                data: {
+                    action: 'delete', // Set action to 'delete'
+                    product_id: productId
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        // Item deleted successfully, you can handle the response as needed
+                        console.log(response.success);
+                        // Optionally, you can remove the HTML element corresponding to the deleted item from the DOM
+                        parentElement.remove();
+                    } else {
+                        // Handle error
+                        console.error(response.error);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Handle AJAX error
+                    console.error(error);
+                }
+            });
+        }
+    </script>
     <!-- <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
       integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
