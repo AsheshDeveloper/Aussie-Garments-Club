@@ -18,14 +18,6 @@ include '../../php/database_connect.php';
     @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
     </style>
 
-    <!-- Bootstrap CSS -->
-    <!-- <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-      crossorigin="anonymous"
-    /> -->
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
     <!-- app icon -->
@@ -214,7 +206,8 @@ include '../../php/database_connect.php';
 
                         <div class="button-group mt-4">
                             <button type="button" class="btn btn-primary me-3 px-4 py-2">Buy Now</button>
-                            <button type="button" data-id="<?php echo $product_id ?>" name ="submit" class="btn btn-outline-primary me-4 px-4 py-2 addToCart">Add to Cart</button>                           
+                            <button type="button" data-id="<?php echo $product_id ?>" name="submit"
+                                class="btn btn-outline-primary me-4 px-4 py-2 addToCart">Add to Cart</button>
                             </a>
                         </div>
                         <!-- add to cart placeholder -->
@@ -580,7 +573,8 @@ include '../../php/database_connect.php';
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
     </script>
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
     </script>
@@ -635,39 +629,41 @@ include '../../php/database_connect.php';
     });
     </script>
 
-<!---Cart Script--->
-    <script type="text/javascript">      
-          $(document).on('click', '.addToCart', function (e) {
-            e.preventDefault();
-            let $error = $('#error');
-            var product_id = parseInt($(this).data('id'));
-            if (isNaN(product_id)) {
-                return;
-            }else{
-                $.ajax({
-                    url: "../../php/function/functions.php",
-                    method: "POST",
-                    data: {
-                        action: 'insert', // Set action to 'insert'
-                        product_id: product_id,
-                        _token: $('[name="csrf-token"]').attr('content'),
-                    },
-                    success: function(response) {
-                        // Check if response contains an error message
-                        if (response.error) {
-                            // Product already exists in the cart, show error message
-                            //$error.text(response.error);
-                            $('.addToCart').text(response.error).removeClass('btn-outline-primary').addClass('btn-danger');
-                        } else {
-                            // Product added to cart successfully, update button text and color
-                            $('.addToCart').text(response.success).removeClass('btn-outline-primary').addClass('btn-success');
-                        }
-                }
-                });                
-            }
+    <!---Cart Script--->
+    <script type="text/javascript">
+    $(document).on('click', '.addToCart', function(e) {
+        e.preventDefault();
+        let $error = $('#error');
+        var product_id = parseInt($(this).data('id'));
+        if (isNaN(product_id)) {
             return;
-          });
-      </script>
+        } else {
+            $.ajax({
+                url: "../../php/function/functions.php",
+                method: "POST",
+                data: {
+                    action: 'insert', // Set action to 'insert'
+                    product_id: product_id,
+                    _token: $('[name="csrf-token"]').attr('content'),
+                },
+                success: function(response) {
+                    // Check if response contains an error message
+                    if (response.error) {
+                        // Product already exists in the cart, show error message
+                        //$error.text(response.error);
+                        $('.addToCart').text(response.error).removeClass('btn-outline-primary')
+                            .addClass('btn-danger');
+                    } else {
+                        // Product added to cart successfully, update button text and color
+                        $('.addToCart').text(response.success).removeClass('btn-outline-primary')
+                            .addClass('btn-success');
+                    }
+                }
+            });
+        }
+        return;
+    });
+    </script>
 </body>
 
 </html>
