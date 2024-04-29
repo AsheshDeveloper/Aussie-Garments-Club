@@ -26,7 +26,9 @@
             <!-- Column 3 -->
             <div class="col-md-3">
                 <h5>We Support</h5>
-                <img src="./images/footer/pngimg.svg" alt="Support Image 1" />
+                <a href="payment_integration/paypal.php" class="mb-5 mt-5 google-login">
+                <img src="./images/footer/pngimg.svg" alt="Support Image 1"/>
+                                </a>
                 <img src="./images/footer/mastercard-og-image.svg" alt="Support Image 2" />
             </div>
             <!-- Column 4 -->
