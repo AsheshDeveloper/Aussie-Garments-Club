@@ -174,10 +174,10 @@ include '../../php/auth/auth_login.php';
                                     <a href="#" class="">Forgot Password?</a>
                                 </small>
                                 <button type="submit" name="submit" type="name" class="btn btn-primary w-100 p-2 mb-3">Login</button>
-                                <a href="" class="mb-5 mt-5 google-login">
+                                <a href="facebook_oauth.php" class="mb-5 mt-5 google-login">
                                     <img class="google-icon" src="../../images/assets/google ICon.png"
                                         alt="Google Logo" />
-                                    Login with Google
+                                    Login with Facebook
                                 </a>
                             </form>
                             <small class="mt-5">Don't have an account yet? <a href="./thirdPartySignup.html">Sign
