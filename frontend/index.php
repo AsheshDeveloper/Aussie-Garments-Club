@@ -68,11 +68,7 @@ require_once("php/database_connect.php");
                 <?php if(!empty($_SESSION['username'])){ ?>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <p>Welcome <?php echo $_SESSION['username'] ?></p>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="./pages/authentication/logout.php">Log out</a>
+                        <span class="nav-link">Welcome <?php echo $_SESSION['username'] ?></span>
                     </li>
                 </ul>
                 <?php } ?>
@@ -108,27 +104,26 @@ require_once("php/database_connect.php");
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./pages/checkout/cart.html"><i
+                            <a class="nav-link" href="./pages/checkout/cart.php"><i
                                     class="fas fa-shopping-cart"></i></a>
                         </li>
-                        <li class="nav-item">
-                            <div class="dropdown">
-                                <a class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton"
-                                    data-bs-toggle="dropdown" aria-expanded="false" href="#">
-                                    <i class="fas fa-user"></i>
-                                </a>
+                        <?php if(!empty($_SESSION['username'])){ ?>
+                            <li class="nav-item">
+                                <div class="dropdown">
+                                    <a class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton"
+                                        data-bs-toggle="dropdown" aria-expanded="false" href="#">
+                                        <i class="fas fa-user"></i>
+                                    </a>
 
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li>
-                                        <a class="dropdown-item" href="./Pages/login.html">Login</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="./Pages/profile/user_profile.html">Profile</a>
-                                    </li>
-                                    <li><a class="dropdown-item" href="#">Logout</a></li>
-                                </ul>
-                            </div>
-                        </li>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">                                   
+                                        <li>
+                                            <a class="dropdown-item" href="./Pages/profile/user_profile.html">Profile</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="./pages/authentication/logout.php">Logout</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        <?php } ?>  
                     </ul>
                 </div>
             </div>
