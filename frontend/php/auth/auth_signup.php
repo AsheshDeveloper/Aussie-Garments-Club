@@ -25,6 +25,7 @@ if(isset($_POST['submit'])){
             $insert = "INSERT INTO users(first_name, middle_name,last_name,contact,email,password) VALUES('$first_name', '$middle_name', '$last_name', '$contact', '$email', '$password')";
             mysqli_query($connect, $insert);
             $_SESSION['username'] = $first_name;
+            $SESSION['email'] = $email;
             header("Location: ../../index.php");
         }
     }

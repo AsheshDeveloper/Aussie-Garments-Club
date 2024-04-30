@@ -30,22 +30,55 @@ if (isset($_POST['action']) && isset($_POST['product_id'])) {
     switch ($action) {
         case 'insert':
             // Add Items to cart
-            $getProductID =  mysqli_real_escape_string($connect, $_POST['product_id']);
+            $getProductID = mysqli_real_escape_string($connect, $_POST['product_id']);
+            $getPrice = mysqli_real_escape_string($connect, $_POST['price']);
+            $getRequest = mysqli_real_escape_string($connect, $_POST['user_request']);            
             $ip = getIPAddress();
-            $fetchData = "SELECT * FROM cart WHERE IpAddress='$ip' AND ProductID='$getProductID' ";
-            $result = mysqli_query($connect, $fetchData);
-            $rows = mysqli_num_rows($result);
-            if($rows){
-                $result = array("error" => "Product exists in the cart!!");
+            $fetchUser = "SELECT * FROM users WHERE email= '$getRequest' ";
+            $userResult = mysqli_query($connect, $fetchUser);
+
+            if (!$userResult) {
+                // Handle query error
+                $error = mysqli_error($connect);
+                // Handle the error appropriately,
+                $result = array("error" => "Database error: $error");
                 header("Content-Type: application/json");
                 echo json_encode($result);
-            }else{
-                $insert = "INSERT INTO cart(ProductID, IpAddress, Quantity) VALUES ('$getProductID', '$ip',0) " ;
-                mysqli_query($connect, $insert);
-                $result = array("success" => "Product added to cart!!");
-                header("Content-Type: application/json");
-                echo json_encode($result);
+                exit;
             }
+
+            if(mysqli_num_rows($userResult) > 0) {
+                $user = mysqli_fetch_array($userResult);
+                $getId = $user['id'];
+                $fetchData = "SELECT * FROM cart WHERE userID='$getId' AND ProductID='$getProductID' ";
+                $result = mysqli_query($connect, $fetchData);
+
+                if (!$result) {
+                    // Handle query error
+                    $error = mysqli_error($connect);
+                    // Handle the error appropriately, for example:
+                    $result = array("error" => "Database error: $error");
+                    header("Content-Type: application/json");
+                    echo json_encode($result);
+                    exit;
+                }
+
+                if(mysqli_num_rows($result) == 0) {
+                    $insert = "INSERT INTO cart(IpAddress, UserID, GuestID, ProductID, Quantity, Price, TotalAmount) VALUES ('$ip','$getId',NULL,'$getProductID', 1,'$getPrice','$getPrice')";
+                    mysqli_query($connect, $insert);
+                    $result = array("success" => "Product added to cart!!");
+                    header("Content-Type: application/json");
+                    echo json_encode($result);
+                } else {
+                    $result = array("error" => "Product exists in the cart!!");
+                    header("Content-Type: application/json");
+                    echo json_encode($result);
+                }
+            } else {
+                $result = array("error" => "No user found with the provided email!!");
+                header("Content-Type: application/json");
+                echo json_encode($result);
+            }            
         break;
 
         case 'update':
