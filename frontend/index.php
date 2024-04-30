@@ -72,7 +72,7 @@ require_once("php/database_connect.php");
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="./pages/profile/user_profile.html">Log out</a>
+                        <a class="nav-link" href="./pages/authentication/logout.php">Log out</a>
                     </li>
                 </ul>
                 <?php } ?>
