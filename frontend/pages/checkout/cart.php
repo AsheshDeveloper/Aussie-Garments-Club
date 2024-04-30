@@ -1,3 +1,7 @@
+<?php
+require_once "../../php/database_connect.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -149,10 +153,11 @@
               </tr>
             </thead>
             <tbody>
-            <?php 
-              require_once "../../php/database_connect.php";
-              $getCart = "SELECT * FROM Cart";                     
+            <?php               
+              $getCart = "SELECT c.*, p.* FROM Cart c INNER JOIN Product p ON c.ProductID = p.ProductID";                     
               if ($cart = $connect->query($getCart)) {
+
+                /**
                   $productIDs = array(); // Initialize an array to store product IDs                        
                   while ($r = $cart->fetch_assoc()) {
                       $productIDs[] = $r['ProductID']; // Store the ProductID from each row
@@ -162,8 +167,11 @@
                   // Build the query to fetch products based on the retrieved IDs
                   $fetch = "SELECT * FROM Product WHERE ProductID IN ($inClause)"; 
                   $result = $connect ->query($fetch);
-                  if($result){                    
-                  while ($row = $result -> fetch_assoc()) { 
+                */
+
+                                      
+                  while ($row = $cart -> fetch_assoc()) { 
+                      //product data
                       $product_id = $row['ProductID'];
                       $product_name = $row['Name'];
                       $description = $row['Description'];
@@ -173,6 +181,9 @@
                       $brand = $row['BrandID'];
                       $size = $row['SizeID'];
                       $imageOne = $row['ImageOne'];
+                      //cart data
+                      $quantity = $row['Quantity'];
+                      $total_amount = $row['TotalAmount'];
 
             ?>                 
               <tr class="">
@@ -189,7 +200,7 @@
                   <div class="col-auto">
                     <input type="text" name="product_id" value="<?php echo $product_id ?>" hidden>
                     <button class="btn btn-sm btn-outline-secondary decrease-quantity">-</button>
-                    <span class="vertical-line quantity">1</span>
+                    <span class="vertical-line quantity"><?php echo $quantity ?></span>
                     <button class="btn btn-sm btn-outline-secondary increase-quantity">+</button>
                     <span class="vertical-line"> | </span>
                     <a href="">Save for Later</a>
@@ -198,7 +209,7 @@
                   </div>
                 </td>
                 <td>$ <?php echo $price; ?></td>
-                <td>$60</td>
+                <td>$ <?php echo $total_amount ?></td>
               </tr>              
               <?php
                     } 
@@ -210,8 +221,7 @@
                     
             <?php
             }
-          }
-            ?>
+          ?>
             </tbody>
           </table>
         </div>
@@ -222,37 +232,26 @@
             <div class="card-body">
               <h5 class="card-title">Total</h5>
               <?php 
-                require_once "../../php/database_connect.php";
                 $count = 0;
                 $grand_total = 0;
-                $getCart = "SELECT * FROM Cart";     
-                if ($cart = $connect->query($getCart)) {
-                  $productIDs = array(); // Initialize an array to store product IDs                        
-                  while ($r = $cart->fetch_assoc()) {
-                      $productIDs[] = $r['ProductID']; // Store the ProductID from each row
-                  }  
-                }  
-                  // Construct the IN clause for the query
-                  $inClause = implode(',', $productIDs);                    
-                  // Build the query to fetch products based on the retrieved IDs
-                  $fetch = "SELECT * FROM Product WHERE ProductID IN ($inClause)"; 
-                  $result = $connect->query($fetch);
-                  if ($result && $result->num_rows > 0) { 
-                      while ($row = $result->fetch_array()) {
-                          $price = array($row['Price']); 
-                          $count++; 
-                          // Calculate total price
-                          $total = array_sum($price);
-                          $grand_total += $total;
-                      }                      
-                  } else {
-                      // Handle case where no rows are returned
-                      $grand_total = 0;
-                  }
+                $getCart = "SELECT c.*, p.* FROM Cart c INNER JOIN Product p ON c.ProductID = p.ProductID";
+                $result = $connect->query($getCart);
+                if ($result && $result->num_rows > 0) { 
+                    while ($row = $result->fetch_array()) {
+                        $price = array($row['TotalAmount']); 
+                        $count++; 
+                        // Calculate total price
+                        $total = array_sum($price);
+                        $grand_total += $total;
+                    }                      
+                } else {
+                    // Handle case where no rows are returned
+                    $grand_total = 0;
+                }
 
               ?>
-              <p>Total Items: <?php echo $count  ?>  </p>
-              <p>Total Price: $ <?php echo $grand_total  ?></p>
+              <p> Total Items:<span class=""> <?php echo $count  ?> </span> </p>
+              <p> Total Price: $ <span class="grand-total"> <?php echo $grand_total  ?> </span></p>
               <div class="d-grid col">
                 <a href="./checkout.html" class="btn btn-primary px-5 py-2">Proceed to Checkout</a>
               </div>
@@ -448,9 +447,10 @@
                 success: function(response) {
                     if (response.success) {
                         // Update successful, you can handle the response as needed
+                        updateCartCounts(response.singleTotal, response.grandTotal);
                         console.log(response.success);
                     } else {
-                        // Handle error
+                        // Handle error                        
                         console.error(response.error);
                     }
                 },
@@ -459,8 +459,7 @@
                     console.error(error);
                 }
             });
-        }
-
+        }        
 
         function deleteItem(parentElement) {
             const productId = parentElement.querySelector('[name="product_id"]').value;
@@ -474,6 +473,7 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.success) {
+                      updateCartCounts(response.cartCount, response.grandTotal);
                         // Item deleted successfully, you can handle the response as needed
                         console.log(response.success);
                         // Optionally, you can remove the HTML element corresponding to the deleted item from the DOM
@@ -489,6 +489,13 @@
                 }
             });
         }
+
+        function updateCartCounts(singleTotal, grandTotal) {
+            // Update cart product count and grand total in the HTML
+            $('.cart-count').text(singleTotal);
+            $('.grand-total').text(grandTotal);
+        }
+
     </script>
     <!-- <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"

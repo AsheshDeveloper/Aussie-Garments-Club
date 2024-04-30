@@ -84,15 +84,25 @@ if (isset($_POST['action']) && isset($_POST['product_id'])) {
         case 'update':
             // Check if the quantity parameter is provided
             if (isset($_POST['quantity'])) {
-                $quantity = intval($_POST['quantity']);
-
+                $quantity = intval($_POST['quantity']);                
+                $product_id = $_POST['product_id'];
                 // Update cart item quantity
-                $update_query = "UPDATE cart SET Quantity = $quantity WHERE ProductID = '$product_id'";
+                $update_query = "UPDATE cart 
+                                    INNER JOIN product ON cart.ProductID = product.ProductID 
+                                    SET cart.Quantity = $quantity,
+                                        cart.TotalAmount = cart.Price * $quantity
+                                    WHERE cart.ProductID = '$product_id'";
                 $result = mysqli_query($connect, $update_query);
 
                 if ($result) {
+                    // Calculate total amount for all items in the cart
+                    $total_amount_query = "SELECT SUM(TotalAmount) AS total_amount, totalAmount FROM cart";
+                    $total_amount_result = mysqli_query($connect, $total_amount_query);
+                    $total_amount_row = mysqli_fetch_assoc($total_amount_result);
+                    $single_total = $total_amount_row['totalAmount'];
+                    $total_amount = $total_amount_row['total_amount'];
                     // Cart item updated successfully
-                    echo json_encode(array("success" => "Cart updated successfully"));
+                    echo json_encode(array("success" => "Cart updated successfully","singleTotal" => $single_total ,"grandTotal" => $total_amount));
                 } else {
                     // Error updating cart item
                     echo json_encode(array("error" => "Failed to update cart"));
@@ -110,7 +120,13 @@ if (isset($_POST['action']) && isset($_POST['product_id'])) {
 
             if ($result) {
                 // Cart item deleted successfully
-                echo json_encode(array("success" => "Cart item deleted successfully"));
+                // Calculate total amount after deleting the cart item
+                $total_amount_query = "SELECT SUM(Price * Quantity) AS total_amount FROM cart";
+                $total_amount_result = mysqli_query($connect, $total_amount_query);
+                $total_amount_row = mysqli_fetch_assoc($total_amount_result);
+                $total_amount = $total_amount_row['total_amount'];
+                // Cart item deleted successfully
+                echo json_encode(array("success" => "Cart item deleted successfully", "grandTotal" => $total_amount));
             } else {
                 // Error deleting cart item
                 echo json_encode(array("error" => "Failed to delete cart item"));
