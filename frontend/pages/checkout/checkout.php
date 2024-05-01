@@ -307,14 +307,28 @@
             </div>
           </div>
         </div>
-
+        <?php
+        $paypalUrl='https://www.sandbox.paypal.com/cgi-bin/webscr';
+	$paypalId='sb-x2ojv29990908@personal.example.com';
+?>
         <!-- Total Section -->
         <div class="col-md-4">
           <div class="card">
             <div class="card-body">
               <div class="d-grid col">
-                <a href="./congrats.html" class="btn btn-primary px-5 py-2">Place your order</a>
-                <small class="mt-2 text-justify">
+              <form action="<?php echo $paypalUrl; ?>" method="post" name="frmPayPal1">
+                  <div class="panel price panel-red">
+                        <input type="hidden" name="business" value="<?php echo $paypalId; ?>">
+                        <input type="hidden" name="cmd" value="_xclick">
+                        <input type="hidden" name="item_name" value="Aussie-Garments-Club">
+                        <input type="hidden" name="item_number" value="2">
+                        <input type="hidden" name="amount" value="20">
+                        <input type="hidden" name="no_shipping" value="1">
+                        <input type="hidden" name="currency_code" value="USD">
+                        <input type="hidden" name="cancel_return" value="http://localhost/Aussie-Garments-Club/frontend/index.php">
+                        <input type="hidden" name="return" value="http://localhost/Aussie-Garments-Club/frontend/payment_integration/success.php">  
+                    <div class="panel-footer">
+                      <button class="btn btn-primary px-5 py-2">Place your order</button>                <small class="mt-2 text-justify">
                   By placing your order, you agree to Aussie's garment Conditions of Use & Sale, and Return Policy. Please read our
                   <a href="#" style="text-decoration: none"> Privacy Notice </a> and our Interest Based Ads Notice.
                 </small>
