@@ -1,4 +1,5 @@
 <?php 
+session_start();
 include '../../php/database_connect.php';
 ?>
 <!DOCTYPE html>
@@ -45,23 +46,31 @@ include '../../php/database_connect.php';
                 </ul>
 
                 <!-- Right side content -->
+                <?php if(empty($_SESSION['username'])){ ?>
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="../Pages/login.html">Login | </a></li>
+                    <li class="nav-item"><a class="nav-link" href="./pages/authentication/login.php">Login | </a></li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../Pages/signup.html">Signup |</a>
+                        <a class="nav-link" href="./pages/authentication/thirdPartySignup.html">Signup |</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Guest</a>
+                        <a class="nav-link" href="./pages/profile/user_profile.html">Guest</a>
                     </li>
                 </ul>
+                <?php } ?>
+                <?php if(!empty($_SESSION['username'])){ ?>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <span class="nav-link">Welcome <?php echo $_SESSION['username'] ?></span>
+                    </li>
+                </ul>
+                <?php } ?>
             </div>
         </nav>
 
         <!-- main nav bar -->
         <nav class="navbar navbar-expand-lg navbar-light bg-none navbar-custom-main">
             <div class="container">
-                <a class="navbar-brand" href="../../index.php"><img src="../../images/AussieGarmentsLogo.svg"
-                        alt="Logo" /></a>
+                <a class="navbar-brand" href="index.html"><img src="./images/AussieGarmentsLogo.svg" alt="Logo" /></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -69,7 +78,7 @@ include '../../php/database_connect.php';
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Product</a>
+                            <a class="nav-link" href="./pages/product/products.html">Product</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Catalog</a>
@@ -81,13 +90,32 @@ include '../../php/database_connect.php';
                             <a class="nav-link" href="#">Site Map</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#">
+                            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                href="./pages/product/products.html">
                                 <i class="fas fa-search"></i>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a>
+                            <a class="nav-link" href="./pages/checkout/cart.php"><i
+                                    class="fas fa-shopping-cart"></i></a>
                         </li>
+                        <?php if(!empty($_SESSION['username'])){ ?>
+                            <li class="nav-item">
+                                <div class="dropdown">
+                                    <a class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton"
+                                        data-bs-toggle="dropdown" aria-expanded="false" href="#">
+                                        <i class="fas fa-user"></i>
+                                    </a>
+
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">                                   
+                                        <li>
+                                            <a class="dropdown-item" href="./Pages/profile/user_profile.html">Profile</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="./pages/authentication/logout.php">Logout</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        <?php } ?>  
                     </ul>
                 </div>
             </div>
@@ -206,7 +234,7 @@ include '../../php/database_connect.php';
 
                         <div class="button-group mt-4">
                             <button type="button" class="btn btn-primary me-3 px-4 py-2">Buy Now</button>
-                            <button type="button" data-id="<?php echo $product_id ?>" name="submit"
+                            <button type="button" data-id="<?php echo $product_id ?>" data-price="<?php echo $price ?>" data-request="<?php echo isset($_SESSION['email']) ? $_SESSION['email'] : 'guest'; ?>" name="submit"
                                 class="btn btn-outline-primary me-4 px-4 py-2 addToCart">Add to Cart</button>
                             </a>
                         </div>
@@ -635,6 +663,8 @@ include '../../php/database_connect.php';
         e.preventDefault();
         let $error = $('#error');
         var product_id = parseInt($(this).data('id'));
+        var price = parseInt($(this).data('price'));
+        var user_request = $(this).data('request');
         if (isNaN(product_id)) {
             return;
         } else {
@@ -644,6 +674,8 @@ include '../../php/database_connect.php';
                 data: {
                     action: 'insert', // Set action to 'insert'
                     product_id: product_id,
+                    price: price,
+                    user_request: user_request,
                     _token: $('[name="csrf-token"]').attr('content'),
                 },
                 success: function(response) {

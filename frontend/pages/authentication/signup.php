@@ -1,4 +1,5 @@
 <?php 
+session_start();
 include '../../php/auth/auth_signup.php'; 
 ?>
 <!DOCTYPE html>
@@ -208,8 +209,7 @@ include '../../php/auth/auth_signup.php';
                                     </div>
                                 </div>
                                 <small class="mb-5 d-flex align-items-center justify-content-between"> </small>
-                                <a href="./verification.html" type="submit" name="submit"
-                                    class="btn btn-primary w-100 p-2 mb-3">Signin</a>
+                                <button type="submit" name="submit" class="btn btn-primary w-100 p-2 mb-3">Signin</button>
                                 <a href="" class="mb-5 mt-5 google-login">
                                     <img class="google-icon" src="../../images/assets/google ICon.png"
                                         alt="Google Logo" />
