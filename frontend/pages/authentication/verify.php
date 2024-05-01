@@ -1,6 +1,8 @@
 <?php 
 session_start();
-include '../../php/auth/auth_signup.php'; 
+
+include __DIR__ .'../../php/auth/auth_login.php'; 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -132,89 +134,31 @@ include '../../php/auth/auth_signup.php';
                 <div class="col-md-5 mx-auto">
                     <div class="card shadowed-card p-4 mt-5 mb-5">
                         <div class="card-body text-center">
-                            <img src="../../images/AussieGarmentsLogo.svg" alt="Logo" />
-                            <h4 class="mt-3 text-primary">Finally Here!</h4>
-                            <small class="text-muted">Create a account to get a stylish product.</small>
-                            <form class="mt-5 mb-5" action="" method="post">
-                                <?php if(isset($errors)) { 
-                    foreach($errors as $error){ ?>
-                                <div class="alert alert-danger" role="alert">
-                                    <?=$error ?>
-                                </div>
-                                <?php } } ?>
-                                <div class="mb-4">
-                                    <div class="d-flex align-items-left">
-                                        <label class="form-check-label mb-1" for="first_name">First Name <span
-                                                class="text-danger">*</span></label>
-                                    </div>
-                                    <input type="text" class="form-control" name="first_name" id="first_name"
-                                        placeholder="eg: Harry" required />
-                                </div>
-                                <div class="mb-4">
-                                    <div class="d-flex align-items-left">
-                                        <label class="form-check-label mb-1" for="middle_name">Middle Name</label>
-                                    </div>
-                                    <input type="text" class="form-control" name="middle_name" id="middle_name"
-                                        placeholder="eg: Harry" />
-                                </div>
-                                <div class="mb-4">
-                                    <div class="d-flex align-items-left">
-                                        <label class="form-check-label mb-1" for="last_name">Last Name <span
-                                                class="text-danger">*</span></label>
-                                    </div>
-                                    <input type="text" class="form-control" name="last_name" id="last_name"
-                                        placeholder="eg: jaggard" required />
-                                </div>
-                                <div class="mb-4">
-                                    <div class="d-flex align-items-left">
-                                        <label class="form-check-label mb-1" for="contact">Contact Number<span
-                                                class="text-danger">*</span></label>
-                                    </div>
-                                    <input type="text" class="form-control" name="contact" id="contact"
-                                        placeholder="eg: +6189876756" required />
-                                </div>
-                                <div class="mb-4">
-                                    <div class="d-flex align-items-left">
-                                        <label class="form-check-label mb-1" for="email"> Email <span
-                                                class="text-danger">*</span></label>
-                                    </div>
-                                    <input type="email" class="form-control" name="email" id="email"
-                                        placeholder="eg: someone@somthing.com" required />
-                                </div>
+                            <h4 class="mt-3 text-primary">Verification Code</h4>
+                            <small class="text-muted">Enter your Verification Code.</small>
+                            <form class="mt-5 mb-5">
                                 <div class="mb-3">
                                     <div class="d-flex align-items-left">
-                                        <label class="form-check-label mb-1" for="password">Password<span
+                                        <label class="form-check-label mb-1" for="code"> Verification Code<span
                                                 class="text-danger">*</span></label>
                                     </div>
                                     <div class="input-group">
-                                        <input type="password" class="form-control" name="password" id="password"
-                                            placeholder="**********" required />
-                                        <a class="btn btn-outline-secondary" class="btn" id="showPassword"><i
-                                                class="far fa-eye"></i></a>
+                                        <input type="text" class="form-control" name="code" id="code"
+                                            placeholder="eg - 1232141" required />
+                                        <button class="btn btn-outline-secondary" type="button"
+                                            id="toggleConfirmPassword">
+                                            <i class="fa fa-refresh"></i>
+                                        </button>
+                                    </div>
+                                    <div class="d-flex align-items-left mt-1">
+                                        <small class=" ">click the button the the side to send the code again</small>
                                     </div>
                                 </div>
 
-                                <div class="mb-3">
-                                    <div class="d-flex align-items-left">
-                                        <label class="form-check-label mb-1" for="password">Confirm Password<span
-                                                class="text-danger">*</span></label>
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="password" class="form-control" name="confirm_password"
-                                            id="password1" placeholder="**********" required />
-                                        <a class="btn btn-outline-secondary" class="btn" id="showPassword1"><i
-                                                class="far fa-eye"></i></a>
-                                    </div>
-                                </div>
-
-
-                                <small class="mb-5 d-flex align-items-center justify-content-between"> </small>
-                                <button type="submit" name="submit"
-                                    class="btn btn-primary w-100 p-2 mb-3">Signup</button>
-
+                                <a href="../../index.php" type="submit"
+                                    class="btn btn-primary w-100 p-2 mt-4 mb-2">Verify Code</a>
+                                <small class="">Try another way? <a href="./verification.html">CLick Me</a></small>
                             </form>
-                            <small class="mt-5">Already Have an account? <a href="login.php">Log
-                                    In</a></small>
                         </div>
                     </div>
                 </div>
@@ -294,39 +238,6 @@ include '../../php/auth/auth_signup.php';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
-
-
-    <!-- password button visible -->
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const showPasswordButton = document.getElementById("showPassword");
-        const showPasswordButton1 = document.getElementById("showPassword1");
-
-        showPasswordButton.addEventListener("click", function() {
-            togglePasswordVisibility("password", this);
-        });
-
-        showPasswordButton1.addEventListener("click", function() {
-            togglePasswordVisibility("password1", this);
-        });
-
-        function togglePasswordVisibility(inputId, button) {
-            const input = document.getElementById(inputId);
-
-            if (input.type === "password") {
-                input.type = "text";
-                button.innerHTML = '<i class="far fa-eye-slash"></i>';
-            } else {
-                input.type = "password";
-                button.innerHTML = '<i class="far fa-eye"></i>';
-            }
-        }
-    });
-    </script>
-
-
-
-
 </body>
 
 </html>

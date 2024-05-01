@@ -1,4 +1,3 @@
-
 <?php 
 if(isset($_POST['submit'])){
     // Connect to the database 
@@ -26,7 +25,7 @@ if(isset($_POST['submit'])){
             mysqli_query($connect, $insert);
             $_SESSION['username'] = $first_name;
             $SESSION['email'] = $email;
-            header("Location: ../../index.php");
+            header("Location: ../../pages/authentication/verification.php");
         }
     }
 }

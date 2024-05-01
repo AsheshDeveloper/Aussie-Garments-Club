@@ -100,22 +100,23 @@ include '../../php/database_connect.php';
                                     class="fas fa-shopping-cart"></i></a>
                         </li>
                         <?php if(!empty($_SESSION['username'])){ ?>
-                            <li class="nav-item">
-                                <div class="dropdown">
-                                    <a class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton"
-                                        data-bs-toggle="dropdown" aria-expanded="false" href="#">
-                                        <i class="fas fa-user"></i>
-                                    </a>
+                        <li class="nav-item">
+                            <div class="dropdown">
+                                <a class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false" href="#">
+                                    <i class="fas fa-user"></i>
+                                </a>
 
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">                                   
-                                        <li>
-                                            <a class="dropdown-item" href="./Pages/profile/user_profile.html">Profile</a>
-                                        </li>
-                                        <li><a class="dropdown-item" href="./pages/authentication/logout.php">Logout</a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                        <?php } ?>  
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <li>
+                                        <a class="dropdown-item" href="./Pages/profile/user_profile.html">Profile</a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="./pages/authentication/logout.php">Logout</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <?php } ?>
                     </ul>
                 </div>
             </div>
@@ -234,8 +235,10 @@ include '../../php/database_connect.php';
 
                         <div class="button-group mt-4">
                             <button type="button" class="btn btn-primary me-3 px-4 py-2">Buy Now</button>
-                            <button type="button" data-id="<?php echo $product_id ?>" data-price="<?php echo $price ?>" data-request="<?php echo isset($_SESSION['email']) ? $_SESSION['email'] : 'guest'; ?>" name="submit"
-                                class="btn btn-outline-primary me-4 px-4 py-2 addToCart">Add to Cart</button>
+                            <button type="button" data-id="<?php echo $product_id ?>" data-price="<?php echo $price ?>"
+                                data-request="<?php echo isset($_SESSION['email']) ? $_SESSION['email'] : 'guest'; ?>"
+                                name="submit" class="btn btn-outline-primary me-4 px-4 py-2 addToCart">Add to
+                                Cart</button>
                             </a>
                         </div>
                         <!-- add to cart placeholder -->

@@ -155,15 +155,14 @@ include '../../php/auth/auth_login.php';
                                 </div>
                                 <div class="mb-3">
                                     <div class="d-flex align-items-left">
-                                        <label class="form-check-label mb-1" for="rememberMe">Password <span
+                                        <label class="form-check-label mb-1" for="password">Password<span
                                                 class="text-danger">*</span></label>
                                     </div>
                                     <div class="input-group">
                                         <input type="password" class="form-control" name="password" id="password"
                                             placeholder="**********" required />
-                                        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </button>
+                                        <a class="btn btn-outline-secondary" class="btn" id="showPassword"><i
+                                                class="far fa-eye"></i></a>
                                     </div>
                                 </div>
                                 <small class="mb-5 d-flex align-items-center justify-content-between">
@@ -173,9 +172,10 @@ include '../../php/auth/auth_login.php';
                                     </div>
                                     <a href="#" class="">Forgot Password?</a>
                                 </small>
-                                <button type="submit" name="submit" type="name" class="btn btn-primary w-100 p-2 mb-3">Login</button>
+                                <button type="submit" name="submit" type="name"
+                                    class="btn btn-primary w-100 p-2 mb-3">Login</button>
                                 <a href="facebook_oauth.php" class="mb-5 mt-5 google-login">
-                                    <img class="google-icon" src="../../images/assets/google ICon.png"
+                                    <img class="google-icon" src="../../images/assets/facebook-logo.png"
                                         alt="Google Logo" />
                                     Login with Facebook
                                 </a>
@@ -261,20 +261,30 @@ include '../../php/auth/auth_login.php';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
-    <!-- <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
-      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-      crossorigin="anonymous"
-    ></script> -->
 
     <!-- password button visible -->
+
+
     <script>
-    document.getElementById("togglePassword").addEventListener("click", function() {
-        const passwordInput = document.querySelector("#inputPassword");
-        const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
-        passwordInput.setAttribute("type", type);
-        this.querySelector("i").classList.toggle("bi-eye");
-        this.querySelector("i").classList.toggle("bi-eye-slash");
+    document.addEventListener("DOMContentLoaded", function() {
+        const showPasswordButton = document.getElementById("showPassword");
+        const showPasswordButton1 = document.getElementById("showPassword1");
+
+        showPasswordButton.addEventListener("click", function() {
+            togglePasswordVisibility("password", this);
+        });
+
+        function togglePasswordVisibility(inputId, button) {
+            const input = document.getElementById(inputId);
+
+            if (input.type === "password") {
+                input.type = "text";
+                button.innerHTML = '<i class="far fa-eye-slash"></i>';
+            } else {
+                input.type = "password";
+                button.innerHTML = '<i class="far fa-eye"></i>';
+            }
+        }
     });
     </script>
 

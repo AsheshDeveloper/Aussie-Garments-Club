@@ -343,3 +343,8 @@ footer hr {
 .checkout-modal-add-payment a {
   text-decoration: none;
 }
+
+.checkout-delivery-radio {
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+}
