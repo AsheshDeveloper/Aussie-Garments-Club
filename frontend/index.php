@@ -6,152 +6,30 @@ require_once("php/database_connect.php");
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <!-- Fontawesome icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <!-- custom font -->
-    <style>
-    @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
-    </style>
-
-    <!-- Bootstrap CSS -->
-    <!-- <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-      crossorigin="anonymous"
-    /> -->
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <!-- header section include -->
+    <?php 
+        include './includes/head_section.html';
+    ?>
     <!-- app icon -->
     <link rel="icon" href="./images/favicon.png" />
     <!-- custom css -->
     <link rel="stylesheet" href="./assets/style.css" />
-
-    <title>Aussie Garments</title>
 </head>
 
 <body>
     <!-- navigation  -->
-    <!-- top navigation -->
     <nav class="nav-wrapper">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom-top">
-            <div class="container">
-                <!-- Left side content -->
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <span class="nav-link phone-number">+610403876990 | </span>
-                    </li>
-                    <li class="nav-item">
-                        <span class="nav-link">info@aussiegarments.com.au</span>
-                    </li>
-                </ul>
-
-                <!-- Right side content -->
-                <?php if(empty($_SESSION['username'])){ ?>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="./pages/authentication/login.php">Login | </a></li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./pages/authentication/thirdPartySignup.html">Signup |</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./pages/profile/user_profile.html">Guest</a>
-                    </li>
-                </ul>
-                <?php } ?>
-                <?php if(!empty($_SESSION['username'])){ ?>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <span class="nav-link">Welcome <?php echo $_SESSION['username'] ?></span>
-                    </li>
-                </ul>
-                <?php } ?>
-            </div>
-        </nav>
-
+        <!-- top navigation -->
+        <?php 
+        include './includes/nav_top.php';
+    ?>
         <!-- main nav bar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-none navbar-custom-main">
-            <div class="container">
-                <a class="navbar-brand" href="index.html"><img src="./images/AussieGarmentsLogo.svg" alt="Logo" /></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="./pages/product/products.html">Product</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Catalog</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Site Map</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                href="./pages/product/products.html">
-                                <i class="fas fa-search"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./pages/checkout/cart.php"><i
-                                    class="fas fa-shopping-cart"></i></a>
-                        </li>
-                        <?php if(!empty($_SESSION['username'])){ ?>
-                            <li class="nav-item">
-                                <div class="dropdown">
-                                    <a class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton"
-                                        data-bs-toggle="dropdown" aria-expanded="false" href="#">
-                                        <i class="fas fa-user"></i>
-                                    </a>
+        <?php 
+        include './includes/nav_main.php';
+    ?>
 
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">                                   
-                                        <li>
-                                            <a class="dropdown-item" href="./Pages/profile/user_profile.html">Profile</a>
-                                        </li>
-                                        <li><a class="dropdown-item" href="./pages/authentication/logout.php">Logout</a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                        <?php } ?>  
-                    </ul>
-                </div>
-            </div>
-        </nav>
     </nav>
 
-    <!-- modal for search -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Search</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="enter to search...."
-                                id="recipient-name" />
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary modalButton">Search</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="container-fluid">
         <!-- slider area -->
@@ -407,7 +285,7 @@ require_once("php/database_connect.php");
 
         <?php
         // Include footer
-        include 'footer.php';
+        include './includes/footer.php';
     ?>
 </body>
 
