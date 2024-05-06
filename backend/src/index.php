@@ -1,3 +1,13 @@
+<?php
+session_start();
+// Check if user is already logged in
+if (!isset($_SESSION["username"])) {
+    $_SESSION["error"] = 'Please login!!';
+    header("Location: ../../frontend/pages/authentication/login.php", true, 301); // Redirect to login page
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>

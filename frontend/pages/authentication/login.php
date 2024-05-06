@@ -3,6 +3,11 @@ session_start();
 
 include '../../php/auth/auth_login.php'; 
 
+if (isset($_SESSION["error"])) {
+    echo '<script>alert("' . $_SESSION["error"] . '");</script>'; // Display alert
+    unset($_SESSION["error"]); // Clear the error message from session
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
