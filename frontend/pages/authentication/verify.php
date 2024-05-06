@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-include __DIR__ .'../../php/auth/auth_login.php'; 
+include '../../php/auth/auth_login.php'; 
 
 ?>
 <!DOCTYPE html>
