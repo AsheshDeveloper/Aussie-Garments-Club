@@ -86,17 +86,18 @@ if (isset($_POST['action']) && isset($_POST['product_id'])) {
             if (isset($_POST['quantity'])) {
                 $quantity = intval($_POST['quantity']);                
                 $product_id = $_POST['product_id'];
+                $user = $_POST['user'];
                 // Update cart item quantity
                 $update_query = "UPDATE cart 
                                     INNER JOIN product ON cart.ProductID = product.ProductID 
                                     SET cart.Quantity = $quantity,
                                         cart.TotalAmount = cart.Price * $quantity
-                                    WHERE cart.ProductID = '$product_id'";
+                                    WHERE cart.ProductID = '$product_id' AND cart.UserID = '$user'";
                 $result = mysqli_query($connect, $update_query);
 
                 if ($result) {
                     // Calculate total amount for all items in the cart
-                    $total_amount_query = "SELECT SUM(TotalAmount) AS total_amount, totalAmount FROM cart";
+                    $total_amount_query = "SELECT SUM(TotalAmount) AS total_amount, totalAmount FROM cart WHERE UserID = '$user'";
                     $total_amount_result = mysqli_query($connect, $total_amount_query);
                     $total_amount_row = mysqli_fetch_assoc($total_amount_result);
                     $single_total = $total_amount_row['totalAmount'];
@@ -115,13 +116,15 @@ if (isset($_POST['action']) && isset($_POST['product_id'])) {
         
         case 'delete':
             // Delete cart item
-            $delete_query = "DELETE FROM cart WHERE ProductID = '$product_id'";
+            $product_id = $_POST['product_id'];
+            $user = $_POST['user'];
+            $delete_query = "DELETE FROM cart WHERE ProductID = '$product_id' AND UserID = '$user'";
             $result = mysqli_query($connect, $delete_query);
 
             if ($result) {
                 // Cart item deleted successfully
                 // Calculate total amount after deleting the cart item
-                $total_amount_query = "SELECT SUM(Price * Quantity) AS total_amount FROM cart";
+                $total_amount_query = "SELECT SUM(Price * Quantity) AS total_amount FROM cart WHERE UserID = '$user'";
                 $total_amount_result = mysqli_query($connect, $total_amount_query);
                 $total_amount_row = mysqli_fetch_assoc($total_amount_result);
                 $total_amount = $total_amount_row['total_amount'];
