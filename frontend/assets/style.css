@@ -71,8 +71,9 @@ html {
 /* suggestion container */
 .suggestion-container .row-suggestion-items img {
   border-radius: 20px !important;
-  width: 100%;
-  /* height: %; */
+  width: 360px;
+  height: 190px;
+  object-fit: cover;
   color: var(--primary-text-color, #2e2e2e);
 }
 
@@ -226,6 +227,7 @@ footer hr {
   width: 140px;
   height: 185px;
   cursor: pointer;
+  object-fit: cover;
 }
 .description-container {
   list-style: none !important;
@@ -340,4 +342,9 @@ footer hr {
 /* checkout */
 .checkout-modal-add-payment a {
   text-decoration: none;
+}
+
+.checkout-delivery-radio {
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
 }
