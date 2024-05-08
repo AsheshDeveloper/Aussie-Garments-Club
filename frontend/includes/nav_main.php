@@ -62,8 +62,8 @@
                             <li>
                                 <a class="dropdown-item" href=<?php 
                     echo basename($_SERVER['PHP_SELF']) == 'index.php' ? '
-                    ./Pages/profile/user_profile.html
-                    ' : '../profile/user_profile.html';
+                    ./Pages/profile/user_profile.php
+                    ' : '../profile/user_profile.php';
                     
                     ?>>Profile</a>
                             </li>
