@@ -141,7 +141,28 @@ if (isset($_POST['action']) && isset($_POST['product_id'])) {
             echo json_encode(array("error" => "Invalid action parameter"));
             break;
     }
-} else {
+}else if (isset($_GET['search_query'])){      
+     $search_query = $_GET['search_query'];
+     // Prepare SQL statement
+     $search = "SELECT * FROM product WHERE name LIKE '%$search_query%'"; 
+     // Execute SQL statement
+     $result = $connect->query($search);
+ 
+     // Check if there are any results
+     if ($result->num_rows > 0) {
+        echo "<ul>";
+        while($row = $result->fetch_assoc()) {
+            // Output each search result as a list item
+            echo "<li><a href='./pages/product/product_details.php?id=" . $row['ProductID'] . "'>"  . $row['Name'] . "</a></li>";
+        }
+        echo "</ul>"; 
+     } else {
+         echo "No result found";
+     } 
+     // Close database connection
+     $connect->close(); 
+
+}  else {
     // Missing or invalid parameters
     echo json_encode(array("error" => "Missing or invalid parameters"));
 }

@@ -38,7 +38,7 @@
                     <a class="nav-link" href="#">Site Map</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#">
+                    <a class="nav-link" data-bs-toggle="modal" data-bs-target="#searchModal" href="#">
                         <i class="fas fa-search"></i>
                     </a>
                 </li>
@@ -107,22 +107,23 @@
 </nav>
 
 <!-- modal for search -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Search</h5>
+                <h5 class="modal-title" id="searchModalLabel">Search</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form id="searchForm">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="enter to search...." id="recipient-name" />
+                        <input type="text" class="form-control" placeholder="enter to search...." name="search_query" id="searchQuery" />
                     </div>
+                    <div id="searchResults"></div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary modalButton">Search</button>
+                <button type="button" class="btn btn-primary modalButton" id="searchButton">Search</button>
             </div>
         </div>
     </div>
