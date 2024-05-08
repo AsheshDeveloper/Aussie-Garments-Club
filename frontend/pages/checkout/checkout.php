@@ -1,3 +1,30 @@
+<?php
+session_start();
+if (!isset($_SESSION["username"])) {
+    $_SESSION["error"] = 'Please login!!';
+    header("Location: ../authentication/login.php", true, 301); // Redirect to login page
+    exit();
+}
+require_once("../../php/database_connect.php"); 
+// find authenticated user details
+$findUser = "SELECT * FROM users WHERE email = '{$_SESSION['email']}'";
+$fetchUser = mysqli_query($connect, $findUser);
+$user = null; // Initialize user variable
+if(mysqli_num_rows($fetchUser) > 0){
+    $user = mysqli_fetch_array($fetchUser);
+    $userID = $user['id'];
+}
+
+// Fetch cart data
+$getCart = "SELECT c.*, p.* FROM Cart c INNER JOIN Product p ON c.ProductID = p.ProductID WHERE c.UserID='$userID'";
+$cartData = array(); // Initialize cart data array
+if ($cart = $connect->query($getCart)) {
+    while ($row = $cart->fetch_assoc()) { 
+        $cartData[] = $row;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,7 +59,23 @@
     <div class="container cart-item-container mt-5 mb-5">
         <div class="row">
             <div class="col-md-8">
-                <h5 class="mb-2">Checkout (<span class="text-primary">2 items</span>)</h5>
+            <?php 
+                $count = 0;
+                $grand_total = 0;
+                if ($cartData && $cartData > 0) { 
+                    foreach($cartData as $row) {
+                        $price = array($row['TotalAmount']); 
+                        $count++; 
+                        // Calculate total price
+                        $total = array_sum($price);
+                        $grand_total += $total;
+                    }                      
+                } else {
+                    // Handle case where no rows are returned
+                    $grand_total = 0;
+                }
+              ?>
+                <h5 class="mb-2">Checkout (<span class="text-primary"><?php echo ($count > 1) ? $count.' Items' : $count.' Item'  ?> </span>)</h5>
 
                 <div class="accordion" id="checkoutAccordion">
                     <div class="accordion-item">
@@ -161,49 +204,45 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    <?php                                               
+                                        foreach($cartData as $row) { 
+                                            //product data
+                                            $product_id = $row['ProductID'];
+                                            $product_name = $row['Name'];
+                                            $description = $row['Description'];
+                                            $price = $row['Price'];
+                                            $stock = $row['QuantityInStock'];
+                                            $category = $row['CategoryID'];
+                                            $brand = $row['BrandID'];
+                                            $size = $row['SizeID'];
+                                            $imageOne = $row['ImageOne'];
+                                            //cart data
+                                            $quantity = $row['Quantity'];
+                                            $total_amount = $row['TotalAmount'];
+                                            $user_id = $row['UserID'];
+
+                                        ?>
                                         <tr class="">
                                             <td>
                                                 <img src="../../images/suggestions/suggestion3.png" alt="Product Image"
                                                     class="class-table-image rounded" />
                                             </td>
                                             <td>
-                                                <h6>
-                                                    Men's Sneakers Outdoor Sports Running Casual Shoes Breathable
-                                                    Lightweight Traning Jogging Non-Slip Gym Sneakers
-                                                    (Black, Numeric_9_Point_5)
-                                                </h6>
-                                                <p class="text-success">$40</p>
-
-                                                <div class="col-auto">
-                                                    <button class="btn btn-sm btn-outline-secondary">-</button>
-                                                    <span class="vertical-line">2</span>
-                                                    <button class="btn btn-sm btn-outline-secondary">+</button>
-                                                </div>
+                                                <h5><?php echo $product_name; ?></h6>
+                                                <p>Size:</p>
+                                                <p>Color:</p>
                                             </td>
+                                            <td class="text-success">Price: $ <?php echo $price; ?></td>
+                                            <td class="text-success">Total Price: $ <?php echo $total_amount ?></td>
                                         </tr>
-                                        <tr>
-                                            <td>
-                                                <img src="../../images/suggestions/suggestion3.png" alt="Product Image"
-                                                    class="class-table-image rounded" />
-                                            </td>
-                                            <td>
-                                                <h6>
-                                                    Men's Sneakers Outdoor Sports Running Casual Shoes Breathable
-                                                    Lightweight Traning Jogging Non-Slip Gym Sneakers
-                                                    (Black, Numeric_9_Point_5)
-                                                </h6>
-                                                <p class="text-success">$40</p>
-
-                                                <div class="col-auto">
-                                                    <button class="btn btn-sm btn-outline-secondary">-</button>
-                                                    <span class="vertical-line">2</span>
-                                                    <button class="btn btn-sm btn-outline-secondary">+</button>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        <?php
+                                            } 
+                                        ?>
+                                         
                                     </tbody>
                                 </table>
 
+                                <?php /**  ?>
                                 <div class="row">
                                     <div class="col-4">
                                         <a href="./congrats.html" class="btn btn-primary px-5 py-2">Place
@@ -211,8 +250,8 @@
                                     </div>
                                     <div class="col-8">
                                         <ul style="list-style: none">
-                                            <li><span class="text-primary">Order Toatal:</span> <span
-                                                    class="text-primary">$80</span></li>
+                                            <li><span class="text-primary">Quantity</span> <span class="text-muted"><?php echo $count  ?> Item(s)</span> <span
+                                                    class="text-primary">$ <?php echo $grand_total  ?></span></li>
                                             <li>
                                                 <small class="mt-2 text-justify">
                                                     By placing your order, you agree to Aussie's garment Conditions of
@@ -225,6 +264,7 @@
                                         </ul>
                                     </div>
                                 </div>
+                                <?php */ ?>
                             </div>
                         </div>
                     </div>
@@ -263,6 +303,23 @@
                                         <hr />
                                         <h6>Order Summary</h6>
                                         <div class="description-container">
+                                        <?php 
+                                            $count = 0;
+                                            $grand_total = 0;
+                                            if ($cartData && $cartData > 0) { 
+                                                foreach($cartData as $row) {
+                                                    $price = array($row['TotalAmount']); 
+                                                    $count++; 
+                                                    // Calculate total price
+                                                    $total = array_sum($price);
+                                                    $grand_total += $total;
+                                                }                      
+                                            } else {
+                                                // Handle case where no rows are returned
+                                                $grand_total = 0;
+                                            }
+
+                                        ?>
                                             <ul style="list-style: none">
                                                 <li><span class="">Style</span> <span class="text-muted">Casual</span>
                                                 </li>
@@ -272,10 +329,10 @@
                                                         class="text-muted">Australia</span>
                                                 </li>
                                                 <hr />
-                                                <li><span class="">Quantity</span> <span class="text-muted">2</span>
+                                                <li><span class="">Quantity</span> <span class="text-muted"><?php echo $count  ?> Item(s)</span>
                                                 </li>
-                                                <li><span class="text-primary">Order Toatal:</span> <span
-                                                        class="text-primary">$59.00</span></li>
+                                                <li><span class="text-primary">Order Total:</span> <span
+                                                        class="text-primary">$ <?php echo $grand_total  ?></span></li>
                                             </ul>
                                         </div>
                                         <div class="bg-light mt-3 rounded p-2">

@@ -91,3 +91,25 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
 </script>
+
+<!---Search Query-->
+<script>
+    $(document).ready(function() {
+        $('#searchButton').click(function() {
+            console.log('hi');
+            var baseUrl = '<?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? './php/function/functions.php' : '../../php/function/functions.php'; ?>';
+            var formData = $('#searchForm').serialize(); // Serialize form data
+            
+            // AJAX request to handle search
+            $.ajax({
+                type: 'GET',
+                action: 'search',
+                url: baseUrl,
+                data: formData,
+                success: function(response) {
+                    $('#searchResults').html(response); // Display search results
+                }
+            });
+        });
+    });
+</script>

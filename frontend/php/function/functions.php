@@ -86,17 +86,18 @@ if (isset($_POST['action']) && isset($_POST['product_id'])) {
             if (isset($_POST['quantity'])) {
                 $quantity = intval($_POST['quantity']);                
                 $product_id = $_POST['product_id'];
+                $user = $_POST['user'];
                 // Update cart item quantity
                 $update_query = "UPDATE cart 
                                     INNER JOIN product ON cart.ProductID = product.ProductID 
                                     SET cart.Quantity = $quantity,
                                         cart.TotalAmount = cart.Price * $quantity
-                                    WHERE cart.ProductID = '$product_id'";
+                                    WHERE cart.ProductID = '$product_id' AND cart.UserID = '$user'";
                 $result = mysqli_query($connect, $update_query);
 
                 if ($result) {
                     // Calculate total amount for all items in the cart
-                    $total_amount_query = "SELECT SUM(TotalAmount) AS total_amount, totalAmount FROM cart";
+                    $total_amount_query = "SELECT SUM(TotalAmount) AS total_amount, totalAmount FROM cart WHERE UserID = '$user'";
                     $total_amount_result = mysqli_query($connect, $total_amount_query);
                     $total_amount_row = mysqli_fetch_assoc($total_amount_result);
                     $single_total = $total_amount_row['totalAmount'];
@@ -115,13 +116,15 @@ if (isset($_POST['action']) && isset($_POST['product_id'])) {
         
         case 'delete':
             // Delete cart item
-            $delete_query = "DELETE FROM cart WHERE ProductID = '$product_id'";
+            $product_id = $_POST['product_id'];
+            $user = $_POST['user'];
+            $delete_query = "DELETE FROM cart WHERE ProductID = '$product_id' AND UserID = '$user'";
             $result = mysqli_query($connect, $delete_query);
 
             if ($result) {
                 // Cart item deleted successfully
                 // Calculate total amount after deleting the cart item
-                $total_amount_query = "SELECT SUM(Price * Quantity) AS total_amount FROM cart";
+                $total_amount_query = "SELECT SUM(Price * Quantity) AS total_amount FROM cart WHERE UserID = '$user'";
                 $total_amount_result = mysqli_query($connect, $total_amount_query);
                 $total_amount_row = mysqli_fetch_assoc($total_amount_result);
                 $total_amount = $total_amount_row['total_amount'];
@@ -138,7 +141,28 @@ if (isset($_POST['action']) && isset($_POST['product_id'])) {
             echo json_encode(array("error" => "Invalid action parameter"));
             break;
     }
-} else {
+}else if (isset($_GET['search_query'])){      
+     $search_query = $_GET['search_query'];
+     // Prepare SQL statement
+     $search = "SELECT * FROM product WHERE name LIKE '%$search_query%'"; 
+     // Execute SQL statement
+     $result = $connect->query($search);
+ 
+     // Check if there are any results
+     if ($result->num_rows > 0) {
+        echo "<ul>";
+        while($row = $result->fetch_assoc()) {
+            // Output each search result as a list item
+            echo "<li><a href='./pages/product/product_details.php?id=" . $row['ProductID'] . "'>"  . $row['Name'] . "</a></li>";
+        }
+        echo "</ul>"; 
+     } else {
+         echo "No result found";
+     } 
+     // Close database connection
+     $connect->close(); 
+
+}  else {
     // Missing or invalid parameters
     echo json_encode(array("error" => "Missing or invalid parameters"));
 }

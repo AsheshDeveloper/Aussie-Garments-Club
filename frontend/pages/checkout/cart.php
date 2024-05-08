@@ -1,4 +1,29 @@
 <?php
+session_start();
+if (!isset($_SESSION["username"])) {
+    $_SESSION["error"] = 'Please login!!';
+    header("Location: ../authentication/login.php", true, 301); // Redirect to login page
+    exit();
+}
+require_once("../../php/database_connect.php"); 
+// find authenticated user details
+$findUser = "SELECT * FROM users WHERE email = '{$_SESSION['email']}'";
+$fetchUser = mysqli_query($connect, $findUser);
+$user = null; // Initialize user variable
+if(mysqli_num_rows($fetchUser) > 0){
+    $user = mysqli_fetch_array($fetchUser);
+    $userID = $user['id'];
+}
+
+// Fetch cart data
+$getCart = "SELECT c.*, p.* FROM Cart c INNER JOIN Product p ON c.ProductID = p.ProductID WHERE c.UserID='$userID'";
+$cartData = array(); // Initialize cart data array
+if ($cart = $connect->query($getCart)) {
+    while ($row = $cart->fetch_assoc()) { 
+        $cartData[] = $row;
+    }
+}
+
 require_once "../../php/database_connect.php";
 ?>
 
@@ -50,39 +75,25 @@ require_once "../../php/database_connect.php";
                         </tr>
                     </thead>
                     <tbody>
-                        <?php               
-              $getCart = "SELECT c.*, p.* FROM Cart c INNER JOIN Product p ON c.ProductID = p.ProductID";                     
-              if ($cart = $connect->query($getCart)) {
+                        <?php  
+                        if($cartData && $cartData >0){      
+                            foreach($cartData as $row) { 
+                                //product data
+                                $product_id = $row['ProductID'];
+                                $product_name = $row['Name'];
+                                $description = $row['Description'];
+                                $price = $row['Price'];
+                                $stock = $row['QuantityInStock'];
+                                $category = $row['CategoryID'];
+                                $brand = $row['BrandID'];
+                                $size = $row['SizeID'];
+                                $imageOne = $row['ImageOne'];
+                                //cart data
+                                $quantity = $row['Quantity'];
+                                $total_amount = $row['TotalAmount'];
+                                $user_id = $row['UserID'];
 
-                /**
-                  $productIDs = array(); // Initialize an array to store product IDs                        
-                  while ($r = $cart->fetch_assoc()) {
-                      $productIDs[] = $r['ProductID']; // Store the ProductID from each row
-                  }                        
-                  // Construct the IN clause for the query
-                  $inClause = implode(',', $productIDs);                    
-                  // Build the query to fetch products based on the retrieved IDs
-                  $fetch = "SELECT * FROM Product WHERE ProductID IN ($inClause)"; 
-                  $result = $connect ->query($fetch);
-                */
-
-                                      
-                  while ($row = $cart -> fetch_assoc()) { 
-                      //product data
-                      $product_id = $row['ProductID'];
-                      $product_name = $row['Name'];
-                      $description = $row['Description'];
-                      $price = $row['Price'];
-                      $stock = $row['QuantityInStock'];
-                      $category = $row['CategoryID'];
-                      $brand = $row['BrandID'];
-                      $size = $row['SizeID'];
-                      $imageOne = $row['ImageOne'];
-                      //cart data
-                      $quantity = $row['Quantity'];
-                      $total_amount = $row['TotalAmount'];
-
-            ?>
+                        ?>
                         <tr class="">
                             <td><input type="checkbox" /></td>
                             <td>
@@ -97,6 +108,7 @@ require_once "../../php/database_connect.php";
                                 <p>Color:</p>
                                 <div class="col-auto">
                                     <input type="text" name="product_id" value="<?php echo $product_id ?>" hidden>
+                                    <input type="text" name="request" value="<?php echo $user_id ?>" hidden>
                                     <button class="btn btn-sm btn-outline-secondary decrease-quantity">-</button>
                                     <span class="vertical-line quantity"><?php echo $quantity ?></span>
                                     <button class="btn btn-sm btn-outline-secondary increase-quantity">+</button>
@@ -133,10 +145,8 @@ require_once "../../php/database_connect.php";
                         <?php 
                 $count = 0;
                 $grand_total = 0;
-                $getCart = "SELECT c.*, p.* FROM Cart c INNER JOIN Product p ON c.ProductID = p.ProductID";
-                $result = $connect->query($getCart);
-                if ($result && $result->num_rows > 0) { 
-                    while ($row = $result->fetch_array()) {
+                if ($cartData && $cartData > 0) { 
+                    foreach($cartData as $row) {
                         $price = array($row['TotalAmount']); 
                         $count++; 
                         // Calculate total price
@@ -249,6 +259,7 @@ require_once "../../php/database_connect.php";
         const quantityElement = parentElement.querySelector('.quantity');
         let currentQuantity = parseInt(quantityElement.textContent);
         const productId = parentElement.querySelector('[name="product_id"]').value;
+        const userId = parentElement.querySelector('[name="request"]').value;
 
         if (parentElement.contains(event.target) && event.target.classList.contains('decrease-quantity')) {
             // Check if the current quantity is already 1
@@ -267,7 +278,8 @@ require_once "../../php/database_connect.php";
             data: {
                 action: 'update', // Set action to 'update'
                 product_id: productId,
-                quantity: newQuantity
+                quantity: newQuantity,
+                user: userId,
             },
             dataType: 'json',
             success: function(response) {
@@ -289,12 +301,15 @@ require_once "../../php/database_connect.php";
 
     function deleteItem(parentElement) {
         const productId = parentElement.querySelector('[name="product_id"]').value;
+        const userId = parentElement.querySelector('[name="request"]').value;
+
         $.ajax({
             url: '../../php/function/functions.php',
             method: 'POST',
             data: {
                 action: 'delete', // Set action to 'delete'
-                product_id: productId
+                product_id: productId,
+                user:userId,
             },
             dataType: 'json',
             success: function(response) {
