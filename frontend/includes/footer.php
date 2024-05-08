@@ -97,13 +97,14 @@
     $(document).ready(function() {
         $('#searchButton').click(function() {
             console.log('hi');
+            var baseUrl = '<?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? './php/function/functions.php' : '../../php/function/functions.php'; ?>';
             var formData = $('#searchForm').serialize(); // Serialize form data
             
             // AJAX request to handle search
             $.ajax({
                 type: 'GET',
                 action: 'search',
-                url: './php/function/functions.php',
+                url: baseUrl,
                 data: formData,
                 success: function(response) {
                     $('#searchResults').html(response); // Display search results
