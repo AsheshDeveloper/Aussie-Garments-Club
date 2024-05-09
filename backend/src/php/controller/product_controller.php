@@ -5,6 +5,7 @@ if(isset($_POST['create'])){
     $description = mysqli_real_escape_string($connect, $_POST['description']);
     $price = mysqli_real_escape_string($connect, $_POST['price']);
     $stock = mysqli_real_escape_string($connect, $_POST['stock_quantity']);
+    $main_category = mysqli_real_escape_string($connect, $_POST['main_category']);
     $category = mysqli_real_escape_string($connect, $_POST['category']);
     $brand = mysqli_real_escape_string($connect, $_POST['brand']);
     $size = mysqli_real_escape_string($connect, $_POST['size']);
@@ -30,7 +31,7 @@ if(isset($_POST['create'])){
         move_uploaded_file($tmp_image_two,"./images/$image_two");
         move_uploaded_file($tmp_image_three,"./images/$image_three");
 
-        $insert = "INSERT INTO product(name, description,price,quantityInStock,categoryID,brandID,sizeID,imageOne,imageTwo,imageThree) VALUES('$product_name', '$description', '$price', '$stock', '$category', '$brand', '$size', '$image_one', '$image_two', '$image_three')";
+        $insert = "INSERT INTO product(name, description,price,quantityInStock,mainCategory,categoryID,brandID,sizeID,imageOne,imageTwo,imageThree) VALUES('$product_name', '$description', '$price', '$stock','$main_category' ,'$category', '$brand', '$size', '$image_one', '$image_two', '$image_three')";
         mysqli_query($connect, $insert);
         $success[] = "product created!";
         header("Location: product.php");     
@@ -42,10 +43,11 @@ if(isset($_POST['create'])){
     $description = mysqli_real_escape_string($connect, $_POST['description']);
     $price = mysqli_real_escape_string($connect, $_POST['price']);
     $stock = mysqli_real_escape_string($connect, $_POST['stock_quantity']);
+    $main_category = mysqli_real_escape_string($connect, $_POST['main_category']);
     $category = mysqli_real_escape_string($connect, $_POST['category']);
     $brand = mysqli_real_escape_string($connect, $_POST['brand']);
     $size = mysqli_real_escape_string($connect, $_POST['size']);    
-    $update = "UPDATE product SET `productName`='$product_name', `description`='$description',`price`='$price',`quntityInStock`='$stock',`categoryID`='$category',`brandID`='$brand',`sizeID`='$size', WHERE productID = $id"; 
+    $update = "UPDATE product SET `productName`='$product_name', `description`='$description',`price`='$price',`quntityInStock`='$stock',`mainCategory`='$main_category',`categoryID`='$category',`brandID`='$brand',`sizeID`='$size', WHERE productID = $id"; 
     if(mysqli_query($connect, $update)){
 
         $success[] = "product updated!";     

@@ -222,19 +222,21 @@ include '../../php/controller/product_controller.php';
                   </div>
                   <div class="d-sm-flex justify-content-between align-items-start">
                   <?php 
-            require_once "../../php/database_connect.php";
-            $sql_query = "SELECT * FROM product WHERE productID = ".$_GET["id"];
-            if ($result = $connect ->query($sql_query)) {
-                while ($row = $result -> fetch_assoc()) { 
-                    $product_id = $row['ProductID'];
-                    $product_name = $row['Name'];
-                    $description = $row['Description'];
-                    $price = $row['Price'];
-                    $stock = $row['QuantityInStock'];
-                    $category = $row['CategoryID'];
-                    $brand = $row['BrandID'];
-                    $size = $row['SizeID'];
-        ?>
+                      require_once "../../php/database_connect.php";
+                      $sql_query = "SELECT * FROM product WHERE productID = ".$_GET["id"];
+                      if ($result = $connect ->query($sql_query)) {
+                          while ($row = $result -> fetch_assoc()) { 
+                              $product_id = $row['ProductID'];
+                              $product_name = $row['Name'];
+                              $description = $row['Description'];
+                              $price = $row['Price'];
+                              $main_category = $row['MainCategory'];
+                              $stock = $row['QuantityInStock'];
+                              $category = $row['CategoryID'];
+                              $brand = $row['BrandID'];
+                              $size = $row['SizeID'];                                                            
+
+                  ?>
         <form class="border shadow p-3 rounded" style="width:450px;" action="" method="post" >
         <h1 class="text-center p-3">Edit product </h1>
             <?php if(isset($errors)) { 
@@ -266,6 +268,19 @@ include '../../php/controller/product_controller.php';
                 <input type="text" class="form-control" name="stock_quantity" id="stock_quantity" required value="<?php echo $stock ?>"> 
             </div> 
             <div class="mb-3">  
+            <select class="form-select" aria-label="Select the main category" name="main_category">
+              <?php
+                $arr = ["men" =>"Men", "women" =>"Women", "children" =>"Children" ];
+                foreach ($arr as $a => $b){
+                  if($a == $main_category){
+                      echo "<option value='{$a}' selected >$b</option>";
+                  }else{
+                      echo "<option value='{$a}' >$b</option>";
+                  }
+
+                }
+              ?>                
+            </select> 
             <select class="form-select" aria-label="Select a category" name="category">
                 <option selected>Select a category</option>
                 <?php 
