@@ -180,6 +180,7 @@ footer hr {
   height: 120px;
   border-radius: 100px;
   object-fit: cover;
+  border: 1px solid var(--primary-ancor-hover, #007bff);
 }
 .user-profile-info input {
   border: none;
@@ -347,4 +348,8 @@ footer hr {
 .checkout-delivery-radio {
   border: 1px solid #dee2e6;
   border-radius: 10px;
+}
+
+.custom-margin {
+  margin-right: 10px; /* Adjust margin size as needed */
 }

@@ -7,11 +7,13 @@
     <html lang="en">
 
     <head>
+        <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqtdParLysiSvwZS4rbp_tSl7tugt6fw8&libraries=places">
+        </script>
         <!-- header section include -->
         <?php
     include '../../includes/head_section.html';
     ?>
-        <script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initialize" async defer></script>
         <!-- app icon -->
         <link rel="icon" href="../../images/favicon.png" />
         <!-- custom css -->
@@ -130,10 +132,10 @@
                                         <label class="form-check-label mb-1" for="address">Address</label>
 
                                         <input type="text" class="form-control mb-2" name="address" id="address"
-                                            placeholder="eg: Apt, Unit, Suite, Building, Floor" required />
+                                            placeholder="eg: unit 1105" required />
 
-                                        <input type="text" class="form-control" name="address1" id="address1"
-                                            placeholder="eg: Street, PO Box, Company, c/o" required />
+                                        <input type="text" class="form-control" name="address1" id="addressAutoComplete"
+                                            placeholder="eg: 30 example street" required />
                                     </div>
 
                                     <div class="mb-3">
@@ -272,12 +274,29 @@
             </div>
         </div>
 
-
-        <script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initialize" async defer></script>
         <?php
         // Include footer
         include '../../includes/footer.php';
     ?>
+        <!-- gogle autocomplete api script -->
+        <script>
+        // Initialize address autocomplete
+        function initAutocomplete() {
+            var input = document.getElementById('addressAutoComplete');
+            var options = {
+                types: ['geocode'], // Limit search to geographic addresses
+                componentRestrictions: {
+                    country: 'AU'
+                } // Bias predictions towards Australia
+            };
+
+            var autocomplete = new google.maps.places.Autocomplete(input, options);
+        }
+
+        // Load the Google Places API
+        google.maps.event.addDomListener(window, 'load', initAutocomplete);
+        </script>
+
 
         <!-- disabeling the city/ suburb select field -->
         <script>
@@ -296,6 +315,8 @@
             }
         });
         </script>
+
+
         <!-- city/suburb api generation -->
         <script>
         document.getElementById('Postcode').addEventListener('input', function() {

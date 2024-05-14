@@ -1,6 +1,6 @@
 <?php 
 session_start();
-require_once("../../php/database_connect.php"); 
+require_once("../../php/profile/loadprofile.php"); 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -115,41 +115,60 @@ require_once("../../php/database_connect.php");
                     </div>
                 </div>
 
-                <!-- Total Section -->
+                <!-- Profile Section -->
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-body user-profile-info">
+
                             <div class="text-center">
-                                <img class="profile-image"
-                                    src="../../images/profile/stefan-stefancik-QXevDflbl8A-unsplash.jpg" alt="Logo" />
-                                <h5 class="text-primary font-weight-bold mt-3">Someone Someone</h5>
+                                <?php if (!empty($row['user_image'])): ?>
+                                <img class="profile-image" src="<?php echo $row['user_image']; ?>"
+                                    alt="Profile Image" />
+                                <?php else: ?>
+                                <!-- If image is null-->
+                                <img class="profile-image" src="../../images/profile/user.png" alt="Logo" />
+                                <?php endif; ?>
+
+                                <h5 class="text-primary font-weight-bold mt-3">
+                                    <?php echo $row['first_name'] . " " . $row['middle_name'] . " " . $row['last_name']; ?>
+                                </h5>
                             </div>
 
                             <div class="d-grid col mt-3 mb-3">
                                 <div class="mb-3">
                                     <span class="label text-primary">Address</span>
-                                    <p class="text-muted">Unit 58 28 Durmoyne street, Lidcombe NSW 2234</p>
+                                    <?php if (!empty($row['aptUnitSuit']) || !empty($row['street']) || !empty($row['citySuburb']) || !empty($row['stateTerritory']) || !empty($row['Postcode'])): ?>
+                                    <p class="text-muted">
+                                        <?php echo (!empty($row['aptUnitSuit']) ? $row['aptUnitSuit'] . " " : "") . (!empty($row['street']) ? $row['street'] . ", " : "") . (!empty($row['citySuburb']) ? $row['citySuburb'] . " " : "") . (!empty($row['stateTerritory']) ? $row['stateTerritory'] . " " : "") . (!empty($row['Postcode']) ? $row['Postcode'] : ""); ?>
+                                    </p>
+                                    <?php else: ?>
+                                    <p class="text-muted">Address not specified</p>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="mb-3">
                                     <span class="label text-primary">Email</span>
-                                    <p class="text-muted">someone@someone.com</p>
+                                    <p class="text-muted"><?php echo $row['email']; ?></p>
                                 </div>
                                 <div class="mb-3">
                                     <span class="label text-primary">Birth Day</span>
-                                    <p class="text-muted">10/01/1997</p>
+                                    <p class="text-muted">
+                                        <?php echo !empty($row['birthday']) ? $row['birthday'] : "edit to specified"; ?>
+                                    </p>
                                 </div>
                                 <div class="mb-3">
                                     <span class="label text-primary">Phone</span>
-                                    <p class="text-muted">+797878787878</p>
+                                    <p class="text-muted"><?php echo $row['contact']; ?></p>
                                 </div>
                                 <div class="mb-3">
                                     <span class="label text-primary">Gender</span>
-                                    <p class="text-muted">FEMALE</p>
+                                    <p class="text-muted">
+                                        <?php echo !empty($row['gender']) ? $row['gender'] : "edit to specified"; ?>
+                                    </p>
                                 </div>
                                 <div class="mb-3">
                                     <p class="label text-primary">Password</p>
-                                    <input class="password-label" type="password" id="password" value="thisispassword"
-                                        readonly />
+                                    <input class="password-label" type="password" id="password"
+                                        value="<?php echo $row['password']; ?>" readonly />
                                     <a class="btn" id="showPassword"><i class="far fa-eye"></i></a>
                                 </div>
 
