@@ -90,6 +90,11 @@ if (isset($_SESSION["error"])) {
                                     <img class="google-icon" src="../../images/assets/facebook-logo.png"
                                         alt="Google Logo" />
                                     Login with Facebook
+                                </a><br>
+                                <a href="google-oauth.php" class="mb-5 mt-5 google-login">
+                                    <img class="google-icon" src="../../images/assets/google ICon.png"
+                                         alt="Google Logo" />
+                                    Login with Google
                                 </a>
                             </form>
                             <small class="mt-5">Don't have an account yet? <a href="./thirdPartySignup.php">Sign
