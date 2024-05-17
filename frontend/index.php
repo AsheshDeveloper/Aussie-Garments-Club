@@ -1,6 +1,21 @@
 <?php 
 session_start();
 require_once("php/database_connect.php"); 
+
+// find authenticated user details
+if (isset($_SESSION["email"])) {
+    $findUser = "SELECT * FROM users WHERE email = '{$_SESSION['email']}'";
+    $fetchUser = mysqli_query($connect, $findUser);
+    $user = null; // Initialize user variable
+    if(mysqli_num_rows($fetchUser) > 0){
+        $user = mysqli_fetch_array($fetchUser);
+        $userID = $user['id'];
+    }
+    $getData = "SELECT c.*, p.* FROM Cart c INNER JOIN Product p ON c.ProductID = p.ProductID WHERE c.UserID='$userID'";
+}else{
+    $getData = "SELECT c.*, p.* FROM Cart c INNER JOIN Product p ON c.ProductID = p.ProductID ";
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -103,8 +118,7 @@ require_once("php/database_connect.php");
                     <div class="row-suggestion-items">
                         <div class="row">
                             <?php
-                                $fetch_product = "Select * from product Limit 2";
-                                $results = mysqli_query($connect, $fetch_product);
+                                $results = mysqli_query($connect, $getData);
                                 while($row=mysqli_fetch_assoc($results) ){   
                                     $product_id = $row['ProductID'];               
                                 $imageOne = $row['ImageOne'];
@@ -118,8 +132,7 @@ require_once("php/database_connect.php");
                         </div>
                         <div class="row mt-3">
                             <?php 
-                                $fetch_product = "Select * from product Limit 2";
-                                $results = mysqli_query($connect, $fetch_product);
+                                $results = mysqli_query($connect, $getData);
                                 while($row=mysqli_fetch_assoc($results) ){         
                                     $product_id = $row['ProductID'];         
                                 $imageOne = $row['ImageOne'];

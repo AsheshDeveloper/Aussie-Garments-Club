@@ -272,28 +272,46 @@ if ($cart = $connect->query($getCart)) {
             </div>
             <?php
                     $paypalUrl='https://www.sandbox.paypal.com/cgi-bin/webscr';
-                $paypalId='sb-x2ojv29990908@personal.example.com';
+                $paypalId='sb-6azpk30044866@business.example.com';
             ?>
             <!-- Total Section -->
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-grid col">
-                            <form action="<?php echo $paypalUrl; ?>" method="post" name="frmPayPal1">
-                                <div class="panel price panel-red">
+                            <?php 
+                                $count = 0;
+                                $grand_total = 0;
+                                if ($cartData && $cartData > 0) { 
+                                    foreach($cartData as $row) {
+                                        $price = array($row['TotalAmount']); 
+                                        $count++; 
+                                        // Calculate total price
+                                        $total = array_sum($price);
+                                        $grand_total += $total;
+                                    }                      
+                                } else {
+                                    // Handle case where no rows are returned
+                                    $grand_total = 0;
+                                }
+
+                            ?>
+                            <div class="panel price panel-red">
+                                <form action="<?php echo $paypalUrl; ?>" method="post">
                                     <input type="hidden" name="business" value="<?php echo $paypalId; ?>">
                                     <input type="hidden" name="cmd" value="_xclick">
                                     <input type="hidden" name="item_name" value="Aussie-Garments-Club">
-                                    <input type="hidden" name="item_number" value="2">
-                                    <input type="hidden" name="amount" value="20">
+                                    <input type="hidden" name="item_number" value="<?php echo $count; ?>">
+                                    <input type="hidden" name="amount" value="<?php echo $grand_total; ?>">
                                     <input type="hidden" name="no_shipping" value="1">
-                                    <input type="hidden" name="currency_code" value="USD">
+                                    <input type="hidden" name="currency_code" value="AUD">
                                     <input type="hidden" name="cancel_return"
-                                        value="http://localhost/Aussie-Garments-Club/frontend/index.php">
+                                        value="http://localhost/the garments club/frontend/index.php">
                                     <input type="hidden" name="return"
-                                        value="http://localhost/Aussie-Garments-Club/frontend/payment_integration/success.php">
+                                        value="http://localhost/the garments club/frontend/payment_integration/success.php">
+                                    <button class="btn btn-primary px-5 w-100 py-2 mb-1">Place your order</button>
+                                </form>
                                     <div class="panel-footer">
-                                        <button class="btn btn-primary px-5 w-100 py-2 mb-1">Place your order</button>
                                         <small class="mt-2 text-justify">
                                             By placing your order, you agree to Aussie's garment Conditions of Use &
                                             Sale, and Return Policy. Please read our
@@ -303,23 +321,6 @@ if ($cart = $connect->query($getCart)) {
                                         <hr />
                                         <h6>Order Summary</h6>
                                         <div class="description-container">
-                                        <?php 
-                                            $count = 0;
-                                            $grand_total = 0;
-                                            if ($cartData && $cartData > 0) { 
-                                                foreach($cartData as $row) {
-                                                    $price = array($row['TotalAmount']); 
-                                                    $count++; 
-                                                    // Calculate total price
-                                                    $total = array_sum($price);
-                                                    $grand_total += $total;
-                                                }                      
-                                            } else {
-                                                // Handle case where no rows are returned
-                                                $grand_total = 0;
-                                            }
-
-                                        ?>
                                             <ul style="list-style: none">
                                                 <li><span class="">Style</span> <span class="text-muted">Casual</span>
                                                 </li>
