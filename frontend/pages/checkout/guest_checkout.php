@@ -1,28 +1,7 @@
 <?php
 session_start();
-// if (!isset($_SESSION["username"])) {
-//     $_SESSION["error"] = 'Please login!!';
-//     header("Location: ../authentication/login.php", true, 301); // Redirect to login page
-//     exit();
-// }
 require_once("../../php/database_connect.php"); 
-// find authenticated user details
-$findUser = "SELECT * FROM users WHERE email = '{$_SESSION['email']}'";
-$fetchUser = mysqli_query($connect, $findUser);
-$user = null; // Initialize user variable
-if(mysqli_num_rows($fetchUser) > 0){
-    $user = mysqli_fetch_array($fetchUser);
-    $userID = $user['id'];
-}
 
-// Fetch cart data
-$getCart = "SELECT c.*, p.* FROM Cart c INNER JOIN Product p ON c.ProductID = p.ProductID WHERE c.UserID='$userID'";
-$cartData = array(); // Initialize cart data array
-if ($cart = $connect->query($getCart)) {
-    while ($row = $cart->fetch_assoc()) { 
-        $cartData[] = $row;
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -59,22 +38,6 @@ if ($cart = $connect->query($getCart)) {
     <div class="container cart-item-container mt-5 mb-5">
         <div class="row">
             <div class="col-md-8">
-                <?php 
-                $count = 0;
-                $grand_total = 0;
-                if ($cartData && $cartData > 0) { 
-                    foreach($cartData as $row) {
-                        $price = array($row['TotalAmount']); 
-                        $count++; 
-                        // Calculate total price
-                        $total = array_sum($price);
-                        $grand_total += $total;
-                    }                      
-                } else {
-                    // Handle case where no rows are returned
-                    $grand_total = 0;
-                }
-              ?>
                 <h5 class="mb-2">Checkout (<span
                         class="text-primary"><?php echo ($count > 1) ? $count.' Items' : $count.' Item'  ?> </span>)
                 </h5>
@@ -101,19 +64,161 @@ if ($cart = $connect->query($getCart)) {
                                     <label for="pickup">Pick up</label>
                                 </div>
 
-                                <!-- Div for Shipment -->
-                                <div id="shipmentDiv">
-                                    <div class="d-flex justify-content-between">
-                                        <p class="align-self-start">Jack Ma</p>
-                                        <p class="align-self-end">
-                                            <!-- address modal trigger  -->
-                                            <a href="#" data-bs-toggle="modal" data-bs-target="#addressEditModal"> Chage
-                                            </a>
-                                        </p>
+                                <div class="row mb-3">
+                                    <h6 class="mb-3">Select address(guys this comes after adding address </h6>
+                                    <div class="pr-3 pl-3 pb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                id="flexRadioDefault1" />
+                                            <label class="form-check-label" for="flexRadioDefault1"> Unit 50 6 east
+                                                street
+                                                Hurstville, NSW 2144</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                id="flexRadioDefault2" checked />
+                                            <label class="form-check-label" for="flexRadioDefault2"> Unit 50 6 east
+                                                street
+                                                Lidcombe, NSW 2142 </label>
+                                        </div>
                                     </div>
 
-                                    <span>Unit 50 6 east street <br />
-                                        Lidcombe, NSW 2142</span>
+                                </div>
+
+                                <!-- Div for Shipment -->
+                                <div id="shipmentDiv">
+                                    <div class="col mx-auto">
+                                        <div class="card p-2 mt-4 mb-5">
+
+                                            <div class="card-body">
+                                                <form class="" action="" method="post">
+
+                                                    <!-- error message -->
+                                                    <?php 
+                                                        if(isset($errors)) 
+                                                        { 
+                                                        foreach($errors as $error){ 
+                                                    ?>
+                                                    <div class="alert alert-danger" role="alert">
+                                                        <?=$error ?>
+                                                    </div>
+                                                    <?php } 
+                                                    
+                                                    } 
+                                                    ?>
+
+                                                    <!-- success message -->
+                                                    <?php 
+                                                        if(isset($success)) 
+                                                        { 
+                                                        foreach($success as $success){ 
+                                                    ?>
+                                                    <div class="alert alert-success" role="alert">
+                                                        <?=$success ?>
+                                                    </div>
+                                                    <?php } 
+                                                    
+                                                    } 
+                                                    ?>
+                                                    <div class="mb-3">
+                                                        <label class="form-check-label mb-1" for="countryRegion">
+                                                            Country/Region
+                                                        </label>
+                                                        <select name="countryRegion" class="form-select"
+                                                            id="countryRegion" aria-label="countryRegion">
+                                                            <option selected>Choose Country or Region</option>
+                                                            <?php
+                                                                // Fetching country data from the API
+                                                                $api_url = 'https://restcountries.com/v3.1/all';
+                                                                $response = file_get_contents($api_url);
+                                                                $countries = json_decode($response, true);
+
+                                                                // Sorting countries by name
+                                                                usort($countries, function($a, $b) {
+                                                                    return strcmp($a['name']['common'], $b['name']['common']);
+                                                                });
+
+                                                                // Loop through the sorted countries and populate the select dropdown
+                                                                foreach ($countries as $country) {
+                                                                    $name = $country['name']['common'];
+                                                                    // $code = $country['cca2'];
+                                                                    echo "<option value='$name'>$name</option>";
+                                                                }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label class="form-check-label mb-1"
+                                                            for="address">Address</label>
+
+                                                        <input type="text" class="form-control mb-2" name="address"
+                                                            id="address" placeholder="eg: unit 1105" required />
+
+                                                        <input type="text" class="form-control" name="address1"
+                                                            id="addressAutoComplete" placeholder="eg: 30 example street"
+                                                            required />
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label class="form-check-label mb-1"
+                                                            for="Postcode">Postcode</label>
+                                                        <input type="number" class="form-control" name="Postcode"
+                                                            id="Postcode" placeholder="eg: 2245" required />
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label class="form-check-label mb-1"
+                                                            for="citySuburb">City/Suburb</label>
+                                                        <select name="citySuburb" class="form-select" id="citySuburb"
+                                                            aria-label="citySuburb" disabled required>
+                                                            <option selected>Choose City or Suburb</option>
+                                                        </select>
+                                                        <small class="text-info">enter postcode to select city or
+                                                            suburb</small>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-check-label mb-1"
+                                                            for="stateTerritory">State/Territory</label>
+
+                                                        <select name="stateTerritory" class="form-select"
+                                                            id="stateTerritory" aria-label="stateTerritory">
+                                                            <option selected>Choose state or Territory</option>
+                                                            <option value="NSW">New South Wales (NSW)</option>
+                                                            <option value="VCT">Victoria (VCT)</option>
+                                                            <option value="QLD">Queensland (QLD)</option>
+                                                            <option value="WA">Western Australia (WA)</option>
+                                                            <option value="SA">South Australia (SA)</option>
+                                                            <option value="Tas">Tasmania (Tas)</option>
+                                                            <option value="NT">Northern Territory (NT)</option>
+                                                            <option value="ACT">Australian Capital Territory (ACT)
+                                                            </option>
+                                                        </select>
+
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label class="form-check-label mb-1" for="fullName"> Full name
+                                                            (Address
+                                                            For)</label>
+
+                                                        <input type="text" class="form-control" name="full_name"
+                                                            id="fullName" placeholder="eg: harry kane" required />
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            id="defaultAddress" name="defaultAddress" />
+                                                        <label class="form-check-label" for="defaultAddress">Make
+                                                            Default Address
+                                                            ?</label>
+                                                    </div>
+                                                    <button type="submit" name="submit"
+                                                        class="btn btn-primary p-2 mb-3 mt-4">Deliver Here
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <!-- Div for Pick up -->
@@ -151,22 +256,56 @@ if ($cart = $connect->query($getCart)) {
                                 <strong> Payment Method </strong>
                             </button>
                         </h2>
+
                         <div id="collapseTwo" class="accordion-collapse collapse show"
                             data-bs-parent="#checkoutAccordion">
                             <div class="accordion-body">
-                                <div class="d-flex justify-content-between">
-                                    <p class="align-self-start"><strong> Paying with Master Card 4456</strong></p>
-                                    <p class="align-self-end">
-                                        <!-- payment edit modal trigger  -->
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#paymentEditModal"> Chage
-                                        </a>
-                                    </p>
+                                <div class="col mx-auto">
+                                    <div class="card p-2 mt-4 mb-5">
+                                        <div class="card-body">
+                                            <form class="" action="" method="post">
+                                                <div class="mb-3">
+                                                    <label class="form-check-label mb-1" for="fullName"> Card
+                                                        Number</label>
+                                                    <input type="number" class="form-control" name="fullName"
+                                                        id="fullName" placeholder="eg: 4567 XXXX XXXX XXXX" required />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-check-label mb-1" for="fullName"> Name on
+                                                        card</label>
+                                                    <input type="text" class="form-control" name="fullName"
+                                                        id="fullName" placeholder="eg: samir samir" required />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-check-label mb-1" for="fullName"> Expiration
+                                                        date</label>
+                                                    <input type="date" class="form-control" name="fullName"
+                                                        id="fullName" placeholder="eg: 4567 XXXX XXXX XXXX" required />
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-check-label mb-1" for="fullName">Security
+                                                        code(CVV/CVC)</label>
+                                                    <input type="number" class="form-control" name="fullName"
+                                                        id="fullName" placeholder="eg: see back of your debit card"
+                                                        required />
+                                                </div>
+
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="defaultAddress" />
+                                                    <label class="form-check-label" for="defaultAddress">Use as my
+                                                        default
+                                                        payment</label>
+                                                </div>
+
+                                                <a href="./card.html" type="submit" type="button"
+                                                    class="btn btn-primary p-2 mb-3 mt-4">Pay with this card</a>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
-                                <p>Billing Address:</p>
-                                <span>Unit 50 6 east street <br />
-                                    Lidcombe, NSW 2142</span>
-                                <hr />
-                                <a href="">setup paypal <i class="fa-brands fa-paypal"></i></a>
+                                <a href="">Pay with paypal <i class="fa-brands fa-paypal"></i></a>
                             </div>
                         </div>
                     </div>
@@ -244,30 +383,7 @@ if ($cart = $connect->query($getCart)) {
                                     </tbody>
                                 </table>
 
-                                <?php /**  ?>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <a href="./congrats.html" class="btn btn-primary px-5 py-2">Place
-                                            your order</a>
-                                    </div>
-                                    <div class="col-8">
-                                        <ul style="list-style: none">
-                                            <li><span class="text-primary">Quantity</span> <span
-                                                    class="text-muted"><?php echo $count  ?> Item(s)</span> <span
-                                                    class="text-primary">$ <?php echo $grand_total  ?></span></li>
-                                            <li>
-                                                <small class="mt-2 text-justify">
-                                                    By placing your order, you agree to Aussie's garment Conditions of
-                                                    Use & Sale, and Return Policy. Please read
-                                                    our
-                                                    <a href="#" style="text-decoration: none"> Privacy Notice </a> and
-                                                    our Interest Based Ads Notice.
-                                                </small>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <?php */ ?>
+
                             </div>
                         </div>
                     </div>
@@ -425,233 +541,6 @@ if ($cart = $connect->query($getCart)) {
     </div>
     </div>
 
-    <!-- Address edit modal -->
-    <div class="modal modal-lg fade checkout-modal-add-payment" id="addressEditModal" tabindex="-1"
-        aria-labelledby="addressEditModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="addressEditModalLabel">Change Delivery Address</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row mb-3">
-                        <h6 class="mb-3">Select form your list of address</h6>
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                id="flexRadioDefault1" />
-                            <label class="form-check-label" for="flexRadioDefault1"> Unit 50 6 east street
-                                Hurstville, NSW 2144</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"
-                                checked />
-                            <label class="form-check-label" for="flexRadioDefault2"> Unit 50 6 east street
-                                Lidcombe, NSW 2142 </label>
-                        </div>
-                    </div>
-                    <hr />
-                    <div class="row">
-                        <h6>Add new address</h6>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card p-2 mt-4 mb-5">
-                                    <div class="card-body">
-                                        <form class="" action="" method="post">
-                                            <div class="mb-3">
-                                                <label class="form-check-label mb-1" for="email"> Country/Region
-                                                </label>
-
-                                                <select class="form-select" aria-label="Default select example">
-                                                    <option selected>Choose County or Region</option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label class="form-check-label mb-1" for="fullName"> Full name
-                                                    (Address For)</label>
-
-                                                <input type="name" class="form-control" name="fullName" id="fullName"
-                                                    placeholder="eg: harry kane" required />
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label class="form-check-label mb-1" for="phoneNumber">Phone
-                                                    number</label>
-
-                                                <input type="number" class="form-control" name="phoneNumber"
-                                                    id="phoneNumber" placeholder="eg: 0978482453" required />
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label class="form-check-label mb-1" for="address">Address</label>
-
-                                                <input type="name" class="form-control mb-2" name="address" id="address"
-                                                    placeholder="eg: Apt, Unit, Suite, Building, Floor" required />
-
-                                                <input type="name" class="form-control" name="address1" id="address1"
-                                                    placeholder="eg: Street, PO Box, Company, c/o" required />
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label class="form-check-label mb-1" for="Postcode">Postcode</label>
-
-                                                <input type="number" class="form-control" name="Postcode" id="Postcode"
-                                                    placeholder="eg: 2245" required />
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label class="form-check-label mb-1" for="citySuburb">
-                                                    City/Suburb </label>
-
-                                                <select class="form-select" aria-label="citySuburb">
-                                                    <option selected>Choose City or Suburb</option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label class="form-check-label mb-1" for="countryRegion">
-                                                    State/Territory </label>
-
-                                                <select class="form-select" aria-label="countryRegion">
-                                                    <option selected>Choose state or Territory</option>
-                                                    <option value="">New South Wales(NSW)</option>
-                                                    <option value="">Victoria(VCT)</option>
-                                                    <option value="">Queensland(QLD)</option>
-                                                    <option value="">Western Australia(WA)</option>
-                                                    <option value="">South Australia(SA)</option>
-                                                    <option value="">Tasmania(Tas)</option>
-                                                    <option value="">Northern Territory(NT)</option>
-                                                    <option value="">Australian Capital Territory(ACT)</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="defaultAddress" />
-                                                <label class="form-check-label" for="defaultAddress">Make
-                                                    Default Address ?</label>
-                                            </div>
-
-                                            <a href="./checkout.html" type="submit" type="button"
-                                                class="btn btn-primary w-100 p-2 mb-3 mt-4">Add Address</a>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Deliver to this address</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- payment method edit modal -->
-    <div class="modal modal-lg fade checkout-modal-add-payment" id="paymentEditModal" tabindex="-1"
-        aria-labelledby="paymentEditModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="paymentEditModalLabel">Add Payment Method</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row mb-3">
-                        <h6 class="mb-3">Select form your list of payment options</h6>
-
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col"></th>
-                                    <th scope="col">Name on card</th>
-                                    <th scope="col">Expires on</th>
-
-                                    <!-- <th scope="col">Action</th> -->
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="">
-                                    <td>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                id="flexRadioDefault1" />
-                                            <label class="form-check-label" for="flexRadioDefault1"> Paying with
-                                                Master Card 4456</label>
-                                        </div>
-                                    </td>
-
-                                    <td>Samir Samir</td>
-                                    <td>08/2025</td>
-
-                                    2
-                                </tr>
-                                <tr class="">
-                                    <td>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                id="flexRadioDefault1" />
-                                            <label class="form-check-label" for="flexRadioDefault1"> Paying with
-                                                Master Card 4456</label>
-                                        </div>
-                                    </td>
-
-                                    <td>Samir Samir</td>
-                                    <td>08/2025</td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <hr />
-
-                    <h6>Add New Card</h6>
-                    <form class="" action="" method="post">
-                        <div class="mb-3">
-                            <label class="form-check-label mb-1" for="fullName"> Card Number</label>
-                            <input type="number" class="form-control" name="fullName" id="fullName"
-                                placeholder="eg: 4567 XXXX XXXX XXXX" required />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-check-label mb-1" for="fullName"> Name on card</label>
-                            <input type="text" class="form-control" name="fullName" id="fullName"
-                                placeholder="eg: samir samir" required />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-check-label mb-1" for="fullName"> Expiration date</label>
-                            <input type="date" class="form-control" name="fullName" id="fullName"
-                                placeholder="eg: 4567 XXXX XXXX XXXX" required />
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-check-label mb-1" for="fullName">Security code(CVV/CVC)</label>
-                            <input type="number" class="form-control" name="fullName" id="fullName"
-                                placeholder="eg: 4567 XXXX XXXX XXXX" required />
-                        </div>
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="defaultAddress" />
-                            <label class="form-check-label" for="defaultAddress">Use as my default
-                                payment</label>
-                        </div>
-
-                        <a href="./checkout.html" type="submit" type="button" class="btn btn-primary p-2 mb-3 mt-4">
-                            Use this payment method</a>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <?php
         // Include footer
         include '../../includes/footer.php';
@@ -681,6 +570,86 @@ if ($cart = $connect->query($getCart)) {
             pickupDiv.style.display = 'block';
             shipmentDiv.style.display = 'none';
         }
+    });
+    </script>
+
+    <script>
+    // Initialize address autocomplete
+    function initAutocomplete() {
+        var input = document.getElementById('addressAutoComplete');
+        var options = {
+            types: ['geocode'], // Limit search to geographic addresses
+            componentRestrictions: {
+                country: 'AU'
+            } // Bias predictions towards Australia
+        };
+
+        var autocomplete = new google.maps.places.Autocomplete(input, options);
+    }
+
+    // Load the Google Places API
+    google.maps.event.addDomListener(window, 'load', initAutocomplete);
+    </script>
+
+
+    <!-- disabeling the city/ suburb select field -->
+    <script>
+    var postcodeInput = document.getElementById('Postcode');
+    var citySuburbSelect = document.getElementById('citySuburb');
+
+    // Add event listener to the postcode input field
+    postcodeInput.addEventListener('input', function() {
+        // Check if the input field has a value
+        if (postcodeInput.value.trim() !== '') {
+            // Enable the select element
+            citySuburbSelect.disabled = false;
+        } else {
+            // Disable the select element
+            citySuburbSelect.disabled = true;
+        }
+    });
+    </script>
+
+
+    <!-- city/suburb api generation -->
+    <script>
+    document.getElementById('Postcode').addEventListener('input', function() {
+        var postcode = this.value;
+        var url = '../../php/profile/address/addressFetch/getCityState.php';
+
+        // Send POST request to PHP file
+        fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'Postcode=' + encodeURIComponent(postcode)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                var select = document.getElementById('citySuburb');
+                select.innerHTML = ''; // Clear existing options
+
+                if (data.error) {
+                    // Handle error response
+                    select.innerHTML = '<option>' + data.error + '</option>';
+                } else {
+                    // Populate select options with suburbs/cities
+                    data.forEach(function(item) {
+                        var option = document.createElement('option');
+                        option.textContent = item.name;
+                        select.appendChild(option);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     });
     </script>
 </body>

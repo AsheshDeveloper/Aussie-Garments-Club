@@ -147,7 +147,7 @@
                                     <div class="mb-3">
                                         <label class="form-check-label mb-1" for="citySuburb">City/Suburb</label>
                                         <select name="citySuburb" class="form-select" id="citySuburb"
-                                            aria-label="citySuburb" disabled>
+                                            aria-label="citySuburb" disabled required>
                                             <option selected>Choose City or Suburb</option>
                                         </select>
                                         <small class="text-info">enter postcode to select city or suburb</small>
