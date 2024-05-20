@@ -1,5 +1,6 @@
 <?php
 session_start();
+$connect = mysqli_connect('localhost', 'root', '', 'the_garments_club');
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if the verification code is correct
     if (isset($_POST['code']) && isset($_SESSION['verification_code'])) {
@@ -9,7 +10,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "SUCCESS";
             // Verification successful
             $_SESSION['success'] = "VERIFIED";
-            header('Location: ../../index.php');
+            $email = $_SESSION['email'];
+            $fetch_user = " SELECT * FROM users WHERE email = '$email'";
+            $result = mysqli_query($connect, $fetch_user);
+            if(mysqli_num_rows($result) > 0) {
+                echo "updating user";
+                $update_user = " UPDATE users SET verified = 1 where email = '$email'";
+                echo $update_user;
+                mysqli_query($connect, $update_user);
+                header('Location: ../../index.php');
+            } else {
+                header('Location: verify_code.php');
+            }
             exit;
         } else {
             echo "FAILED";
