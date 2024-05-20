@@ -28,7 +28,7 @@
                 </li>
                 <li class="nav-item">
                     <?php
-                    if(!$_SESSION['userId']){
+                    if(empty($_SESSION['userId'])){
                         echo '  <span class="nav-link text-primary" href="#">
                         Browsing as Guest              
                         </span>';
