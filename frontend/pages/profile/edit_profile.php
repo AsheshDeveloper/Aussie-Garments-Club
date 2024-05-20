@@ -1,3 +1,9 @@
+<?php
+session_start();
+require_once("../../php/profile/editprofile.php");  
+// require_once("../../php/profile/loadprofile.php");
+// require_once("../../php/profile/editpassword.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,19 +34,75 @@
     </nav>
 
     <div class="container-fluid">
-        <div class="container cart-item-container mt-5 mb-5">
+
+        <div class="container mt-5 mb-3">
+            <h5 class="mb-3">Edit Your Profile</h5>
+            <!-- error message -->
+            <?php 
+                if(isset($errors)) 
+                { 
+                foreach($errors as $error){ 
+            ?>
+            <div class="alert alert-danger" role="alert">
+                <?=$error ?>
+            </div>
+            <?php } 
+                            
+            } 
+            ?>
+
+            <!-- success message -->
+            <?php 
+                if(isset($success)) 
+                { 
+                foreach($success as $success){ 
+            ?>
+            <div class="alert alert-success" role="alert">
+                <?=$success ?>
+            </div>
+            <?php } 
+                                    
+            } 
+            ?>
+        </div>
+
+        <div class="container cart-item-container mb-5">
             <div class="row">
                 <div class="col-md-7">
-                    <h5 class="mb-3">Edit Your Profile</h5>
 
-                    <form class="mb-5" action="" method="post">
+                    <form class="mb-5" action="" method="post" enctype="multipart/form-data">
+                        <?php if (!empty($row['user_image'])): ?>
+                        <div class="mb-3">
+                            <div class="d-flex">
+                                <label class="form-check-label mb-1">Current Profile Image</label>
+                            </div>
+                            <img class="class-table-image" src="../../images/uploads/<?php echo $row['user_image']; ?>"
+                                alt="Profile Image" style="max-width: 150px; max-height: 150px;">
+                        </div>
+                        <?php endif; ?>
+
+                        <div class="mb-3">
+                            <div class="d-flex">
+                                <label class="form-check-label mb-1" for="user_image">Profile Image</label>
+                            </div>
+
+                            <div class="input-group">
+                                <input type="file" class="form-control" name="user_image" id="user_image">
+                            </div>
+                        </div>
+
                         <div class="mb-3">
                             <div class="d-flex">
                                 <label class="form-check-label mb-1" for="address">Address</label>
                             </div>
                             <div class="input-group">
-                                <input type="text" class="form-control" name="address" id="address"
-                                    placeholder="Unit 58 28 Durmoyne street, Lidcombe NSW 2234" disabled />
+                                <?php
+                                    if (isset($row['aptUnitSuit'], $row['street'], $row['citySuburb'], $row['stateTerritory'], $row['Postcode'])) {
+                                        echo '<input type="text" class="form-control" name="address" id="address" value="' . $row['aptUnitSuit'] . ' ' . $row['street'] . ' ' . $row['citySuburb'] . ' ' . $row['stateTerritory'] . ' ' . $row['Postcode'] . '" disabled />';
+                                    } else {
+                                        echo '<input type="text" class="form-control" name="address" id="address" value="Address Not Available" disabled />';
+                                    }
+                                ?>
                             </div>
                             <span class="text-info">you can update your address in address section(go back)</span>
                         </div>
@@ -51,7 +113,7 @@
                             </div>
                             <div class="input-group">
                                 <input type="text" class="form-control" name="email" id="email"
-                                    placeholder="enter your email" />
+                                    placeholder="enter your email" value="<?php echo $row['email']; ?>" />
                             </div>
                         </div>
 
@@ -60,7 +122,8 @@
                                 <label class="form-check-label mb-1" for="dob">Date of Birth</label>
                             </div>
                             <div class="input-group">
-                                <input type="date" class="form-control" name="dob" id="dob" placeholder="" />
+                                <input type="date" class="form-control" name="birthday" id="dob"
+                                    value="<?php echo !empty($row['birthday']) ? $row['birthday'] : ''; ?>" />
                             </div>
                         </div>
 
@@ -70,25 +133,28 @@
                             </div>
                             <div class="input-group">
                                 <input type="number" class="form-control" name="phone" id="phone"
-                                    placeholder="enter your phone number" />
+                                    placeholder="enter your phone number" value="<?php echo $row['contact']; ?>" />
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <div class="d-flex">
-                                <label class="form-check-label mb-1" for="dob">Gender</label>
-                            </div>
-                            <div class="input-group">
-                                <input type="date" class="form-control" name="dob" id="dob" placeholder="Female"
-                                    disabled />
-                            </div>
+                            <label class="form-check-label mb-1" for="gender">Gender</label>
+
+                            <select name="gender" class="form-select" id="gender" aria-label="gender">
+                                <option selected>
+                                    <?php echo !empty($row['gender']) ? $row['gender'] : "Choose Gender"; ?>
+                                </option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
                         </div>
 
-                        <button type="submit" type="name" class="btn btn-primary p-2">Update Your Profile</button>
+                        <button type="submit" name="submit" class="btn btn-primary p-2">Update Your Profile</button>
                     </form>
                 </div>
 
-                <!-- Total Section -->
+                <!-- password update  Section -->
                 <div class="col-md-5">
                     <div class="card">
                         <div class="card-body">
@@ -101,9 +167,9 @@
                                                 class="text-danger">*</span></label>
                                     </div>
                                     <div class="input-group">
-                                        <input type="password" class="form-control" name="oldPassword" id="oldPassword"
-                                            placeholder="**********" required />
-                                        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                        <input type="password" class="form-control" name="oldPassword" id="password1"
+                                            placeholder="enter your old password" required />
+                                        <button class="btn btn-outline-secondary" type="button" id="showPassword">
                                             <i class="fa-solid fa-eye"></i>
                                         </button>
                                     </div>
@@ -114,9 +180,9 @@
                                                 class="text-danger">*</span></label>
                                     </div>
                                     <div class="input-group">
-                                        <input type="password" class="form-control" name="newPassword" id="newPassword"
+                                        <input type="password" class="form-control" name="newPassword" id="password2"
                                             placeholder="new password" required />
-                                        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                        <button class="btn btn-outline-secondary" type="button" id="showPassword1">
                                             <i class="fa-solid fa-eye"></i>
                                         </button>
                                     </div>
@@ -128,15 +194,15 @@
                                     </div>
                                     <div class="input-group">
                                         <input type="password" class="form-control" name="confirmPassword"
-                                            id="confirmPassword" placeholder="confirm new pasword" required />
-                                        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                            id="password3" placeholder="confirm new pasword" required />
+                                        <button class="btn btn-outline-secondary" type="button" id="showPassword2">
                                             <i class="fa-solid fa-eye"></i>
                                         </button>
                                     </div>
                                 </div>
 
-                                <button type="submit" type="name" class="btn btn-primary w-100 p-2">Update Your
-                                    Pasword</button>
+                                <button type="submit" name="submitPwd" class="btn btn-primary w-100 p-2">Update Your
+                                    Password</button>
                             </form>
                         </div>
                     </div>
@@ -228,6 +294,39 @@
         include '../../includes/footer.php';
     ?>
     <!-- custom script -->
+    <!-- password button visible -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const showPasswordButton = document.getElementById("showPassword");
+        const showPasswordButton1 = document.getElementById("showPassword1");
+        const showPasswordButton2 = document.getElementById("showPassword2");
+
+        showPasswordButton.addEventListener("click", function() {
+            togglePasswordVisibility("password1", this);
+        });
+
+        showPasswordButton1.addEventListener("click", function() {
+            togglePasswordVisibility("password2", this);
+        });
+
+        showPasswordButton2.addEventListener("click", function() {
+            togglePasswordVisibility("password3", this);
+        });
+
+        function togglePasswordVisibility(inputId, button) {
+            const input = document.getElementById(inputId);
+
+            if (input.type === "password") {
+                input.type = "text";
+                button.innerHTML = '<i class="far fa-eye-slash"></i>';
+            } else {
+                input.type = "password";
+                button.innerHTML = '<i class="far fa-eye"></i>';
+            }
+        }
+    });
+    </script>
+
 
 </body>
 

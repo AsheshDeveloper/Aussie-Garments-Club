@@ -1,12 +1,10 @@
 <?php
 session_start();
-
-if (!isset($_SESSION["username"])) {
-    $_SESSION["error"] = 'Please login!!';
-    header("Location: ../authentication/login.php", true, 301); // Redirect to login page
-    exit();
-}
-
+// if (!isset($_SESSION["username"])) {
+//     $_SESSION["error"] = 'Please login!!';
+//     header("Location: ../authentication/login.php", true, 301); // Redirect to login page
+//     exit();
+// }
 require_once("../../php/database_connect.php"); 
 // find authenticated user details
 $findUser = "SELECT * FROM users WHERE email = '{$_SESSION['email']}'";
@@ -336,7 +334,7 @@ if ($cart = $connect->query($getCart)) {
             data: {
                 action: 'delete', // Set action to 'delete'
                 product_id: productId,
-                user:userId,
+                user: userId,
             },
             dataType: 'json',
             success: function(response) {

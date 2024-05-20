@@ -1,10 +1,10 @@
 <?php
 session_start();
-if (!isset($_SESSION["username"])) {
-    $_SESSION["error"] = 'Please login!!';
-    header("Location: ../authentication/login.php", true, 301); // Redirect to login page
-    exit();
-}
+// if (!isset($_SESSION["username"])) {
+//     $_SESSION["error"] = 'Please login!!';
+//     header("Location: ../authentication/login.php", true, 301); // Redirect to login page
+//     exit();
+// }
 require_once("../../php/database_connect.php"); 
 // find authenticated user details
 $findUser = "SELECT * FROM users WHERE email = '{$_SESSION['email']}'";
@@ -59,7 +59,7 @@ if ($cart = $connect->query($getCart)) {
     <div class="container cart-item-container mt-5 mb-5">
         <div class="row">
             <div class="col-md-8">
-            <?php 
+                <?php 
                 $count = 0;
                 $grand_total = 0;
                 if ($cartData && $cartData > 0) { 
@@ -75,7 +75,9 @@ if ($cart = $connect->query($getCart)) {
                     $grand_total = 0;
                 }
               ?>
-                <h5 class="mb-2">Checkout (<span class="text-primary"><?php echo ($count > 1) ? $count.' Items' : $count.' Item'  ?> </span>)</h5>
+                <h5 class="mb-2">Checkout (<span
+                        class="text-primary"><?php echo ($count > 1) ? $count.' Items' : $count.' Item'  ?> </span>)
+                </h5>
 
                 <div class="accordion" id="checkoutAccordion">
                     <div class="accordion-item">
@@ -204,7 +206,7 @@ if ($cart = $connect->query($getCart)) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php                                               
+                                        <?php                                               
                                         foreach($cartData as $row) { 
                                             //product data
                                             $product_id = $row['ProductID'];
@@ -229,8 +231,8 @@ if ($cart = $connect->query($getCart)) {
                                             </td>
                                             <td>
                                                 <h5><?php echo $product_name; ?></h6>
-                                                <p>Size:</p>
-                                                <p>Color:</p>
+                                                    <p>Size:</p>
+                                                    <p>Color:</p>
                                             </td>
                                             <td class="text-success">Price: $ <?php echo $price; ?></td>
                                             <td class="text-success">Total Price: $ <?php echo $total_amount ?></td>
@@ -238,7 +240,7 @@ if ($cart = $connect->query($getCart)) {
                                         <?php
                                             } 
                                         ?>
-                                         
+
                                     </tbody>
                                 </table>
 
@@ -250,7 +252,8 @@ if ($cart = $connect->query($getCart)) {
                                     </div>
                                     <div class="col-8">
                                         <ul style="list-style: none">
-                                            <li><span class="text-primary">Quantity</span> <span class="text-muted"><?php echo $count  ?> Item(s)</span> <span
+                                            <li><span class="text-primary">Quantity</span> <span
+                                                    class="text-muted"><?php echo $count  ?> Item(s)</span> <span
                                                     class="text-primary">$ <?php echo $grand_total  ?></span></li>
                                             <li>
                                                 <small class="mt-2 text-justify">
@@ -330,7 +333,8 @@ if ($cart = $connect->query($getCart)) {
                                                         class="text-muted">Australia</span>
                                                 </li>
                                                 <hr />
-                                                <li><span class="">Quantity</span> <span class="text-muted"><?php echo $count  ?> Item(s)</span>
+                                                <li><span class="">Quantity</span> <span
+                                                        class="text-muted"><?php echo $count  ?> Item(s)</span>
                                                 </li>
                                                 <li><span class="text-primary">Order Total:</span> <span
                                                         class="text-primary">$ <?php echo $grand_total  ?></span></li>

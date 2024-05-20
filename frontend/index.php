@@ -53,8 +53,24 @@ if (isset($_SESSION["email"])) {
                 <!-- Left Side Content -->
                 <div class="col-md-6 left-content-slider">
                     <h2 class="quote-text mb-4 mt-5">Where style meets convenience, and savings meet satisfaction</h2>
-                    <a href="" class="btn btn-primary me-4 px-5 py-2">Get Started</a>
-                    <a class="btn btn-outline-primary px-4 py-2" href="./pages/products.html">View Products</a>
+                    <?php
+                    if(!$_SESSION['userId']){
+
+                       echo' <a href="./pages/authentication/thirdPartySignup.php" class="btn btn-primary me-4 px-5 py-2">Get
+                            Started</a>';
+                    }
+                    ?>
+                    <?php
+                    if($_SESSION['userId']){
+
+                       echo' 
+                     <a class="btn btn-primary px-4 py-2" href="./pages/product/products.php">View Products</a>';
+
+                    } else {
+                          echo' 
+                     <a class="btn btn-outline-primary px-4 py-2" href="./pages/product/products.php">View Products</a>';
+                    }
+                    ?>
                     <p class="mt-2 contacts-info">
                         +610403876990 |
                         <a href=""><i class="fab fa-facebook me-1"></i> </a>
