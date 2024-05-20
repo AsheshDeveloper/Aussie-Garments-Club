@@ -39,7 +39,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     exit;
 }
-session_start();
 include '../../php/auth/auth_login.php';
 ?>
 
