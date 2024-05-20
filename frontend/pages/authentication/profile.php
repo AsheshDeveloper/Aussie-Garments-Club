@@ -1,4 +1,5 @@
 <?php
+    $connect = mysqli_connect('localhost', 'root', '', 'the_garments_club');
 // Initialize the session - is required to check the login state.
 session_start();
 // Check if the user is logged in, if not then redirect to login page
@@ -10,7 +11,26 @@ if (!isset($_SESSION['facebook_loggedin'])) {
 $facebook_loggedin = $_SESSION['facebook_loggedin'];
 $facebook_email = $_SESSION['facebook_email'];
 $facebook_name = $_SESSION['facebook_name'];
-$facebook_picture = $_SESSION['facebook_picture'];
+$name = explode(" ", $facebook_name);
+$first_name = $name[0];
+$last_name = $name[1];
+$user_type = 'user';
+
+$fetch_user = " SELECT * FROM users WHERE email = '$facebook_email' ";
+$result = mysqli_query($connect, $fetch_user);
+if(mysqli_num_rows($result) > 0){
+    $row= mysqli_fetch_array($result);
+    $_SESSION['username'] = $row['first_name'];
+    $_SESSION['email'] = $row['email'];
+    header('Location: ../../index.php');
+}else{
+    $insert = "INSERT INTO users(first_name, middle_name,last_name,contact,email,password,user_type) VALUES('$first_name', '$middle_name', '$last_name', '$contact', '$facebook_email', '$password', '$user_type')";
+    mysqli_query($connect, $insert);
+    $_SESSION['username'] = $facebook_name;
+    $_SESSION['email'] = $facebook_email;
+    header('Location: ../../index.php');
+}
+
 ?>
 <html>
 
