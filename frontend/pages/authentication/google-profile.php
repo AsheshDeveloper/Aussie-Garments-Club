@@ -1,4 +1,5 @@
 <?php
+    $connect = mysqli_connect('localhost', 'root', '', 'the_garments_club');
 // Initialize the session - is required to check the login state.
 session_start();
 // Check if the user is logged in, if not then redirect to login page
@@ -10,7 +11,26 @@ if (!isset($_SESSION['google_loggedin'])) {
 $google_loggedin = $_SESSION['google_loggedin'];
 $google_email = $_SESSION['google_email'];
 $google_name = $_SESSION['google_name'];
+$name = explode(" ", $google_name);
+$first_name = $name[0];
+$last_name = $name[1];
 $google_picture = $_SESSION['google_picture'];
+$user_type = 'user';
+
+$fetch_user = " SELECT * FROM users WHERE email = '$google_email' ";
+$result = mysqli_query($connect, $fetch_user);
+if(mysqli_num_rows($result) > 0){
+    $row= mysqli_fetch_array($result);
+    $_SESSION['username'] = $row['first_name'];
+    $_SESSION['email'] = $row['email'];
+    header('Location: ../../index.php');
+}else{
+    $insert = "INSERT INTO users(first_name, middle_name,last_name,contact,email,password,user_type) VALUES('$first_name', '$middle_name', '$last_name', '$contact', '$google_email', '$password', '$user_type')";
+    mysqli_query($connect, $insert);
+    $_SESSION['username'] = $first_name;
+    $_SESSION['email'] = $google_email;
+    header('Location: ../../index.php');
+}
 ?>
 <html>
 <head>
