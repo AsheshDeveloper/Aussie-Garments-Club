@@ -1,10 +1,10 @@
 <?php
 session_start();
-if (!isset($_SESSION["username"])) {
-    $_SESSION["error"] = 'Please login!!';
-    header("Location: ../authentication/login.php", true, 301); // Redirect to login page
-    exit();
-}
+// if (!isset($_SESSION["username"])) {
+//     $_SESSION["error"] = 'Please login!!';
+//     header("Location: ../authentication/login.php", true, 301); // Redirect to login page
+//     exit();
+// }
 require_once("../../php/database_connect.php"); 
 // find authenticated user details
 $findUser = "SELECT * FROM users WHERE email = '{$_SESSION['email']}'";
@@ -24,7 +24,6 @@ if ($cart = $connect->query($getCart)) {
     }
 }
 
-require_once "../../php/database_connect.php";
 ?>
 
 <!DOCTYPE html>
@@ -143,33 +142,59 @@ require_once "../../php/database_connect.php";
                     <div class="card-body">
                         <h5 class="card-title">Total</h5>
                         <?php 
-                $count = 0;
-                $grand_total = 0;
-                if ($cartData && $cartData > 0) { 
-                    foreach($cartData as $row) {
-                        $price = array($row['TotalAmount']); 
-                        $count++; 
-                        // Calculate total price
-                        $total = array_sum($price);
-                        $grand_total += $total;
-                    }                      
-                } else {
-                    // Handle case where no rows are returned
-                    $grand_total = 0;
-                }
-
-              ?>
-                        <p> Total Items:<span class=""> <?php echo $count  ?> </span> </p>
-                        <p> Total Price: $ <span class="grand-total"> <?php echo $grand_total  ?> </span></p>
-                        <div class="d-grid col">
-                            <a href="./checkout.php" class="btn btn-primary px-5 py-2">Proceed to Checkout</a>
-                        </div>
+                        $count = 0;
+                        $grand_total = 0;
+                        if ($cartData && count($cartData) > 0) { 
+                            foreach($cartData as $row) {
+                                $price = $row['TotalAmount']; 
+                                $count++; 
+                                // Calculate total price
+                                $total = $price;
+                                $grand_total += $total;
+                            }
+                            echo '<p>Total Items: <span class="item-count">' . $count . '</span></p>';
+                            echo '<p>Total Price: $<span class="grand-total">' . $grand_total . '</span></p>';
+                            echo '<div class="d-grid col">';
+                            echo '<a href="./checkout.php" class="btn btn-primary px-5 py-2">Proceed to Checkout</a>';
+                            echo '</div>';
+                        } else {
+                            // Handle case where no rows are returned
+                            echo '<p>No items in the cart.</p>';
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 
+<!-- modal for search -->
+<div class="modal fade" id="guestModal" tabindex="-1" aria-labelledby="guestModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="guestModalLabel">Search</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="guestForm" method="post">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Enter First Name" name="guest_first_name"  />
+                        <input type="text" class="form-control" placeholder="Enter Middle Name" name="guest_middle_name"  />
+                        <input type="text" class="form-control" placeholder="Enter Last Name" name="guest_last_name"  />
+                        <input type="text" class="form-control" placeholder="Enter Email" name="guest_email"  />
+                        <input type="text" class="form-control" placeholder="Enter Contact Number" name="guest_contact"  />
+                        <input type="text" class="form-control" placeholder="Enter Address" name="guest_address"  />                        
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary modalButton" id="guestButton">Search</button>
+            </div>
+        </div>
+    </div>
+</div>
     <!-- suggestion for you -->
     <div class="container mt-5 mb-5 suggestion-container">
         <div class="row">
@@ -309,7 +334,7 @@ require_once "../../php/database_connect.php";
             data: {
                 action: 'delete', // Set action to 'delete'
                 product_id: productId,
-                user:userId,
+                user: userId,
             },
             dataType: 'json',
             success: function(response) {

@@ -1,7 +1,3 @@
-<?php 
-// session_start();
-// require_once("php/database_connect.php"); 
-?>
 <!-- navigation  -->
 <!-- top navigation -->
 <nav class="nav-wrapper">
@@ -26,19 +22,27 @@
                     ?>>Login | </a></li>
                 <li class="nav-item">
                     <a class="nav-link" href=<?php 
-                    echo basename($_SERVER['PHP_SELF']) == 'index.php' ?
-                    './pages/authentication/thirdPartySignup.php' : '../authentication/signup.php';
+                        echo basename($_SERVER['PHP_SELF']) == 'index.php' ?
+                        './pages/authentication/thirdPartySignup.php' : '../authentication/signup.php';
                     ?>>Signup |</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./pages/profile/user_profile.php">Guest</a>
+                    <?php
+                    if(!$_SESSION['userId']){
+                        echo '  <span class="nav-link text-primary" href="#">
+                        Browsing as Guest              
+                        </span>';
+                    }
+                    ?>
                 </li>
             </ul>
             <?php } ?>
             <?php if(!empty($_SESSION['username'])){ ?>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <span class="nav-link">Welcome <?php echo $_SESSION['username'] ?></span>
+                    <span class="nav-link">Welcome <span class="text-primary">
+                            <?php echo $_SESSION['username'] ?></span>
+                        </strong>
                 </li>
             </ul>
             <?php } ?>

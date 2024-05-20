@@ -28,14 +28,24 @@
                     
                     ?>>Product</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="#">Catalog</a>
+                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link" href=<?php 
+                    echo basename($_SERVER['PHP_SELF']) == 'index.php' ? '
+                  ./pages/about/about.php
+                    ' : '../about/about.php';
+                    
+                    ?>>About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Site Map</a>
+                    <a class="nav-link" href=<?php 
+                    echo basename($_SERVER['PHP_SELF']) == 'index.php' ? '
+                  ./pages/site_map/sitemap.php
+                    ' : '../site_map/sitemap.php';
+                    
+                    ?>>Site Map</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="modal" data-bs-target="#searchModal" href="#">
@@ -62,8 +72,8 @@
                             <li>
                                 <a class="dropdown-item" href=<?php 
                     echo basename($_SERVER['PHP_SELF']) == 'index.php' ? '
-                    ./Pages/profile/user_profile.html
-                    ' : '../profile/user_profile.html';
+                    ./Pages/profile/user_profile.php
+                    ' : '../profile/user_profile.php';
                     
                     ?>>Profile</a>
                             </li>
@@ -117,7 +127,8 @@
             <div class="modal-body">
                 <form id="searchForm">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="enter to search...." name="search_query" id="searchQuery" />
+                        <input type="text" class="form-control" placeholder="enter to search...." name="search_query"
+                            id="searchQuery" />
                     </div>
                     <div id="searchResults"></div>
                 </form>

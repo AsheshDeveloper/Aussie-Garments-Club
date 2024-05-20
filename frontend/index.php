@@ -1,6 +1,21 @@
 <?php 
 session_start();
 require_once("php/database_connect.php"); 
+
+// find authenticated user details
+if (isset($_SESSION["email"])) {
+    $findUser = "SELECT * FROM users WHERE email = '{$_SESSION['email']}'";
+    $fetchUser = mysqli_query($connect, $findUser);
+    $user = null; // Initialize user variable
+    if(mysqli_num_rows($fetchUser) > 0){
+        $user = mysqli_fetch_array($fetchUser);
+        $userID = $user['id'];
+    }
+    $getData = "SELECT c.*, p.* FROM Cart c INNER JOIN Product p ON c.ProductID = p.ProductID WHERE c.UserID='$userID'";
+}else{
+    $getData = "SELECT c.*, p.* FROM Cart c INNER JOIN Product p ON c.ProductID = p.ProductID ";
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,8 +53,24 @@ require_once("php/database_connect.php");
                 <!-- Left Side Content -->
                 <div class="col-md-6 left-content-slider">
                     <h2 class="quote-text mb-4 mt-5">Where style meets convenience, and savings meet satisfaction</h2>
-                    <a href="" class="btn btn-primary me-4 px-5 py-2">Get Started</a>
-                    <a class="btn btn-outline-primary px-4 py-2" href="./pages/products.html">View Products</a>
+                    <?php
+                    if(!$_SESSION['userId']){
+
+                       echo' <a href="./pages/authentication/thirdPartySignup.php" class="btn btn-primary me-4 px-5 py-2">Get
+                            Started</a>';
+                    }
+                    ?>
+                    <?php
+                    if($_SESSION['userId']){
+
+                       echo' 
+                     <a class="btn btn-primary px-4 py-2" href="./pages/product/products.php">View Products</a>';
+
+                    } else {
+                          echo' 
+                     <a class="btn btn-outline-primary px-4 py-2" href="./pages/product/products.php">View Products</a>';
+                    }
+                    ?>
                     <p class="mt-2 contacts-info">
                         +610403876990 |
                         <a href=""><i class="fab fa-facebook me-1"></i> </a>
@@ -103,8 +134,7 @@ require_once("php/database_connect.php");
                     <div class="row-suggestion-items">
                         <div class="row">
                             <?php
-                                $fetch_product = "Select * from product Limit 2";
-                                $results = mysqli_query($connect, $fetch_product);
+                                $results = mysqli_query($connect, $getData);
                                 while($row=mysqli_fetch_assoc($results) ){   
                                     $product_id = $row['ProductID'];               
                                 $imageOne = $row['ImageOne'];
@@ -118,8 +148,7 @@ require_once("php/database_connect.php");
                         </div>
                         <div class="row mt-3">
                             <?php 
-                                $fetch_product = "Select * from product Limit 2";
-                                $results = mysqli_query($connect, $fetch_product);
+                                $results = mysqli_query($connect, $getData);
                                 while($row=mysqli_fetch_assoc($results) ){         
                                     $product_id = $row['ProductID'];         
                                 $imageOne = $row['ImageOne'];

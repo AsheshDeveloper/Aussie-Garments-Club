@@ -252,6 +252,12 @@ include '../../php/controller/product_controller.php';
                               <input type="text" class="form-control" name="stock_quantity" id="stock_quantity" required> 
                           </div>   
                           <div class="mb-3">
+                          <select class="form-select" aria-label="Select the main category" name="main_category">
+                              <option selected>Select the main category</option>
+                              <option value="men">Men</option>
+                              <option value="women">Women</option>
+                              <option value="children">Children</option>   
+                          </select> 
                           <select class="form-select" aria-label="Select a category" name="category">
                               <option selected>Select a category</option>
                               <?php 
