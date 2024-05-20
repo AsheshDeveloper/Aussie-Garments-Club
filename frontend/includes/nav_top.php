@@ -3,6 +3,14 @@
 <nav class="nav-wrapper">
     <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom-top">
         <div class="container">
+
+            <div>
+                <?php
+                if(isset($_SESSION['success'])) {
+                    echo "VERIFIED";
+                }
+                ?>
+            </div>
             <!-- Left side content -->
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
