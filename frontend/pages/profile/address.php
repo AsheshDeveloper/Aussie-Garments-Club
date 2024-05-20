@@ -1,3 +1,6 @@
+<?php 
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,6 +42,9 @@
                     </span>
                 </h5>
                 <a href="./add_address.php" class="btn btn-primary px-5 py-2">Add a new address</a>
+                <div class="mt-3" id="deleteSuccessAlert">
+
+                </div>
                 <table class="table mt-4">
                     <thead>
                         <tr>
@@ -54,45 +60,8 @@
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr class="">
-                            <td>1 <span class="ml-2 badge text-bg-warning">Default</span></td>
-                            <td>Australia</td>
-                            <td>Unit 58</td>
-                            <td>28 Durmoyne street</td>
-                            <td>Lidcombe</td>
-                            <td>NSW</td>
-                            <td>2234</td>
-                            <td><span class="ml-2 badge text-bg-primary">Someone</span></td>
+                    <tbody id="address_table_body">
 
-                            <td>
-                                <!-- <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button> -->
-                                <a href="" type="button" class="btn btn-outline-success">
-                                    <i class="fa-solid fa-pen"></i>
-                                </a>
-                                <a href="" type="button" class="btn btn-outline-danger"><i
-                                        class="fas fa-trash-alt"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Australia</td>
-                            <td>Unit 58</td>
-                            <td>28 Durmoyne street</td>
-                            <td>Lidcombe</td>
-                            <td>NSW</td>
-                            <td>2234</td>
-                            <td><span class="ml-2 badge text-bg-primary">Jack</span></td>
-
-                            <td>
-                                <!-- <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button> -->
-                                <a href="" type="button" class="btn btn-outline-success">
-                                    <i class="fa-solid fa-pen"></i>
-                                </a>
-                                <a href="" type="button" class="btn btn-outline-danger"><i
-                                        class="fas fa-trash-alt"></i></a>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -183,18 +152,77 @@
     ?>
     <!-- Optional JavaScript -->
 
-
     <script>
-    const passwordInput = document.getElementById("password");
-    const showPasswordButton = document.getElementById("showPassword");
-    const editPasswordButton = document.getElementById("editPassword");
+    // Fetch data from profile_address_get.php using AJAX
+    window.onload = function() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "../../php/profile/address/profile_address_Get.php", true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var data = JSON.parse(xhr.responseText);
+                var tableBody = document.getElementById("address_table_body");
+                tableBody.innerHTML = ""; // Clear existing table rows
+                for (var i = 0; i < data.length; i++) {
+                    var row = "<tr>";
 
-    showPasswordButton.addEventListener("click", () => {
-        const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
-        passwordInput.setAttribute("type", type);
-        showPasswordButton.querySelector("i").classList.toggle("fa-eye-slash");
-    });
+                    row += "<td>" + (i + 1) + "<span class='ml-2 badge text-bg-warning'>" + (data[i]
+                            .defaultAddress == 1 ? 'Default' : '') +
+                        "</span>  </td>"; // Use index + 1 as serial number
+                    row += "<td>" + data[i].country + "</td>";
+                    row += "<td>" + data[i].aptUnitSuit + "</td>";
+                    row += "<td>" + data[i].street + "</td>";
+                    row += "<td>" + data[i].citySuburb + "</td>";
+                    row += "<td>" + data[i].stateTerritory + "</td>";
+                    row += "<td>" + data[i].Postcode + "</td>";
+                    row += "<td> <span class='badge text-bg-primary'>" + data[i].forUser + "</span> </td>";
+                    row += "<td>";
+                    row += "<div class='btn-group' role='group'>";
+                    row +=
+                        "<div class='mr-4 custom-margin'><button href='' type='button' class='btn btn-outline-success'><i class='fa-solid fa-pen'></i></button></div>";
+                    row += "<button type='button' class='btn btn-outline-danger' data-row-id='" +
+                        data[i].addressID +
+                        "' onclick='deleteRow(this, event)'><i class='fas fa-trash-alt'></i></button>";
+
+                    row += "</div>";
+                    row += "</td>";
+                    row += "</tr>";
+                    tableBody.innerHTML += row;
+                }
+            }
+        };
+        xhr.send();
+    };
     </script>
+    <script>
+    function deleteRow(button) {
+        event.preventDefault();
+
+        if (confirm("Are you sure you want to delete this row?")) {
+            var rowId = button.getAttribute('data-row-id');
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "../../php/profile/address/profile_delete_address.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        // Show success alert
+                        document.getElementById("deleteSuccessAlert").innerHTML =
+                            '<div class="alert alert-success" role="alert">Row deleted successfully</div>';
+                        // Reload the page after a short delay (optional)
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 2000); // 2 seconds delay before reloading
+                    } else {
+                        console.error("Error deleting row: " + xhr.responseText);
+                    }
+                }
+            };
+            // Ensure that the parameter name is "addressID"
+            xhr.send("addressID=" + encodeURIComponent(rowId)); // Send addressID 
+        }
+    }
+    </script>
+
 </body>
 
 </html>

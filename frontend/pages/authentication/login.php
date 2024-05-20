@@ -82,7 +82,7 @@ if (isset($_SESSION["error"])) {
                                         <input class="form-check-input" type="checkbox" id="rememberMe" />
                                         <label class="form-check-label" for="rememberMe">Remember me</label>
                                     </div>
-                                    <a href="#" class="">Forgot Password?</a>
+                                    <a href="./forgotpwd.php" class="">Forgot Password?</a>
                                 </small>
                                 <button type="submit" name="submit" type="name"
                                     class="btn btn-primary w-100 p-2 mb-3">Login</button>

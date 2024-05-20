@@ -1,10 +1,10 @@
 <?php
 session_start();
-if (!isset($_SESSION["username"])) {
-    $_SESSION["error"] = 'Please login!!';
-    header("Location: ../authentication/login.php", true, 301); // Redirect to login page
-    exit();
-}
+// if (!isset($_SESSION["username"])) {
+//     $_SESSION["error"] = 'Please login!!';
+//     header("Location: ../authentication/login.php", true, 301); // Redirect to login page
+//     exit();
+// }
 require_once("../../php/database_connect.php"); 
 // find authenticated user details
 $findUser = "SELECT * FROM users WHERE email = '{$_SESSION['email']}'";
@@ -59,7 +59,7 @@ if ($cart = $connect->query($getCart)) {
     <div class="container cart-item-container mt-5 mb-5">
         <div class="row">
             <div class="col-md-8">
-            <?php 
+                <?php 
                 $count = 0;
                 $grand_total = 0;
                 if ($cartData && $cartData > 0) { 
@@ -75,7 +75,9 @@ if ($cart = $connect->query($getCart)) {
                     $grand_total = 0;
                 }
               ?>
-                <h5 class="mb-2">Checkout (<span class="text-primary"><?php echo ($count > 1) ? $count.' Items' : $count.' Item'  ?> </span>)</h5>
+                <h5 class="mb-2">Checkout (<span
+                        class="text-primary"><?php echo ($count > 1) ? $count.' Items' : $count.' Item'  ?> </span>)
+                </h5>
 
                 <div class="accordion" id="checkoutAccordion">
                     <div class="accordion-item">
@@ -204,7 +206,7 @@ if ($cart = $connect->query($getCart)) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php                                               
+                                        <?php                                               
                                         foreach($cartData as $row) { 
                                             //product data
                                             $product_id = $row['ProductID'];
@@ -229,8 +231,8 @@ if ($cart = $connect->query($getCart)) {
                                             </td>
                                             <td>
                                                 <h5><?php echo $product_name; ?></h6>
-                                                <p>Size:</p>
-                                                <p>Color:</p>
+                                                    <p>Size:</p>
+                                                    <p>Color:</p>
                                             </td>
                                             <td class="text-success">Price: $ <?php echo $price; ?></td>
                                             <td class="text-success">Total Price: $ <?php echo $total_amount ?></td>
@@ -238,7 +240,7 @@ if ($cart = $connect->query($getCart)) {
                                         <?php
                                             } 
                                         ?>
-                                         
+
                                     </tbody>
                                 </table>
 
@@ -250,7 +252,8 @@ if ($cart = $connect->query($getCart)) {
                                     </div>
                                     <div class="col-8">
                                         <ul style="list-style: none">
-                                            <li><span class="text-primary">Quantity</span> <span class="text-muted"><?php echo $count  ?> Item(s)</span> <span
+                                            <li><span class="text-primary">Quantity</span> <span
+                                                    class="text-muted"><?php echo $count  ?> Item(s)</span> <span
                                                     class="text-primary">$ <?php echo $grand_total  ?></span></li>
                                             <li>
                                                 <small class="mt-2 text-justify">
@@ -272,28 +275,46 @@ if ($cart = $connect->query($getCart)) {
             </div>
             <?php
                     $paypalUrl='https://www.sandbox.paypal.com/cgi-bin/webscr';
-                $paypalId='sb-x2ojv29990908@personal.example.com';
+                $paypalId='sb-6azpk30044866@business.example.com';
             ?>
             <!-- Total Section -->
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-grid col">
-                            <form action="<?php echo $paypalUrl; ?>" method="post" name="frmPayPal1">
-                                <div class="panel price panel-red">
+                            <?php 
+                                $count = 0;
+                                $grand_total = 0;
+                                if ($cartData && $cartData > 0) { 
+                                    foreach($cartData as $row) {
+                                        $price = array($row['TotalAmount']); 
+                                        $count++; 
+                                        // Calculate total price
+                                        $total = array_sum($price);
+                                        $grand_total += $total;
+                                    }                      
+                                } else {
+                                    // Handle case where no rows are returned
+                                    $grand_total = 0;
+                                }
+
+                            ?>
+                            <div class="panel price panel-red">
+                                <form action="<?php echo $paypalUrl; ?>" method="post">
                                     <input type="hidden" name="business" value="<?php echo $paypalId; ?>">
                                     <input type="hidden" name="cmd" value="_xclick">
                                     <input type="hidden" name="item_name" value="Aussie-Garments-Club">
-                                    <input type="hidden" name="item_number" value="2">
-                                    <input type="hidden" name="amount" value="20">
+                                    <input type="hidden" name="item_number" value="<?php echo $count; ?>">
+                                    <input type="hidden" name="amount" value="<?php echo $grand_total; ?>">
                                     <input type="hidden" name="no_shipping" value="1">
-                                    <input type="hidden" name="currency_code" value="USD">
+                                    <input type="hidden" name="currency_code" value="AUD">
                                     <input type="hidden" name="cancel_return"
-                                        value="http://localhost/Aussie-Garments-Club/frontend/index.php">
+                                        value="http://localhost/the garments club/frontend/index.php">
                                     <input type="hidden" name="return"
-                                        value="http://localhost/Aussie-Garments-Club/frontend/payment_integration/success.php">
+                                        value="http://localhost/the garments club/frontend/payment_integration/success.php">
+                                    <button class="btn btn-primary px-5 w-100 py-2 mb-1">Place your order</button>
+                                </form>
                                     <div class="panel-footer">
-                                        <button class="btn btn-primary px-5 w-100 py-2 mb-1">Place your order</button>
                                         <small class="mt-2 text-justify">
                                             By placing your order, you agree to Aussie's garment Conditions of Use &
                                             Sale, and Return Policy. Please read our
@@ -303,23 +324,6 @@ if ($cart = $connect->query($getCart)) {
                                         <hr />
                                         <h6>Order Summary</h6>
                                         <div class="description-container">
-                                        <?php 
-                                            $count = 0;
-                                            $grand_total = 0;
-                                            if ($cartData && $cartData > 0) { 
-                                                foreach($cartData as $row) {
-                                                    $price = array($row['TotalAmount']); 
-                                                    $count++; 
-                                                    // Calculate total price
-                                                    $total = array_sum($price);
-                                                    $grand_total += $total;
-                                                }                      
-                                            } else {
-                                                // Handle case where no rows are returned
-                                                $grand_total = 0;
-                                            }
-
-                                        ?>
                                             <ul style="list-style: none">
                                                 <li><span class="">Style</span> <span class="text-muted">Casual</span>
                                                 </li>
@@ -329,7 +333,8 @@ if ($cart = $connect->query($getCart)) {
                                                         class="text-muted">Australia</span>
                                                 </li>
                                                 <hr />
-                                                <li><span class="">Quantity</span> <span class="text-muted"><?php echo $count  ?> Item(s)</span>
+                                                <li><span class="">Quantity</span> <span
+                                                        class="text-muted"><?php echo $count  ?> Item(s)</span>
                                                 </li>
                                                 <li><span class="text-primary">Order Total:</span> <span
                                                         class="text-primary">$ <?php echo $grand_total  ?></span></li>

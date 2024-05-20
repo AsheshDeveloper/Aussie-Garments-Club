@@ -40,7 +40,7 @@ include '../../php/auth/auth_login.php';
                     <div class="card shadowed-card p-4 mt-5 mb-5">
                         <div class="card-body text-center">
                             <h4 class="mt-3 text-primary">Verification Code</h4>
-                            <small class="text-muted">Enter your Verification Code.</small>
+                            <small class="text-muted">A verification code has been sent to your email and phone.</small>
                             <form class="mt-5 mb-5">
                                 <div class="mb-3">
                                     <div class="d-flex align-items-left">
@@ -49,7 +49,7 @@ include '../../php/auth/auth_login.php';
                                     </div>
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="code" id="code"
-                                            placeholder="eg - 1232141" required />
+                                            placeholder="enter the verification code" required />
                                         <button class="btn btn-outline-secondary" type="button"
                                             id="toggleConfirmPassword">
                                             <i class="fa fa-refresh"></i>
@@ -60,9 +60,9 @@ include '../../php/auth/auth_login.php';
                                     </div>
                                 </div>
 
-                                <a href="../../index.php" type="submit"
+                                <a href="./forgotpwdreset.php" type="submit"
                                     class="btn btn-primary w-100 p-2 mt-4 mb-2">Verify Code</a>
-                                <small class="">Try another way? <a href="./verification.php">CLick Me</a></small>
+                                <!-- <small class="">Try another way? <a href="./verification.php">CLick Me</a></small> -->
                             </form>
                         </div>
                     </div>

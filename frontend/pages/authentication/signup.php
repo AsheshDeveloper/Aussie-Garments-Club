@@ -30,40 +30,6 @@ include '../../php/auth/auth_signup.php';
         <?php 
         include '../../includes/nav_main.php';
     ?>
-        <!-- <nav class="navbar navbar-expand-lg navbar-light bg-none navbar-custom-main">
-            <div class="container">
-                <a class="navbar-brand" href="../../index.php"><img src="../../images/AussieGarmentsLogo.svg"
-                        alt="Logo" /></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Product</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Catalog</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Site Map</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#">
-                                <i class="fas fa-search"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav> -->
     </nav>
 
     <div class="container-fluid">
