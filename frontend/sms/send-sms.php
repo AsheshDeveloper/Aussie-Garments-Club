@@ -3,7 +3,7 @@ use Twilio\Rest\Client;
 require_once "../../vendor/autoload.php";
 
 $sid = "AC240112cb42f42b094167c7f84708bfba";
-$token = "b98efb15da1a63a1b5d3fcc39a1b7186";
+$token = "8329b5a81a5c0c15ae6738ea10482283";
 $twilio = new Client($sid, $token);
 print($twilio);
 $message = $twilio->messages
