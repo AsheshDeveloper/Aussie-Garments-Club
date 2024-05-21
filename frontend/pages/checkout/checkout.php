@@ -226,7 +226,7 @@ if ($cart = $connect->query($getCart)) {
                                         ?>
                                         <tr class="">
                                             <td>
-                                                <img src="../../images/suggestions/suggestion3.png" alt="Product Image"
+                                                <img src="data:image/jpeg;base64,<?php echo base64_encode($imageOne); ?>" alt="Product Image"
                                                     class="class-table-image rounded" />
                                             </td>
                                             <td>

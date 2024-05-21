@@ -98,7 +98,7 @@ if(!empty($_SESSION['email'])){
                         <tr class="">
                             <td><input type="checkbox" /></td>
                             <td>
-                                <img src="../../../backend/src/pages/products/images/<?php echo $imageOne ?>"
+                                <img src="data:image/jpeg;base64,<?php echo base64_encode($imageOne); ?>"
                                     alt="Product Image" class="class-table-image rounded" />
                             </td>
                             <td>

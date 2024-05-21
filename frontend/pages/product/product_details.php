@@ -57,15 +57,15 @@ include '../../php/database_connect.php';
                     <d iv id="imageSlider" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner product-carousel">
                             <div class="carousel-item active">
-                                <img src="../../../backend/src/pages/products/images/<?php echo $imageOne ?>"
+                                <img src="data:image/jpeg;base64,<?php echo base64_encode($imageOne); ?>"
                                     class="d-block w-100 product-image" alt="Product Image 1" />
                             </div>
                             <div class="carousel-item">
-                                <img src="../../../backend/src/pages/products/images/<?php echo $imageTwo ?>"
+                                <img src="data:image/jpeg;base64,<?php echo base64_encode($imageTwo); ?>"
                                     class="d-block w-100 product-image" alt="Product Image 2" />
                             </div>
                             <div class="carousel-item">
-                                <img src="../../../backend/src/pages/products/images/<?php echo $imageThree ?>"
+                                <img src="data:image/jpeg;base64,<?php echo base64_encode($imageThree); ?>"
                                     class="d-block w-100 product-image" alt="Product Image 3" />
                             </div>
                         </div>
@@ -82,13 +82,11 @@ include '../../php/database_connect.php';
                     </d>
                     <!-- Image Selector -->
                     <div class="mt-3 image-selector-container">
-                        <img src="../../../backend/src/pages/products/images/<?php echo $imageOne ?>"
+                        <img src="data:image/jpeg;base64,<?php echo base64_encode($imageOne); ?>"
                             class="d-inline-block image-selector" alt="Image Selector 1" />
-                        <img src="../../../backend/src/pages/products/images/<?php echo $imageTwo ?>"
+                        <img src="data:image/jpeg;base64,<?php echo base64_encode($imageTwo); ?>"
                             class="d-inline-block image-selector mx-2" alt="Image Selector 2" />
-                        <img src="../../../backend/src/pages/products/images/<?php echo $imageThree ?>"
-                            class="d-inline-block image-selector mx-2" alt="Image Selector 2" />
-                        <img src="../../images/product_details/mohamad-khosravi-5KyzZbonwqQ-unsplash.png"
+                        <img src="data:image/jpeg;base64,<?php echo base64_encode($imageThree); ?>"
                             class="d-inline-block image-selector mx-2" alt="Image Selector 2" />
                     </div>
                 </div>

@@ -10,31 +10,27 @@ if(isset($_POST['create'])){
     $brand = mysqli_real_escape_string($connect, $_POST['brand']);
     $size = mysqli_real_escape_string($connect, $_POST['size']);
 
-    //accessing images
-    $image_one = mysqli_real_escape_string($connect, $_FILES['image_one']['name']);
-    $image_two = mysqli_real_escape_string($connect, $_FILES['image_two']['name']);
-    $image_three = mysqli_real_escape_string($connect, $_FILES['image_three']['name']);
+    //processing images
+    $image_one = addslashes(file_get_contents($_FILES['image_one']['tmp_name']));
+    $image_two = addslashes(file_get_contents($_FILES['image_two']['tmp_name']));
+    $image_three = addslashes(file_get_contents($_FILES['image_three']['tmp_name']));    
 
-    //access image tmp name
-    $tmp_image_one = $_FILES['image_one']['tmp_name'];
-    $tmp_image_two = $_FILES['image_two']['tmp_name'];
-    $tmp_image_three = $_FILES['image_three']['tmp_name'];
-
-    $fetch_product = " SELECT * FROM product WHERE productName = '$product_name' ";
+    $fetch_product = " SELECT * FROM product WHERE name = '$product_name' ";
 
     $result = mysqli_query($connect, $fetch_product);
 
-    if(mysqli_num_rows($result) > 0){
-        $errors[] = "product already exists!";
-    }else{        
-        move_uploaded_file($tmp_image_one,"./images/$image_one");
-        move_uploaded_file($tmp_image_two,"./images/$image_two");
-        move_uploaded_file($tmp_image_three,"./images/$image_three");
-
-        $insert = "INSERT INTO product(name, description,price,quantityInStock,mainCategory,categoryID,brandID,sizeID,imageOne,imageTwo,imageThree) VALUES('$product_name', '$description', '$price', '$stock','$main_category' ,'$category', '$brand', '$size', '$image_one', '$image_two', '$image_three')";
-        mysqli_query($connect, $insert);
-        $success[] = "product created!";
-        header("Location: product.php");     
+    if($result){
+        if(mysqli_num_rows($result) > 0){
+            $errors[] = "product already exists!";
+        }else{        
+            $insert = "INSERT INTO product(name, description,price,quantityInStock,mainCategory,categoryID,brandID,sizeID,imageOne,imageTwo,imageThree) VALUES('$product_name', '$description', '$price', '$stock','$main_category' ,'$category', '$brand', '$size', '$image_one', '$image_two', '$image_three')";
+            mysqli_query($connect, $insert);
+            $success[] = "product created!";
+            header("Location: product.php");     
+        }
+    }else{
+        // Handle query execution failure
+        echo "Error: " . mysqli_error($connect);
     }
 } elseif(isset($_POST["update"])){   
     require_once("../../php/database_connect.php"); 

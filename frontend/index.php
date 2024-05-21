@@ -140,7 +140,7 @@ if (isset($_SESSION["email"])) {
                                 $imageOne = $row['ImageOne'];
                                 $imageTwo = $row['ImageTwo'];
                                 echo "<div class='col'>
-                                <img src='../backend/src/pages/products/images/$imageOne' alt='Image 1' class='img-fluid' />
+                                <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid' />
                                 </div>";
                                 }
                             ?>
@@ -154,7 +154,7 @@ if (isset($_SESSION["email"])) {
                                 $imageOne = $row['ImageOne'];
                                 $imageTwo = $row['ImageTwo'];
                                 echo "<div class='col'>
-                                        <img src='../backend/src/pages/products/images/$imageOne' alt='Image 3' class='img-fluid' />
+                                        <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 3' class='img-fluid' />
                                         </div>";
                                 }
                             ?>
@@ -174,7 +174,7 @@ if (isset($_SESSION["email"])) {
                                 $imageOne = $row['ImageOne'];
                                 $imageTwo = $row['ImageTwo'];
                                 echo "<div class='col'>
-                                <img src='../backend/src/pages/products/images/$imageOne' alt='Image 1' class='img-fluid' />
+                                <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid' />
                                 </div>";
                                 }
                             ?>
@@ -188,7 +188,7 @@ if (isset($_SESSION["email"])) {
                                 $imageOne = $row['ImageOne'];
                                 $imageTwo = $row['ImageTwo'];
                                 echo "<div class='col'>
-                                        <img src='../backend/src/pages/products/images/$imageOne' alt='Image 3' class='img-fluid' />
+                                        <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 3' class='img-fluid' />
                                         </div>";
                                 }
                             ?>
@@ -206,7 +206,7 @@ if (isset($_SESSION["email"])) {
             <h5 class="for-men-heading mb-4">For Men<img src="./images/assets/bussiness-man.png" alt="Heading" /></h5>
             <div class="row section-for-men-row">
                 <?php 
-                $fetch_product = "SELECT * FROM product WHERE mainCategory = 'men' LIMIT 4";
+                $fetch_product = "SELECT * FROM product WHERE mainCategory = 'men' && name='test'";
                 $results = mysqli_query($connect, $fetch_product);
                 while($row=mysqli_fetch_assoc($results) ){  
                     $product_id = $row['ProductID'];
@@ -218,7 +218,7 @@ if (isset($_SESSION["email"])) {
                   
                   echo "<div class='col' style='position: relative'>
                             <a href='./pages/product/product_details.php?id=$product_id'>
-                                <img src='../backend/src/pages/products/images/$imageOne' alt='Image 1' class='img-fluid mb-3' />
+                                <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid mb-3' />
                                 <div class='badge text-bg-success badge-floating-stock'>50/100</div>
                             </a>
                             <h5>$product_name</h5>
