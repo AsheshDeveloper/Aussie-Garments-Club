@@ -1,40 +1,24 @@
 <?php 
 session_start();
-require_once "../../../vendor/autoload.php";
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    echo "testing";    
- $email = $_POST['email'];
-$verificationCode = rand(100000, 999999);
-$_SESSION['verification_code'] = $verificationCode;
-echo $verificationCode;
-// Example: send email code logic here
-$mail = new PHPMailer(true);
 
-try {
-    $mail->isSMTP();
-    $mail->Host = 'smtp.office365.com'; // Or 'smtp-mail.outlook.com'
-    $mail->SMTPAuth = true;
-    $mail->Username = 'aussiegarmentclub@outlook.com';
-    $mail->Password = 'An1l@123456';
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-    $mail->Port = 587;
+include '../../php/auth/auth_login.php'; 
 
-    $mail->setFrom('aussiegarmentclub@outlook.com', 'Aussie Garment');
-    $mail->addAddress($email, '');
-    echo $email;
-    $mail->isHTML(true);
-    $mail->Subject = 'Verify your Email';
-    $mail->Body = "Your email verification code is: $verificationCode" ;
-    $mail->AltBody = 'Verification Code';
-
-    $mail->send();
-    echo 'Message has been sent';
-} catch (Exception $e) {
-    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+if($_SERVER['REQUEST_METHOD']=="POST"){
+    $code_sent = $_SESSION['verification_code'];
+    $code_eneterd = $_POST['code'];
+    if($code_sent == $code_eneterd){
+        header('Location:forgotpwdreset.php');
+    }else{
+        $_SESSION['error_message'] = 'Verification code does not match. Please try again.';
+        header('Location:verify_pwd_reset.php');
+        exit();
+    }
+   
 }
-header('Location: verify_pwd_reset.php');
+$error_message = '';
+if(isset($_SESSION['error_message'])) {
+    $error_message = $_SESSION['error_message'];
+    unset($_SESSION['error_message']);
 }
 ?>
 <!DOCTYPE html>
@@ -72,17 +56,22 @@ header('Location: verify_pwd_reset.php');
                 <div class="col-md-5 mx-auto">
                     <div class="card shadowed-card p-4 mt-5 mb-5">
                         <div class="card-body text-center">
-                            <h4 class="mt-3 text-primary">Reset Password</h4>
-                            <small class="text-muted">Enter email to reset password. We will send a verification code.</small>
+                            <h4 class="mt-3 text-primary">Verification Code</h4>
+                            <small class="text-muted">A verification code has been sent to your email.</small>
+                            <?php if ($error_message): ?>
+                                <div class="alert alert-danger mt-3">
+                                    <?php echo $error_message; ?>
+                                </div>
+                            <?php endif; ?>
                             <form class="mt-5 mb-5" method="post" action="">
                                 <div class="mb-3">
                                     <div class="d-flex align-items-left">
-                                        <label class="form-check-label mb-1" for="email"> Email Address<span
+                                        <label class="form-check-label mb-1" for="code"> Verification Code<span
                                                 class="text-danger">*</span></label>
                                     </div>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="email" id="email"
-                                            placeholder="enter the email address" required />
+                                        <input type="text" class="form-control" name="code" id="code"
+                                            placeholder="enter the verification code" required />
                                         <button class="btn btn-outline-secondary" type="submit"
                                             id="toggleConfirmPassword">
                                             <i class="fa fa-refresh"></i>
@@ -94,7 +83,7 @@ header('Location: verify_pwd_reset.php');
                                 </div>
 
                                 <button type="submit"
-                                    class="btn btn-primary w-100 p-2 mt-4 mb-2">Send verification code</a>
+                                    class="btn btn-primary w-100 p-2 mt-4 mb-2">Verify Code</>
                                 <!-- <small class="">Try another way? <a href="./verification.php">CLick Me</a></small> -->
                             </form>
                         </div>

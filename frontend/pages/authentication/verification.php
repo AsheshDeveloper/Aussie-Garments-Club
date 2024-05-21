@@ -1,6 +1,9 @@
 <?php
 session_start();
 use Twilio\Rest\Client;
+require '../../../vendor/autoload.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 require_once "../../../vendor/autoload.php";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone = $_POST['phone'];
@@ -11,7 +14,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Generate a verification code
         $verificationCode = rand(100000, 999999);
         $_SESSION['verification_code'] = $verificationCode;
-        echo $verificationCode;
         try {
             $twilio = new Client($sid, $token);
             $message = $twilio->messages->create(
@@ -29,9 +31,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header('Location: index.php'); // Redirect back to the form
         }
     } elseif (!empty($email)) {
+        $verificationCode = rand(100000, 999999);
         $_SESSION['verification_method'] = 'email';
         $_SESSION['contact_info'] = $email;
+        $_SESSION['verification_code'] = $verificationCode;
         // Example: send email code logic here
+        $mail = new PHPMailer(true);
+
+        try {
+            $mail->isSMTP();
+            $mail->Host = 'smtp.office365.com'; // Or 'smtp-mail.outlook.com'
+            $mail->SMTPAuth = true;
+            $mail->Username = 'aussiegarmentclub@outlook.com';
+            $mail->Password = 'An1l@123456';
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
+
+            $mail->setFrom('aussiegarmentclub@outlook.com', 'Aussie Garment');
+            $mail->addAddress($email, '');
+            $mail->isHTML(true);
+            $mail->Subject = 'Verify your Email';
+            $mail->Body = "Your email verification code is: $verificationCode" ;
+            $mail->AltBody = 'Verification Code';
+
+            $mail->send();
+            echo 'Message has been sent';
+        } catch (Exception $e) {
+            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        }
+
+
         header('Location: verify.php');
     } else {
         $_SESSION['error'] = "Please enter either a phone number or an email address.";
