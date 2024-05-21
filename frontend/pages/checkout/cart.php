@@ -7,20 +7,22 @@ session_start();
 // }
 require_once("../../php/database_connect.php"); 
 // find authenticated user details
-$findUser = "SELECT * FROM users WHERE email = '{$_SESSION['email']}'";
-$fetchUser = mysqli_query($connect, $findUser);
-$user = null; // Initialize user variable
-if(mysqli_num_rows($fetchUser) > 0){
-    $user = mysqli_fetch_array($fetchUser);
-    $userID = $user['id'];
-}
+if(!empty($_SESSION['email'])){
+    $findUser = "SELECT * FROM users WHERE email = '{$_SESSION['email']}'";
+    $fetchUser = mysqli_query($connect, $findUser);
+    $user = null; // Initialize user variable
+    if(mysqli_num_rows($fetchUser) > 0){
+        $user = mysqli_fetch_array($fetchUser);
+        $userID = $user['id'];
+    }
 
-// Fetch cart data
-$getCart = "SELECT c.*, p.* FROM Cart c INNER JOIN Product p ON c.ProductID = p.ProductID WHERE c.UserID='$userID'";
-$cartData = array(); // Initialize cart data array
-if ($cart = $connect->query($getCart)) {
-    while ($row = $cart->fetch_assoc()) { 
-        $cartData[] = $row;
+    // Fetch cart data
+    $getCart = "SELECT c.*, p.* FROM Cart c INNER JOIN Product p ON c.ProductID = p.ProductID WHERE c.UserID='$userID'";
+    $cartData = array(); // Initialize cart data array
+    if ($cart = $connect->query($getCart)) {
+        while ($row = $cart->fetch_assoc()) { 
+            $cartData[] = $row;
+        }
     }
 }
 
@@ -75,7 +77,7 @@ if ($cart = $connect->query($getCart)) {
                     </thead>
                     <tbody>
                         <?php  
-                        if($cartData && $cartData >0){      
+                        if(isset($cartData) && $cartData >0){      
                             foreach($cartData as $row) { 
                                 //product data
                                 $product_id = $row['ProductID'];
@@ -144,7 +146,7 @@ if ($cart = $connect->query($getCart)) {
                         <?php 
                         $count = 0;
                         $grand_total = 0;
-                        if ($cartData && count($cartData) > 0) { 
+                        if (isset($cartData) && count($cartData) > 0) { 
                             foreach($cartData as $row) {
                                 $price = $row['TotalAmount']; 
                                 $count++; 
