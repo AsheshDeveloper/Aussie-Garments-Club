@@ -86,16 +86,30 @@ if (isset($_SESSION["error"])) {
                                 </small>
                                 <button type="submit" name="submit" type="name"
                                     class="btn btn-primary w-100 p-2 mb-3">Login</button>
-                                <a href="facebook_oauth.php" class="mb-5 mt-5 google-login">
+
+                                <div class="mb-3"> <small>Or Login Via</small> </div>
+                                <div class="mb-5">
+                                    <a href="google-oauth.php" class="google-login mr-2">
+                                        <img class="google-icon" src="../../images/assets/google ICon.png"
+                                            alt="Google Logo" />
+
+                                    </a>
+                                    <a href="facebook_oauth.php" class="google-login ml-3">
+                                        <img class="facebook-icon" src="../../images/assets/facebook-logo.png"
+                                            alt="Google Logo" />
+
+                                    </a>
+                                </div>
+                                <!-- <a href="facebook_oauth.php" class="btn w-50 google-login">
                                     <img class="google-icon" src="../../images/assets/facebook-logo.png"
                                         alt="Google Logo" />
                                     Login with Facebook
-                                </a><br>
-                                <a href="google-oauth.php" class="mb-5 mt-5 google-login">
-                                    <img class="google-icon" src="../../images/assets/google ICon.png"
-                                         alt="Google Logo" />
-                                    Login with Google
                                 </a>
+                                <a href="google-oauth.php" class="btn w-50 google-login">
+                                    <img class="google-icon" src="../../images/assets/google ICon.png"
+                                        alt="Google Logo" />
+                                    Login with Google
+                                </a> -->
                             </form>
                             <small class="mt-5">Don't have an account yet? <a href="./thirdPartySignup.php">Sign
                                     Up</a></small>
