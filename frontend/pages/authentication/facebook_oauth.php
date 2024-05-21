@@ -27,7 +27,7 @@ if (isset($_GET['code']) && !empty($_GET['code'])) {
     if (isset($response['access_token']) && !empty($response['access_token'])) {
         // Execute cURL request to retrieve the user info associated with the Facebook account
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://graph.facebook.com/' . $facebook_oauth_version . '/me?fields=email');
+        curl_setopt($ch, CURLOPT_URL, 'https://graph.facebook.com/' . $facebook_oauth_version . '/me?fields=email,name');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: Bearer ' . $response['access_token']]);
         $response = curl_exec($ch);

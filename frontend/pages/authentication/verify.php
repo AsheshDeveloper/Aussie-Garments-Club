@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-include '../../php/auth/auth_login.php'; 
+include '../../php/auth/auth_login.php';
 
 ?>
 <!DOCTYPE html>
@@ -41,7 +41,7 @@ include '../../php/auth/auth_login.php';
                         <div class="card-body text-center">
                             <h4 class="mt-3 text-primary">Verification Code</h4>
                             <small class="text-muted">Enter your Verification Code.</small>
-                            <form class="mt-5 mb-5">
+                            <form class="mt-5 mb-5" method="post" action="verify_code.php">
                                 <div class="mb-3">
                                     <div class="d-flex align-items-left">
                                         <label class="form-check-label mb-1" for="code"> Verification Code<span
@@ -59,10 +59,7 @@ include '../../php/auth/auth_login.php';
                                         <small class=" ">click the button on the side to send the code again</small>
                                     </div>
                                 </div>
-
-                                <a href="../../index.php" type="submit"
-                                    class="btn btn-primary w-100 p-2 mt-4 mb-2">Verify Code</a>
-                                <small class="">Try another way? <a href="./verification.php">CLick Me</a></small>
+                                <button type="submit" name="submit" class="btn btn-primary w-100 p-2 mt-4 mb-2">Verify Code</button>
                             </form>
                         </div>
                     </div>

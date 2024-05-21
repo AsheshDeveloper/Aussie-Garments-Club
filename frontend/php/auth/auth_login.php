@@ -9,13 +9,18 @@ if(isset($_POST['submit'])){
     $fetch_user = " SELECT * FROM users WHERE email = '$email' && password='$password' ";
 
     $result = mysqli_query($connect, $fetch_user);
-
+// fetch user
+    //check if verified. or verifiy page verify.php
     if(mysqli_num_rows($result) > 0){
         $row= mysqli_fetch_array($result);
         $_SESSION['userId'] = $row['id'];
         $_SESSION['username'] = $row['first_name'];
         $_SESSION['email'] = $row['email'];
-        header('Location: ../../index.php');
+        if($row['verified']) {
+            header('Location: ../../index.php');
+        } else {
+            header('Location: ../../pages/authentication/verification.php');
+        }
     }else{
         $errors[] = 'Incorrect email or password!';
     }

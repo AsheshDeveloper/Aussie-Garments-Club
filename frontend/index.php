@@ -54,14 +54,14 @@ if (isset($_SESSION["email"])) {
                 <div class="col-md-6 left-content-slider">
                     <h2 class="quote-text mb-4 mt-5">Where style meets convenience, and savings meet satisfaction</h2>
                     <?php
-                    if(!$_SESSION['userId']){
+                    if(empty($_SESSION['userId'])){
 
                        echo' <a href="./pages/authentication/thirdPartySignup.php" class="btn btn-primary me-4 px-5 py-2">Get
                             Started</a>';
                     }
                     ?>
                     <?php
-                    if($_SESSION['userId']){
+                    if(!empty($_SESSION['userId'])){
 
                        echo' 
                      <a class="btn btn-primary px-4 py-2" href="./pages/product/products.php">View Products</a>';

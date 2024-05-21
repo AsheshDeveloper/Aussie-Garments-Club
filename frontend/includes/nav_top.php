@@ -3,6 +3,14 @@
 <nav class="nav-wrapper">
     <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom-top">
         <div class="container">
+
+            <div>
+                <?php
+                if(isset($_SESSION['success'])) {
+                    echo "VERIFIED";
+                }
+                ?>
+            </div>
             <!-- Left side content -->
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
@@ -28,7 +36,7 @@
                 </li>
                 <li class="nav-item">
                     <?php
-                    if(!$_SESSION['userId']){
+                    if(empty($_SESSION['userId'])){
                         echo '  <span class="nav-link text-primary" href="#">
                         Browsing as Guest              
                         </span>';
