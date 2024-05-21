@@ -162,7 +162,7 @@ if ($results && mysqli_num_rows($results) > 0) {
 
                                 echo "<div class='col-md-3' style='position: relative'>
                       <a href='./pages/product/product_details.php?id=$product_id'>
-                      <img src='../../images/products/$imageOne' alt='Image 1' class='img-fluid mb-3' />
+                      <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid mb-3' />
                           <div class='badge text-bg-success badge-floating-stock'>50/100</div>
                       </a>
                       <h5>$product_name</h5>

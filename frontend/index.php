@@ -206,7 +206,7 @@ if (isset($_SESSION["email"])) {
             <h5 class="for-men-heading mb-4">For Men<img src="./images/assets/bussiness-man.png" alt="Heading" /></h5>
             <div class="row section-for-men-row">
                 <?php 
-                $fetch_product = "SELECT * FROM product WHERE mainCategory = 'men' && name='test'";
+                $fetch_product = "SELECT * FROM product WHERE mainCategory = 'men' LIMIT 4";
                 $results = mysqli_query($connect, $fetch_product);
                 while($row=mysqli_fetch_assoc($results) ){  
                     $product_id = $row['ProductID'];
