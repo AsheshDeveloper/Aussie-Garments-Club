@@ -237,7 +237,7 @@ include '../../php/controller/product_controller.php';
                               $size = $row['SizeID'];                                                            
 
                   ?>
-        <form class="border shadow p-3 rounded" style="width:450px;" action="" method="post" >
+        <form class="border shadow p-3 rounded" style="width:450px;" action="" method="post" enctype="multipart/form-data">
         <h1 class="text-center p-3">Edit product </h1>
             <?php if(isset($errors)) { 
                 foreach($errors as $error){ ?>                     
