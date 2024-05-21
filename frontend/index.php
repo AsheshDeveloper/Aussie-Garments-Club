@@ -248,7 +248,7 @@ if (isset($_SESSION["email"])) {
                   $imageOne = $row['ImageOne'];
                   $imageTwo = $row['ImageTwo'];
                   echo "<div class='col'>
-                          <img src='../backend/src/pages/products/images/$imageOne' alt='Image 1' class='img-fluid mb-3' />
+                          <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid mb-3' />
                           <h5>$product_name</h5>
                           <p class='text-muted'>$product_category</p>
                           <p class='text-muted'><span>$</span>$price</p>
@@ -275,7 +275,7 @@ if (isset($_SESSION["email"])) {
                   $imageOne = $row['ImageOne'];
                   $imageTwo = $row['ImageTwo'];
                   echo "<div class='col'>
-                          <img src='../backend/src/pages/products/images/$imageOne' alt='Image 1' class='img-fluid mb-3' />
+                          <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid mb-3' />
                           <h5>$product_name</h5>
                           <p class='text-muted'>$product_category</p>
                           <p class='text-muted'><span>$</span>$price</p>
@@ -302,7 +302,7 @@ if (isset($_SESSION["email"])) {
                   $imageOne = $row['ImageOne'];
                   $imageTwo = $row['ImageTwo'];
                   echo "<div class='col'>
-                          <img src='../backend/src/pages/products/images/$imageOne' alt='Image 1' class='img-fluid mb-3' />
+                          <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid mb-3' />
                           <h5>$product_name</h5>
                           <p class='text-muted'>$product_category</p>
                           <p class='text-muted'><span>$</span>$price</p>

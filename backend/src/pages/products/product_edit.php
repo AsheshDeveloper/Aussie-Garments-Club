@@ -270,7 +270,7 @@ include '../../php/controller/product_controller.php';
             <div class="mb-3">  
             <select class="form-select" aria-label="Select the main category" name="main_category">
               <?php
-                $arr = ["men" =>"Men", "women" =>"Women", "children" =>"Children" ];
+                $arr = ["men" =>"Men", "women" =>"Women", "kids" =>"Kids", "baby" => "Baby" ];
                 foreach ($arr as $a => $b){
                   if($a == $main_category){
                       echo "<option value='{$a}' selected >$b</option>";
