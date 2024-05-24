@@ -1,3 +1,7 @@
+<?php
+session_start();
+include_once("../../php/profile/card/getCard.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,6 +37,19 @@
                 Your Cards <span><i class="fa-solid fa-credit-card text-primary"></i></span>
             </h5>
             <a href="./add_card.php" class="btn btn-primary px-5 py-2 mb-3">Add a new card</a>
+            <?php
+            if (isset($_GET['success']) && $_GET['success'] == '1') {
+                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+                echo 'Card successfully deleted.';
+                echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+                echo '</div>';
+            } elseif (isset($_GET['error']) && $_GET['error'] == '1') {
+                echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
+                echo 'Error: Failed to delete card.';
+                echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+                echo '</div>';
+            }
+            ?>
             <table class="table">
                 <thead>
                     <tr>
@@ -45,40 +62,42 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Samir Samir</td>
-                        <td>1234 4323 5678 5678</td>
-                        <td>dd/mm/yyy</td>
-                        <td>
-                            <div class="mb-3">
-                                <input class="password-label" type="password" id="password" value="345" readonly
-                                    style="border: none" />
-                                <a class="btn" id="showPassword"><i class="far fa-eye"></i></a>
-                            </div>
-                        </td>
-
-                        <td>
-                            <a href="" type="button" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Elon Stark</td>
-                        <td>1234 4323 5678 5678</td>
-                        <td>dd/mm/yyy</td>
-                        <td>
-                            <div class="mb-3">
-                                <input class="password-label" type="password" id="password" value="345" readonly
-                                    style="border: none" />
-                                <a class="btn" id="showPassword"><i class="far fa-eye"></i></a>
-                            </div>
-                        </td>
-
-                        <td>
-                            <a href="" type="button" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i></a>
-                        </td>
-                    </tr>
+                    <?php
+                    // $sn = 1;
+                    // while ($row = mysqli_fetch_assoc($result)) {
+                        // $cardNumber = $row['cardNumber']; 
+                        // $expirationDate = $row['expirationDate']; 
+                        // $securityCode = $row['securityCode'];
+                        // $cardID = $row['cardID']; 
+                        // $nameOnCard = $row['nameOnCard']; 
+                    //      echo "<tr>";
+                    //         echo "<td>" . $sn++ . "</td>";
+                    //         echo "<td>" . $cardNumber . "</td>";
+                    //         echo "<td>" . $nameOnCard . "</td>";
+                    //         echo "<td>" . $expirationDate . "</td>";
+                    //         echo "<td><div class='mb-3'><input class='password-label' type='password' id='password" . $sn . "' value='" . $securityCode . "' readonly style='border: none' /><a class='showPassword btn' id='showPassword" . $sn . "'><i class='far fa-eye'></i></a></div></td>";
+                    //         echo "<td><a href='delete_card.php?card_id=" . $cardID . "' class='btn btn-outline-danger'><i class='fas fa-trash-alt'></i></a></td>";
+                    //         echo "</tr>";
+                    // }
+                    if ($result->num_rows > 0) {
+                        $sn = 1;
+                        while($row = $result->fetch_assoc()) {
+                            
+                            echo "<tr>";
+                            echo "<td>" . $sn++;
+                            echo "<br/><span class='ml-2 badge text-bg-warning'>" . ($row['defaultCard'] == 1 ? 'Default' : '') . "</span>";
+                            echo "</td>";
+                            echo "<td>" . htmlspecialchars($row['cardNumber']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['nameOnCard']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['expirationDate']) . "</td>";
+                            echo "<td><div class='mb-3'><input class='password-label' type='password' id='password" . $sn . "' value='" . htmlspecialchars($row['securityCode']) . "' readonly style='border: none' /><a class='showPassword btn' id='showPassword" . $sn . "'><i class='far fa-eye'></i></a></div></td>";
+                            echo "<td><a href='../../php/profile/card/deleteCard.php?card_id=" . htmlspecialchars($row['cardID']) . "' class='btn btn-outline-danger delete-button'><i class='fas fa-trash-alt'></i></a></td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='6'>No cards found.</td></tr>";
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>
@@ -91,14 +110,23 @@
     <!-- custom script -->
 
     <script>
-    const passwordInput = document.getElementById("password");
-    const showPasswordButton = document.getElementById("showPassword");
-    const editPasswordButton = document.getElementById("editPassword");
+    document.querySelectorAll(".showPassword").forEach(button => {
+        button.addEventListener("click", (event) => {
+            const input = event.target.closest("td").querySelector(".password-label");
+            const type = input.getAttribute("type") === "password" ? "text" : "password";
+            input.setAttribute("type", type);
+            event.target.classList.toggle("fa-eye-slash");
+        });
+    });
+    </script>
 
-    showPasswordButton.addEventListener("click", () => {
-        const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
-        passwordInput.setAttribute("type", type);
-        showPasswordButton.querySelector("i").classList.toggle("fa-eye-slash");
+    <script>
+    document.querySelectorAll('.delete-button').forEach(button => {
+        button.addEventListener('click', function(event) {
+            if (!confirm('Are you sure you want to delete this card?')) {
+                event.preventDefault(); // Prevent the default behavior (i.e., following the link)
+            }
+        });
     });
     </script>
 </body>

@@ -54,7 +54,7 @@ include '../../php/database_connect.php';
             <div class="row">
                 <div class="col-md-6">
                     <!-- Image Slider -->
-                    <d iv id="imageSlider" class="carousel slide" data-bs-ride="carousel">
+                    <div id="imageSlider" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner product-carousel">
                             <div class="carousel-item active">
                                 <img src="../../../backend/src/pages/products/images/<?php echo $imageOne ?>"
@@ -79,7 +79,7 @@ include '../../php/database_connect.php';
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Next</span>
                         </button>
-                    </d>
+                    </div>
                     <!-- Image Selector -->
                     <div class="mt-3 image-selector-container">
                         <img src="../../../backend/src/pages/products/images/<?php echo $imageOne ?>"
@@ -93,11 +93,56 @@ include '../../php/database_connect.php';
                     </div>
                 </div>
                 <div class="col-md-6">
+                    <p id="response-container"></p>
                     <div class="description-container">
-                        <!-- Right Column (Empty for now) -->
+
+                        <!-- userID and productID here -->
+                        <input type="hidden" id="userID" value="<?php echo $_SESSION['userId']; ?>">
+                        <input type="hidden" id="productID" value="<?php echo $_GET['id']; ?>">
+                        <?php
+                        require_once "../../php/database_connect.php";
+                        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                            $action = $_POST['action'];
+                            $userID = $_SESSION['userId'];
+                            $productID = $_POST['productID'];
+
+                            if ($action == 'add') {
+                                $sql = "INSERT INTO wishlist (userID, productID) VALUES (?, ?)";
+                                $stmt = $connect->prepare($sql);
+                                $stmt->bind_param("ii", $userID, $productID);
+
+                                if ($stmt->execute()) {
+                                    echo "success";
+                                } else {
+                                    echo "error";
+                                }
+                                $stmt->close();
+                            } elseif ($action == 'remove') {
+                                $sql = "DELETE FROM wishlist WHERE userID = ? AND productID = ?";
+                                $stmt = $connect->prepare($sql);
+                                $stmt->bind_param("ii", $userID, $productID);
+
+                                if ($stmt->execute()) {
+                                    echo "success";
+                                } else {
+                                    echo "error";
+                                }
+                                $stmt->close();
+                            }
+
+                            $connect->close();
+                            exit;
+                        }
+                        ?>
+
                         <!-- Right Column -->
-                        <h3 class="mt-3 text-primary">
-                            <?php echo $product_name ?> <a class="button-fav" href=""> <i class="fas fa-heart"></i></a>
+                        <h3 class="mt-3">
+                            <span class="text-primary"> <?php echo $product_name ?> </span>
+                            <a class="button-fav" name="addFav" type="submit" id="fav-add"> <i
+                                    class="fas fa-heart"></i></a>
+
+                            <a class="button-remove-fav" name="addDel" type="submit" id="fav-remove"> <i
+                                    class="fas fa-heart"></i></a>
                         </h3>
                         <h5 class="text-primary"><?php echo $price ?></h5>
                         <div class="badge text-bg-success badge-floating-stock mb-1">stock: <?php echo $stock ?></div>
@@ -510,6 +555,68 @@ include '../../php/database_connect.php';
         }
         return;
     });
+    </script>
+
+    <script>
+    document.getElementById('fav-add').addEventListener('click', function() {
+        document.getElementById('fav-add').style.display = 'none';
+        document.getElementById('fav-remove').style.display = 'inline';
+    });
+
+    document.getElementById('fav-remove').addEventListener('click', function() {
+        document.getElementById('fav-remove').style.display = 'none';
+        document.getElementById('fav-add').style.display = 'inline';
+    });
+    </script>
+
+    <script>
+    document.getElementById('fav-add').addEventListener('click', function() {
+        const userID = <?php echo json_encode($_SESSION['userId']); ?>;
+        const productID = document.getElementById('productID').value;
+
+        fetch('', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `action=add&userID=${userID}&productID=${productID}`
+            })
+            .then(response => {
+                if (response.ok) {
+                    showAlert('Added to wishlist successfully!', 'success');
+                    document.getElementById('fav-add').style.display = 'none';
+                    document.getElementById('fav-remove').style.display = 'inline';
+                } else {
+                    showAlert('Failed to add to wishlist.', 'error');
+                }
+            });
+    });
+
+    document.getElementById('fav-remove').addEventListener('click', function() {
+        const userID = <?php echo json_encode($_SESSION['userId']); ?>;
+        const productID = document.getElementById('productID').value;
+
+        fetch('', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `action=remove&userID=${userID}&productID=${productID}`
+            })
+            .then(response => {
+                if (response.ok) {
+                    showAlert('Removed from wishlist successfully!', 'success');
+                    document.getElementById('fav-remove').style.display = 'none';
+                    document.getElementById('fav-add').style.display = 'inline';
+                } else {
+                    showAlert('Failed to remove from wishlist.', 'error');
+                }
+            });
+    });
+
+    function showAlert(message, type) {
+        alert(message); // Basic HTML alert
+    }
     </script>
 </body>
 

@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header('Location: verify.php');
     } else {
         $_SESSION['error'] = "Please enter either a phone number or an email address.";
-        header('Location: index.php'); // Redirect back to the form
+        header('Location: ../../index.php'); // Redirect back to the form
     }
     exit;
 }
@@ -80,12 +80,13 @@ include '../../php/auth/auth_login.php';
                             <h4 class="mt-3 text-primary">Verify Your account</h4>
                             <small class="text-muted">how would like to verify your account?</small>
                             <form class="mt-5 mb-5" method="post" action="">
-                            <div class="mb-3">
+                                <div class="mb-3">
                                     <div class="d-flex align-items-left">
                                         <label class="form-check-label mb-1" for="phone">Phone Number</label>
                                     </div>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="phone" id="phone" placeholder="e.g., +610987654325" />
+                                        <input type="text" class="form-control" name="phone" id="phone"
+                                            placeholder="e.g., +610987654325" />
                                     </div>
                                 </div>
                                 <div class="mb-3">
@@ -93,7 +94,8 @@ include '../../php/auth/auth_login.php';
                                         <label class="form-check-label mb-1" for="email">Email Address</label>
                                     </div>
                                     <div class="input-group">
-                                        <input type="email" class="form-control" name="email" id="email" placeholder="e.g., someone@someone.com" />
+                                        <input type="email" class="form-control" name="email" id="email"
+                                            placeholder="e.g., someone@someone.com" />
                                     </div>
                                 </div>
 

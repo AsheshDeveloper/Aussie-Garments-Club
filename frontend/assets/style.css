@@ -277,6 +277,14 @@ footer hr {
   color: #ffd700;
 }
 
+.description-container .button-remove-fav {
+  display: none;
+}
+
+.description-container .button-remove-fav:hover {
+  color: #ea3d4b !important;
+}
+
 /* popup */
 .custom-popover-content {
   display: none;
