@@ -23,6 +23,43 @@ if ($cart = $connect->query($getCart)) {
         $cartData[] = $row;
     }
 }
+
+// Calculate total cost and insert order data into database
+$grand_total = 0;
+foreach($cartData as $row) {
+    $price = array($row['TotalAmount']); 
+    $total = array_sum($price);
+    $grand_total += $total;
+}
+
+
+// Create an order
+// Check if the user with a particular email already has an existing order
+$checkExistingOrderQuery = "SELECT * FROM `order` WHERE customerEmail = '{$_SESSION['email']}'";
+$checkExistingOrderResult = mysqli_query($connect, $checkExistingOrderQuery);
+if (mysqli_num_rows($checkExistingOrderResult) > 0) {
+    echo "Error: You already have an existing order in our system.";
+} else {
+    // Generate unique orderNumber using uniqid
+    $orderNumber = 'AGC-' . uniqid();
+    // Check if the generated orderNumber already exists
+    $checkOrderNumberQuery = "SELECT * FROM `order` WHERE orderNumber = '$orderNumber'";
+    $checkOrderNumberResult = mysqli_query($connect, $checkOrderNumberQuery);
+    while (mysqli_num_rows($checkOrderNumberResult) > 0) {
+        // If the orderNumber already exists, generate a new one
+        $orderNumber = 'AGC-' . uniqid();
+        $checkOrderNumberResult = mysqli_query($connect, $checkOrderNumberQuery);
+    }
+
+    // Insert order data into database
+    $order_status = "Pending"; 
+    $insertOrder = "INSERT INTO `order` (orderNumber, customerName, customerEmail, orderStatus, totalAmount, createdAt) VALUES ('$orderNumber','{$_SESSION['username']}' ,'{$_SESSION['email']}' ,'$order_status', '$grand_total', NOW())";
+    if (mysqli_query($connect, $insertOrder)) {
+        echo "Order saved successfully.";
+    } else {
+        echo "Error: " . $insertOrder . "<br>" . mysqli_error($connect);
+    }
+}
 ?>
 
 <!DOCTYPE html>
