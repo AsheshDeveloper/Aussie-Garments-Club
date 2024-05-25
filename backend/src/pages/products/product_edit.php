@@ -157,7 +157,7 @@ include '../../php/controller/product_controller.php';
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link" href="../../index.html">
+              <a class="nav-link" href="../../index.php">
                 <i class="mdi mdi-grid-large menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
               </a>
@@ -237,7 +237,7 @@ include '../../php/controller/product_controller.php';
                               $size = $row['SizeID'];                                                            
 
                   ?>
-        <form class="border shadow p-3 rounded" style="width:450px;" action="" method="post" >
+        <form class="border shadow p-3 rounded" style="width:450px;" action="" method="post" enctype="multipart/form-data">
         <h1 class="text-center p-3">Edit product </h1>
             <?php if(isset($errors)) { 
                 foreach($errors as $error){ ?>                     
@@ -270,7 +270,7 @@ include '../../php/controller/product_controller.php';
             <div class="mb-3">  
             <select class="form-select" aria-label="Select the main category" name="main_category">
               <?php
-                $arr = ["men" =>"Men", "women" =>"Women", "children" =>"Children" ];
+                $arr = ["men" =>"Men", "women" =>"Women", "kids" =>"Kids", "baby" => "Baby" ];
                 foreach ($arr as $a => $b){
                   if($a == $main_category){
                       echo "<option value='{$a}' selected >$b</option>";

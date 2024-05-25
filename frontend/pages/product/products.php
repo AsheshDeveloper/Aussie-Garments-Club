@@ -155,6 +155,7 @@ if ($results && mysqli_num_rows($results) > 0) {
                             while($row=mysqli_fetch_assoc($results)) {
                                 $product_id = $row['ProductID'];
                                 $product_name = $row['Name'];
+                                $product_category = $row['MainCategory'];
                                 $price = $row['Price'];
                                 $imageOne = $row['ImageOne'];
                                 $imageTwo = $row['ImageTwo'];
@@ -165,14 +166,14 @@ if ($results && mysqli_num_rows($results) > 0) {
 
                                 echo "<div class='col-md-3' style='position: relative'>
                       <a href='./pages/product/product_details.php?id=$product_id'>
-                      <img src='../../images/products/$imageOne' alt='Image 1' class='img-fluid mb-3' />
+                      <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid mb-3' />
                           <div class='badge text-bg-success badge-floating-stock'>50/100</div>
                       </a>
-                      <h5>Suit Set</h5>
-                      <p class='text-muted'>$product_name</p>
+                      <h5>$product_name</h5>
+                      <p class='text-muted'>$product_category</p>
                       <p class='text-muted'><span>$</span>$price</p>
                       <p>
-                          <a href='./pages/product/product_details.php?id=$product_id' class='btn btn-outline-primary'><i class='fas fa-arrow-right'></i></a>
+                          <a href='./product_details.php?id=$product_id' class='btn btn-outline-primary'><i class='fas fa-arrow-right'></i></a>
                       </p>
                   </div>";
 
