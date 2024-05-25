@@ -23,6 +23,59 @@ if ($cart = $connect->query($getCart)) {
         $cartData[] = $row;
     }
 }
+
+// fetch default address
+// SQL query
+$getDefaultAddress = "SELECT * FROM `address` WHERE id = '{$_SESSION['userId']}' AND defaultAddress = 1";
+$getDefault = mysqli_query($connect, $getDefaultAddress);
+$defAddress = null;
+// Fetch result
+if (mysqli_num_rows($getDefault) > 0) {
+    // Output data of each row
+    $defAddress = mysqli_fetch_array($getDefault);
+    $aptUnitSuit = $defAddress['aptUnitSuit']; // Adjust this to match your column name
+    $street = $defAddress['street']; // Adjust this to match your column name
+    $citySuburb = $defAddress['citySuburb']; // Adjust this to match your column name
+    $stateTerritory = $defAddress['stateTerritory']; // Adjust this to match your column name
+    $Postcode = $defAddress['Postcode']; // Adjust this to match your column name
+} 
+
+// Fetch user ID from session and sanitize
+$userId = $_SESSION['userId'] ?? '';
+$userId = filter_var($userId, FILTER_SANITIZE_STRING);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['addressID'])) {
+    // Sanitize the address ID
+    $addressId = filter_var($_POST['addressID'], FILTER_SANITIZE_STRING);
+    
+    // Reset all addresses to defaultAddress = 0 for this user
+    $resetQuery = "UPDATE `address` SET defaultAddress = 0 WHERE id = ?";
+    $resetStmt = $connect->prepare($resetQuery);
+    $resetStmt->bind_param("s", $userId);
+    if (!$resetStmt->execute()) {
+        die("Reset query failed: " . $connect->error);
+    }
+
+    // Set the selected address as the default
+    $updateQuery = "UPDATE `address` SET defaultAddress = 1 WHERE id = ? AND addressID = ?";
+    $updateStmt = $connect->prepare($updateQuery);
+    $updateStmt->bind_param("ss", $userId, $addressId);
+    if (!$updateStmt->execute()) {
+        die("Update query failed: " . $connect->error);
+    }
+
+    // Redirect to avoid resubmission on page refresh
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit;
+}
+
+// Fetch all addresses of the user
+$allAddressQuery = "SELECT * FROM `address` WHERE id = ?";
+$allAddressStmt = $connect->prepare($allAddressQuery);
+$allAddressStmt->bind_param("s", $userId);
+$allAddressStmt->execute();
+$result = $allAddressStmt->get_result();
+
 ?>
 
 <!DOCTYPE html>
@@ -104,16 +157,23 @@ if ($cart = $connect->query($getCart)) {
                                 <!-- Div for Shipment -->
                                 <div id="shipmentDiv">
                                     <div class="d-flex justify-content-between">
-                                        <p class="align-self-start">Jack Ma</p>
+                                        <p class="align-self-start">
+                                            <?php 
+                                            if(!empty($_SESSION['userId'])){
+
+                                                echo $_SESSION['username'];
+                                            }
+                                        ?>
+                                        </p>
                                         <p class="align-self-end">
                                             <!-- address modal trigger  -->
-                                            <a href="#" data-bs-toggle="modal" data-bs-target="#addressEditModal"> Chage
-                                            </a>
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#addressEditModal">
+                                                Change </a>
                                         </p>
                                     </div>
 
-                                    <span>Unit 50 6 east street <br />
-                                        Lidcombe, NSW 2142</span>
+                                    <span><?php echo 'Unit '. $aptUnitSuit; ?> <?php echo $street; ?><br />
+                                        <?php echo $citySuburb . ', ' . $stateTerritory . ' ' . $Postcode; ?></span>
                                 </div>
 
                                 <!-- Div for Pick up -->
@@ -314,39 +374,38 @@ if ($cart = $connect->query($getCart)) {
                                         value="http://localhost/aussie-garments-club/frontend/payment_integration/success.php">
                                     <button class="btn btn-primary px-5 w-100 py-2 mb-1">Place your order</button>
                                 </form>
-                                    <div class="panel-footer">
-                                        <small class="mt-2 text-justify">
-                                            By placing your order, you agree to Aussie's garment Conditions of Use &
-                                            Sale, and Return Policy. Please read our
-                                            <a href="#" style="text-decoration: none"> Privacy Notice </a> and our
-                                            Interest Based Ads Notice.
-                                        </small>
-                                        <hr />
-                                        <h6>Order Summary</h6>
-                                        <div class="description-container">
-                                            <ul style="list-style: none">
-                                                <li><span class="">Style</span> <span class="text-muted">Casual</span>
-                                                </li>
-                                                <li><span class="">Weight</span> <span class="text-muted">200gm</span>
-                                                </li>
-                                                <li><span class="">Country</span> <span
-                                                        class="text-muted">Australia</span>
-                                                </li>
-                                                <hr />
-                                                <li><span class="">Quantity</span> <span
-                                                        class="text-muted"><?php echo $count  ?> Item(s)</span>
-                                                </li>
-                                                <li><span class="text-primary">Order Total:</span> <span
-                                                        class="text-primary">$ <?php echo $grand_total  ?></span></li>
-                                            </ul>
-                                        </div>
-                                        <div class="bg-light mt-3 rounded p-2">
-                                            <h6 class="label">Quallifying Offers</h6>
-                                            <p class="text-muted">Free Shippling</p>
-                                            <p class="text-muted">10% promotion Code</p>
-                                        </div>
+                                <div class="panel-footer">
+                                    <small class="mt-2 text-justify">
+                                        By placing your order, you agree to Aussie's garment Conditions of Use &
+                                        Sale, and Return Policy. Please read our
+                                        <a href="#" style="text-decoration: none"> Privacy Notice </a> and our
+                                        Interest Based Ads Notice.
+                                    </small>
+                                    <hr />
+                                    <h6>Order Summary</h6>
+                                    <div class="description-container">
+                                        <ul style="list-style: none">
+                                            <li><span class="">Style</span> <span class="text-muted">Casual</span>
+                                            </li>
+                                            <li><span class="">Weight</span> <span class="text-muted">200gm</span>
+                                            </li>
+                                            <li><span class="">Country</span> <span class="text-muted">Australia</span>
+                                            </li>
+                                            <hr />
+                                            <li><span class="">Quantity</span> <span
+                                                    class="text-muted"><?php echo $count  ?> Item(s)</span>
+                                            </li>
+                                            <li><span class="text-primary">Order Total:</span> <span
+                                                    class="text-primary">$ <?php echo $grand_total  ?></span></li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-light mt-3 rounded p-2">
+                                        <h6 class="label">Quallifying Offers</h6>
+                                        <p class="text-muted">Free Shippling</p>
+                                        <p class="text-muted">10% promotion Code</p>
                                     </div>
                                 </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -365,122 +424,50 @@ if ($cart = $connect->query($getCart)) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row mb-3">
+                    <div class="row mb-3 ml-5">
                         <h6 class="mb-3">Select form your list of address</h6>
+                        <form method="POST" action="">
+                            <div id="addressList">
+                                <?php if ($result->num_rows > 0): ?>
+                                <?php while ($row = $result->fetch_assoc()): ?>
+                                <?php
+                                        // Sanitize address data
+                                        $aptUnitSuit = htmlspecialchars($row['aptUnitSuit']);
+                                        $street = htmlspecialchars($row['street']);
+                                        $citySuburb = htmlspecialchars($row['citySuburb']);
+                                        $stateTerritory = htmlspecialchars($row['stateTerritory']);
+                                        $Postcode = htmlspecialchars($row['Postcode']);
+                                        $isDefault = $row['defaultAddress'] == 1 ? 'checked' : '';
 
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                id="flexRadioDefault1" />
-                            <label class="form-check-label" for="flexRadioDefault1"> Unit 50 6 east street
-                                Hurstville, NSW 2144</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"
-                                checked />
-                            <label class="form-check-label" for="flexRadioDefault2"> Unit 50 6 east street
-                                Lidcombe, NSW 2142 </label>
-                        </div>
-                    </div>
-                    <hr />
-                    <div class="row">
-                        <h6>Add new address</h6>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card p-2 mt-4 mb-5">
-                                    <div class="card-body">
-                                        <form class="" action="" method="post">
-                                            <div class="mb-3">
-                                                <label class="form-check-label mb-1" for="email"> Country/Region
-                                                </label>
-
-                                                <select class="form-select" aria-label="Default select example">
-                                                    <option selected>Choose County or Region</option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label class="form-check-label mb-1" for="fullName"> Full name
-                                                    (Address For)</label>
-
-                                                <input type="name" class="form-control" name="fullName" id="fullName"
-                                                    placeholder="eg: harry kane" required />
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label class="form-check-label mb-1" for="phoneNumber">Phone
-                                                    number</label>
-
-                                                <input type="number" class="form-control" name="phoneNumber"
-                                                    id="phoneNumber" placeholder="eg: 0978482453" required />
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label class="form-check-label mb-1" for="address">Address</label>
-
-                                                <input type="name" class="form-control mb-2" name="address" id="address"
-                                                    placeholder="eg: Apt, Unit, Suite, Building, Floor" required />
-
-                                                <input type="name" class="form-control" name="address1" id="address1"
-                                                    placeholder="eg: Street, PO Box, Company, c/o" required />
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label class="form-check-label mb-1" for="Postcode">Postcode</label>
-
-                                                <input type="number" class="form-control" name="Postcode" id="Postcode"
-                                                    placeholder="eg: 2245" required />
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label class="form-check-label mb-1" for="citySuburb">
-                                                    City/Suburb </label>
-
-                                                <select class="form-select" aria-label="citySuburb">
-                                                    <option selected>Choose City or Suburb</option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label class="form-check-label mb-1" for="countryRegion">
-                                                    State/Territory </label>
-
-                                                <select class="form-select" aria-label="countryRegion">
-                                                    <option selected>Choose state or Territory</option>
-                                                    <option value="">New South Wales(NSW)</option>
-                                                    <option value="">Victoria(VCT)</option>
-                                                    <option value="">Queensland(QLD)</option>
-                                                    <option value="">Western Australia(WA)</option>
-                                                    <option value="">South Australia(SA)</option>
-                                                    <option value="">Tasmania(Tas)</option>
-                                                    <option value="">Northern Territory(NT)</option>
-                                                    <option value="">Australian Capital Territory(ACT)</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="defaultAddress" />
-                                                <label class="form-check-label" for="defaultAddress">Make
-                                                    Default Address ?</label>
-                                            </div>
-
-                                            <a href="./checkout.html" type="submit" type="button"
-                                                class="btn btn-primary w-100 p-2 mb-3 mt-4">Add Address</a>
-                                        </form>
-                                    </div>
+                                        // Generate the full address string
+                                        $fullAddress = "$aptUnitSuit $street, $citySuburb, $stateTerritory $Postcode";
+                                        ?>
+                                <div class="form-check">
+                                    <input class="form-check-input radio-design" type="radio" name="addressID"
+                                        id="address<?php echo $row['addressID']; ?>"
+                                        value="<?php echo $row['addressID']; ?>" <?php echo $isDefault; ?> />
+                                    <label class="form-check-label" for="address<?php echo $row['addressID']; ?>">
+                                        <?php echo $fullAddress; ?>
+                                    </label>
                                 </div>
+                                <?php endwhile; ?>
+                                <?php else: ?>
+                                <p>No addresses found.</p>
+                                <?php endif; ?>
                             </div>
-                        </div>
+                            <hr>
+
+                            <div class="">
+                                <button class="btn btn-primary mr-2" type="submit">Update Default Address</button>
+                                <a href="../profile/add_address.php" class="btn btn-outline-primary">Add New Address
+                                    <span> <i class="fas fa-address-card"></i></span>
+                                </a>
+
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Deliver to this address</button>
-                </div>
+
             </div>
         </div>
     </div>
@@ -613,6 +600,7 @@ if ($cart = $connect->query($getCart)) {
         }
     });
     </script>
+
 </body>
 
 

@@ -411,3 +411,8 @@ footer hr {
   height: 100%;
   border: 0;
 }
+
+/* universal */
+.radio-design {
+  border: 1px solid #007bff !important;
+}
