@@ -93,10 +93,13 @@ include '../../php/database_connect.php';
                 <div class="col-md-6">
                     <p id="response-container"></p>
                     <div class="description-container">
-
                         <!-- userID and productID here -->
-                        <input type="hidden" id="userID" value="<?php echo $_SESSION['userId']; ?>">
-                        <input type="hidden" id="productID" value="<?php echo $_GET['id']; ?>">
+                    <?php 
+                        if(!empty($_SESSION['userId'])){
+                           echo" <input type='hidden' id='userID' value='{$_SESSION['userId']}'>
+                                <input type='hidden' id='productID' value='{$_GET['id']}'> ";
+                        }
+                    ?>  
                         <?php
                         require_once "../../php/database_connect.php";
                         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
