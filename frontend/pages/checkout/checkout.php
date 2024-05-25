@@ -309,9 +309,9 @@ if ($cart = $connect->query($getCart)) {
                                     <input type="hidden" name="no_shipping" value="1">
                                     <input type="hidden" name="currency_code" value="AUD">
                                     <input type="hidden" name="cancel_return"
-                                        value="http://localhost/the garments club/frontend/index.php">
+                                        value="http://localhost/aussie-garments-club/frontend/index.php">
                                     <input type="hidden" name="return"
-                                        value="http://localhost/the garments club/frontend/payment_integration/success.php">
+                                        value="http://localhost/aussie-garments-club/frontend/payment_integration/success.php">
                                     <button class="btn btn-primary px-5 w-100 py-2 mb-1">Place your order</button>
                                 </form>
                                     <div class="panel-footer">
