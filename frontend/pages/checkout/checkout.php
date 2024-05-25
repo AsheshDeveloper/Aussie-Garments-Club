@@ -354,78 +354,7 @@ if ($cart = $connect->query($getCart)) {
         </div>
     </div>
 
-    <!-- suggestion for you -->
-    <div class="container mt-5 mb-5 suggestion-container">
-        <div class="row">
-            <h5 class="mb-4">Your Items</h5>
-
-            <div class="col-md-6">
-                <h6 class="mb-4">Saved for later <img src="../../images/assets/refresh 1.png" alt="Suggestion" />
-                </h6>
-
-                <div class="row-suggestion-items">
-                    <div class="row">
-                        <div class="col">
-                            <a href="">
-                                <img src="../../images/suggestions/suggestion1.png" alt="Image 1" class="img-fluid" />
-                            </a>
-                        </div>
-                        <div class="col">
-                            <a href="">
-                                <img src="../../images/suggestions/suggestion2.png" alt="Image 2" class="img-fluid" />
-                            </a>
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col">
-                            <a href="">
-                                <img src="../../images/suggestions/suggestion3.png" alt="Image 3" class="img-fluid" />
-                            </a>
-                        </div>
-                        <div class="col">
-                            <a href="">
-                                <img src="../../images/suggestions/suggedtion3.1.png" alt="Image 4" class="img-fluid" />
-                            </a>
-                        </div>
-                    </div>
-                    <p class="mt-3"><a href="#more-suggestions">More saved Items</a></p>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <h6 class="mb-4">Purchase again <img src="../../images/assets/clock 1.png" alt="Purchase" />
-                </h6>
-                <div class="row-suggestion-items">
-                    <div class="row">
-                        <div class="col">
-                            <a href="">
-                                <img src="../../images/suggestions/suggestion5.png" alt="Image 1" class="img-fluid" />
-                            </a>
-                        </div>
-                        <div class="col">
-                            <a href="">
-                                <img src="../../images/suggestions/suggestion1.png" alt="Image 2" class="img-fluid" />
-                            </a>
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col">
-                            <a href="">
-                                <img src="../../images/suggestions/suggestion3.png" alt="Image 3" class="img-fluid" />
-                            </a>
-                        </div>
-                        <div class="col">
-                            <a href="">
-                                <img src="../../images/suggestions/suggestion2.png" alt="Image 4" class="img-fluid" />
-                            </a>
-                        </div>
-                    </div>
-                    <p class="mt-3"><a href="#more-purchases">More in purchase again</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-
+    
     <!-- Address edit modal -->
     <div class="modal modal-lg fade checkout-modal-add-payment" id="addressEditModal" tabindex="-1"
         aria-labelledby="addressEditModalLabel" aria-hidden="true">

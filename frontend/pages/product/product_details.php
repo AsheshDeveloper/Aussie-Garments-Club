@@ -321,28 +321,34 @@ include '../../php/database_connect.php';
 
                 <div class="row-suggestion-items">
                     <div class="row">
-                        <div class="col">
-                            <a href="">
-                                <img src="../../images/suggestions/suggestion1.png" alt="Image 1" class="img-fluid" />
-                            </a>
-                        </div>
-                        <div class="col">
-                            <a href="">
-                                <img src="../../images/suggestions/suggestion2.png" alt="Image 2" class="img-fluid" />
-                            </a>
-                        </div>
+                    <?php
+                                $fetch_product = "Select * from product Limit 2";
+                                $results = mysqli_query($connect, $fetch_product);
+                                while($row=mysqli_fetch_assoc($results) ){   
+                                    $product_id = $row['ProductID'];               
+                                $imageOne = $row['ImageOne'];
+                                $imageTwo = $row['ImageTwo'];
+                                echo "<div class='col'>
+                                        <a href='./product_details.php?id=$product_id'>                                        
+                                        <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid' />
+                                        </a> </div>";
+                                }
+                            ?>
                     </div>
                     <div class="row mt-3">
-                        <div class="col">
-                            <a href="">
-                                <img src="../../images/suggestions/suggestion3.png" alt="Image 3" class="img-fluid" />
-                            </a>
-                        </div>
-                        <div class="col">
-                            <a href="">
-                                <img src="../../images/suggestions/suggedtion3.1.png" alt="Image 4" class="img-fluid" />
-                            </a>
-                        </div>
+                    <?php
+                        $fetch_product = "Select * from product Limit 2";
+                        $results = mysqli_query($connect, $fetch_product);
+                        while($row=mysqli_fetch_assoc($results) ){   
+                            $product_id = $row['ProductID'];               
+                        $imageOne = $row['ImageOne'];
+                        $imageTwo = $row['ImageTwo'];
+                        echo "<div class='col'>
+                                <a href='./product_details.php?id=$product_id'>                                        
+                                <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid' />
+                                </a> </div>";
+                        }
+                    ?>
                     </div>
                     <p class="mt-3"><a href="#more-suggestions">More in suggestions</a></p>
                 </div>
@@ -351,30 +357,36 @@ include '../../php/database_connect.php';
                 <h5 class="mb-4">Purchase again <img src="../../images/assets/clock 1.png" alt="Purchase" /></h5>
                 <div class="row-suggestion-items">
                     <div class="row">
-                        <div class="col">
-                            <a href="">
-                                <img src="../../images/suggestions/suggestion3.png" alt="Image 3" class="img-fluid" />
-                            </a>
-                        </div>
-                        <div class="col">
-                            <a href="">
-                                <img src="../../images/suggestions/suggedtion3.1.png" alt="Image 4" class="img-fluid" />
-                            </a>
-                        </div>
+                    <?php
+                        $fetch_product = "Select * from product Limit 2";
+                        $results = mysqli_query($connect, $fetch_product);
+                        while($row=mysqli_fetch_assoc($results) ){   
+                            $product_id = $row['ProductID'];               
+                        $imageOne = $row['ImageOne'];
+                        $imageTwo = $row['ImageTwo'];
+                        echo "<div class='col'>
+                                <a href='./product_details.php?id=$product_id'>                                        
+                                <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid' />
+                                </a> </div>";
+                        }
+                    ?>
                     </div>
                     <div class="row mt-3">
-                        <div class="col">
-                            <a href="">
-                                <img src="../../images/suggestions/suggestion1.png" alt="Image 1" class="img-fluid" />
-                            </a>
-                        </div>
-                        <div class="col">
-                            <a href="">
-                                <img src="../../images/suggestions/suggestion2.png" alt="Image 2" class="img-fluid" />
-                            </a>
-                        </div>
+                    <?php
+                        $fetch_product = "Select * from product Limit 2";
+                        $results = mysqli_query($connect, $fetch_product);
+                        while($row=mysqli_fetch_assoc($results) ){   
+                            $product_id = $row['ProductID'];               
+                        $imageOne = $row['ImageOne'];
+                        $imageTwo = $row['ImageTwo'];
+                        echo "<div class='col'>
+                                <a href='./product_details.php?id=$product_id'>                                        
+                                <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid' />
+                                </a> </div>";
+                        }
+                    ?>
                     </div>
-                    <p class="mt-3"><a href="#more-purchases">More in purchase again</a></p>
+                    <p class="mt-3"><a href="./products.php">More in purchase again</a></p>
                 </div>
             </div>
         </div>
