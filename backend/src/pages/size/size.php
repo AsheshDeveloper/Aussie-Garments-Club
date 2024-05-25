@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -152,7 +155,7 @@
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link" href="../../index.html">
+              <a class="nav-link" href="../../index.php">
                 <i class="mdi mdi-grid-large menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
               </a>
@@ -212,49 +215,51 @@
                           ><i class="mdi mdi-plus me-1"></i>New Size</a
                         >
                       </div>
+                      <?php
+                      if(!empty($_SESSION['message'])) { ?>                                    
+                          <div class="alert alert-success" role="alert">
+                                  <?=$_SESSION['message'] ?>
+                          </div>                    
+                      <?php } ?>
                     </div>
                     <div class="table-responsive">
                       <table class="table table-hover">
                         <thead>
                           <tr>
-                            <th>SN.</th>
-                            <th>ID</th>
-                            <th>Availabe Size</th>
-                            <!-- size storage place -->
-
-                            <th>Action</th>
+                          <th scope="col">Id</th>
+                          <th scope="col">Availabe Size</th>
+                          <th scope="col" colspan="2">Action</th>
                           </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>1</td>
-                            <td>100</td>
-                            <td>
-                              <span class="badge badge-opacity-success me-1">XL</span>,<span class="badge badge-opacity-success me-1"
-                                >3XL</span
-                              ><span class="badge badge-opacity-success me-1">4XL</span>
-                            </td>
-
-                            <td>
-                              <a class="btn btn-inverse-dark btn-rounded btn-icon" href=""><i class="mdi mdi-pencil"></i></a>
-                              <a class="btn btn-inverse-danger btn-rounded btn-icon" href=""><i class="mdi mdi-delete"></i></a>
-                            </td>
+                      </thead>
+                      <tbody>
+                          <?php 
+                              require_once "../../php/database_connect.php";
+                              $fetch = "SELECT * FROM size";
+                              if ($result = $connect ->query($fetch)) {
+                                  while ($row = $result -> fetch_assoc()) { 
+                                      //print_r($row);
+                                      $size_id = $row['SizeID'];
+                                      $size_name = $row['SizeName'];
+                          ?>                    
+                          <tr class="trow">
+                              <td><?php echo $size_id; ?></td>
+                              <td><?php echo $size_name; ?></td>
+                              <td><a href="../size/size_edit.php?id=<?php echo $size_id; ?>" class="btn btn-primary">Edit</a></td>
+                              <td><a href="../size/size_delete.php?id=<?php echo $size_id; ?>" class="btn btn-danger">Delete</a></td>
                           </tr>
-                          <tr>
-                            <td>1</td>
-                            <td>100</td>
-                            <td>
-                              <span class="badge badge-opacity-success me-1">XL</span>,<span class="badge badge-opacity-success me-1"
-                                >3XL</span
-                              ><span class="badge badge-opacity-success me-1">4XL</span>
-                            </td>
-
-                            <td>
-                              <a class="btn btn-inverse-dark btn-rounded btn-icon" href=""><i class="mdi mdi-pencil"></i></a>
-                              <a class="btn btn-inverse-danger btn-rounded btn-icon" href=""><i class="mdi mdi-delete"></i></a>
-                            </td>
+          
+                          <?php
+                              } 
+                              ?>
+                      <?php } else{  ?>
+                          <tr class="trow">
+                              <td colspan="5">No data found!</td>
                           </tr>
-                        </tbody>
+                              
+                      <?php
+                      }
+                      ?>
+                      </tbody>
                       </table>
                     </div>
                   </div>

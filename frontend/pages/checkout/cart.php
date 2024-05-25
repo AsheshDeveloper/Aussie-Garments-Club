@@ -7,20 +7,22 @@ session_start();
 // }
 require_once("../../php/database_connect.php"); 
 // find authenticated user details
-$findUser = "SELECT * FROM users WHERE email = '{$_SESSION['email']}'";
-$fetchUser = mysqli_query($connect, $findUser);
-$user = null; // Initialize user variable
-if(mysqli_num_rows($fetchUser) > 0){
-    $user = mysqli_fetch_array($fetchUser);
-    $userID = $user['id'];
-}
+if(!empty($_SESSION['email'])){
+    $findUser = "SELECT * FROM users WHERE email = '{$_SESSION['email']}'";
+    $fetchUser = mysqli_query($connect, $findUser);
+    $user = null; // Initialize user variable
+    if(mysqli_num_rows($fetchUser) > 0){
+        $user = mysqli_fetch_array($fetchUser);
+        $userID = $user['id'];
+    }
 
-// Fetch cart data
-$getCart = "SELECT c.*, p.* FROM Cart c INNER JOIN Product p ON c.ProductID = p.ProductID WHERE c.UserID='$userID'";
-$cartData = array(); // Initialize cart data array
-if ($cart = $connect->query($getCart)) {
-    while ($row = $cart->fetch_assoc()) { 
-        $cartData[] = $row;
+    // Fetch cart data
+    $getCart = "SELECT c.*, p.* FROM Cart c INNER JOIN Product p ON c.ProductID = p.ProductID WHERE c.UserID='$userID'";
+    $cartData = array(); // Initialize cart data array
+    if ($cart = $connect->query($getCart)) {
+        while ($row = $cart->fetch_assoc()) { 
+            $cartData[] = $row;
+        }
     }
 }
 
@@ -75,7 +77,7 @@ if ($cart = $connect->query($getCart)) {
                     </thead>
                     <tbody>
                         <?php  
-                        if($cartData && $cartData >0){      
+                        if(isset($cartData) && $cartData >0){      
                             foreach($cartData as $row) { 
                                 //product data
                                 $product_id = $row['ProductID'];
@@ -96,7 +98,7 @@ if ($cart = $connect->query($getCart)) {
                         <tr class="">
                             <td><input type="checkbox" /></td>
                             <td>
-                                <img src="../../../backend/src/pages/products/images/<?php echo $imageOne ?>"
+                                <img src="data:image/jpeg;base64,<?php echo base64_encode($imageOne); ?>"
                                     alt="Product Image" class="class-table-image rounded" />
                             </td>
                             <td>
@@ -144,7 +146,7 @@ if ($cart = $connect->query($getCart)) {
                         <?php 
                         $count = 0;
                         $grand_total = 0;
-                        if ($cartData && count($cartData) > 0) { 
+                        if (isset($cartData) && count($cartData) > 0) { 
                             foreach($cartData as $row) {
                                 $price = $row['TotalAmount']; 
                                 $count++; 
@@ -205,60 +207,72 @@ if ($cart = $connect->query($getCart)) {
 
                 <div class="row-suggestion-items">
                     <div class="row">
-                        <div class="col">
-                            <a href="">
-                                <img src="../../images/suggestions/suggestion1.png" alt="Image 1" class="img-fluid" />
-                            </a>
-                        </div>
-                        <div class="col">
-                            <a href="">
-                                <img src="../../images/suggestions/suggestion2.png" alt="Image 2" class="img-fluid" />
-                            </a>
-                        </div>
+                    <?php
+                        $fetch_product = "Select * from product Limit 2";
+                        $results = mysqli_query($connect, $fetch_product);
+                        while($row=mysqli_fetch_assoc($results) ){   
+                            $product_id = $row['ProductID'];               
+                        $imageOne = $row['ImageOne'];
+                        $imageTwo = $row['ImageTwo'];
+                        echo "<div class='col'>
+                                <a href='./product_details.php?id=$product_id'>                                        
+                                <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid' />
+                                </a> </div>";
+                        }
+                    ?>
                     </div>
                     <div class="row mt-3">
-                        <div class="col">
-                            <a href="">
-                                <img src="../../images/suggestions/suggestion3.png" alt="Image 3" class="img-fluid" />
-                            </a>
-                        </div>
-                        <div class="col">
-                            <a href="">
-                                <img src="../../images/suggestions/suggedtion3.1.png" alt="Image 4" class="img-fluid" />
-                            </a>
-                        </div>
+                    <?php
+                        $fetch_product = "Select * from product Limit 2";
+                        $results = mysqli_query($connect, $fetch_product);
+                        while($row=mysqli_fetch_assoc($results) ){   
+                            $product_id = $row['ProductID'];               
+                        $imageOne = $row['ImageOne'];
+                        $imageTwo = $row['ImageTwo'];
+                        echo "<div class='col'>
+                                <a href='./product_details.php?id=$product_id'>                                        
+                                <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid' />
+                                </a> </div>";
+                        }
+                    ?>
                     </div>
-                    <p class="mt-3"><a href="#more-suggestions">More saved Items</a></p>
+                    <p class="mt-3"><a href="../product/products.php">More saved Items</a></p>
                 </div>
             </div>
             <div class="col-md-6">
                 <h6 class="mb-4">Purchase again <img src="../../images/assets/clock 1.png" alt="Purchase" /></h6>
                 <div class="row-suggestion-items">
                     <div class="row">
-                        <div class="col">
-                            <a href="">
-                                <img src="../../images/suggestions/suggestion5.png" alt="Image 1" class="img-fluid" />
-                            </a>
-                        </div>
-                        <div class="col">
-                            <a href="">
-                                <img src="../../images/suggestions/suggestion1.png" alt="Image 2" class="img-fluid" />
-                            </a>
-                        </div>
+                    <?php
+                        $fetch_product = "Select * from product Limit 2";
+                        $results = mysqli_query($connect, $fetch_product);
+                        while($row=mysqli_fetch_assoc($results) ){   
+                            $product_id = $row['ProductID'];               
+                        $imageOne = $row['ImageOne'];
+                        $imageTwo = $row['ImageTwo'];
+                        echo "<div class='col'>
+                                <a href='./product_details.php?id=$product_id'>                                        
+                                <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid' />
+                                </a> </div>";
+                        }
+                    ?>
                     </div>
                     <div class="row mt-3">
-                        <div class="col">
-                            <a href="">
-                                <img src="../../images/suggestions/suggestion3.png" alt="Image 3" class="img-fluid" />
-                            </a>
-                        </div>
-                        <div class="col">
-                            <a href="">
-                                <img src="../../images/suggestions/suggestion2.png" alt="Image 4" class="img-fluid" />
-                            </a>
-                        </div>
+                    <?php
+                        $fetch_product = "Select * from product Limit 2";
+                        $results = mysqli_query($connect, $fetch_product);
+                        while($row=mysqli_fetch_assoc($results) ){   
+                            $product_id = $row['ProductID'];               
+                        $imageOne = $row['ImageOne'];
+                        $imageTwo = $row['ImageTwo'];
+                        echo "<div class='col'>
+                                <a href='./product_details.php?id=$product_id'>                                        
+                                <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid' />
+                                </a> </div>";
+                        }
+                    ?>
                     </div>
-                    <p class="mt-3"><a href="#more-purchases">More in purchase again</a></p>
+                    <p class="mt-3"><a href="../product/products.php">More in purchase again</a></p>
                 </div>
             </div>
         </div>

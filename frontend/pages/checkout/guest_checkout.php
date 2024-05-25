@@ -38,9 +38,7 @@ require_once("../../php/database_connect.php");
     <div class="container cart-item-container mt-5 mb-5">
         <div class="row">
             <div class="col-md-8">
-                <h5 class="mb-2">Checkout (<span
-                        class="text-primary"><?php echo ($count > 1) ? $count.' Items' : $count.' Item'  ?> </span>)
-                </h5>
+                <h5 class="mb-2">Checkout</h5>
 
                 <div class="accordion" id="checkoutAccordion">
                     <div class="accordion-item">
@@ -425,7 +423,7 @@ require_once("../../php/database_connect.php");
                                             <?php 
                                             $count = 0;
                                             $grand_total = 0;
-                                            if ($cartData && $cartData > 0) { 
+                                            if (isset($cartData) && $cartData > 0) { 
                                                 foreach($cartData as $row) {
                                                     $price = array($row['TotalAmount']); 
                                                     $count++; 

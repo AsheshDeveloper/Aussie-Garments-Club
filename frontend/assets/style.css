@@ -93,7 +93,7 @@ html {
 
 .section-for-men .section-for-men-row img {
   border-radius: 20px !important;
-  width: 100%;
+  width: 40%;
   height: 68%;
   color: var(--primary-text-color, #2e2e2e);
 }

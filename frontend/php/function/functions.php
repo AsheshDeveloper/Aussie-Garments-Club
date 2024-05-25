@@ -36,7 +36,7 @@ if (isset($_POST['action']) && isset($_POST['product_id'])) {
             $ip = getIPAddress();
             $fetchUser = "SELECT * FROM users WHERE email= '$getRequest' ";
             $userResult = mysqli_query($connect, $fetchUser);
-
+        
             if (!$userResult) {
                 // Handle query error
                 $error = mysqli_error($connect);
@@ -46,13 +46,34 @@ if (isset($_POST['action']) && isset($_POST['product_id'])) {
                 echo json_encode($result);
                 exit;
             }
-
+        
             if(mysqli_num_rows($userResult) > 0) {
                 $user = mysqli_fetch_array($userResult);
                 $getId = $user['id'];
+                
+                // Check product quantity
+                $checkProductQuantity = "SELECT QuantityInStock FROM product WHERE ProductID='$getProductID'";
+                $quantityResult = mysqli_query($connect, $checkProductQuantity);
+                if (!$quantityResult) {
+                    // Handle query error
+                    $error = mysqli_error($connect);
+                    $result = array("error" => "Database error: $error");
+                    header("Content-Type: application/json");
+                    echo json_encode($result);
+                    exit;
+                }
+                
+                $productQuantity = mysqli_fetch_assoc($quantityResult)['QuantityInStock'];
+                if ($productQuantity <= 0) {
+                    $result = array("error" => "Product is out of stock!!");
+                    header("Content-Type: application/json");
+                    echo json_encode($result);
+                    exit;
+                }
+        
                 $fetchData = "SELECT * FROM cart WHERE userID='$getId' AND ProductID='$getProductID' ";
                 $result = mysqli_query($connect, $fetchData);
-
+        
                 if (!$result) {
                     // Handle query error
                     $error = mysqli_error($connect);
@@ -62,10 +83,15 @@ if (isset($_POST['action']) && isset($_POST['product_id'])) {
                     echo json_encode($result);
                     exit;
                 }
-
+        
                 if(mysqli_num_rows($result) == 0) {
                     $insert = "INSERT INTO cart(IpAddress, UserID, GuestID, ProductID, Quantity, Price, TotalAmount) VALUES ('$ip','$getId',NULL,'$getProductID', 1,'$getPrice','$getPrice')";
                     mysqli_query($connect, $insert);
+        
+                    // Update product quantity
+                    $updateProductQuantity = "UPDATE product SET Quantity = Quantity - 1 WHERE ProductID = '$getProductID'";
+                    mysqli_query($connect, $updateProductQuantity);
+        
                     $result = array("success" => "Product added to cart!!");
                     header("Content-Type: application/json");
                     echo json_encode($result);
@@ -80,6 +106,7 @@ if (isset($_POST['action']) && isset($_POST['product_id'])) {
                 echo json_encode($result);
             }            
         break;
+        
 
         case 'update':
             // Check if the quantity parameter is provided

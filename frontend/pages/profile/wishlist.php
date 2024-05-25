@@ -71,7 +71,7 @@ include_once("../../php/profile/wishlist/getWishlist.php");
                             $product_id = $item['productID'];
                             echo "<tr>";
                             echo "<td>" . $sn++ . "</td>";
-                            echo "<td><img class='class-table-image rounded' src='../../../backend/src/pages/products/images/" . htmlspecialchars($item['ImageOne']) . "' alt='product image' /></td>";
+                            echo "<td><img class='class-table-image rounded' src='data:image/jpeg;base64," .base64_encode($item['ImageOne'])."' alt='Image 1' class='img-fluid' /></td>";
                             echo "<td>" . htmlspecialchars($item['Name']) . "</td>";
                             echo "<td>
                                     <a href='../../pages/product/product_details.php?id=$product_id' type='button' class='btn btn-outline-success'><i class='fas fa-eye'></i></a>

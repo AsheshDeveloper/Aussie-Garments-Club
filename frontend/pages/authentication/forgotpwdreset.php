@@ -2,6 +2,17 @@
 session_start();
 
 include '../../php/auth/auth_login.php'; 
+$displayMessage = '';
+$errorMessage = '';
+if($_SERVER['REQUEST_METHOD'] == "POST"){
+    $newPassword = $_POST['newPassword'];
+    $confirmPassword = $_POST['confirmPassword'];
+    if($newPassword == $confirmPassword) {
+        $displayMessage = "Password has been successfully changed. Please <a href='../../index.php'>login</a> with your new password.";
+    } else {
+        $errorMessage = "Password does not match";
+    }
+}
 
 ?>
 <!DOCTYPE html>
@@ -41,6 +52,16 @@ include '../../php/auth/auth_login.php';
                         <div class="card-body text-center">
                             <h4 class="mt-3 text-primary">New Password</h4>
                             <small class="text-muted">Enter a new password to continue.</small>
+                            <?php if ($errorMessage): ?>
+                                <div class="alert alert-danger mt-3">
+                                    <?php echo $errorMessage; ?>
+                                </div>
+                            <?php endif; ?>
+                            <?php if ($displayMessage): ?>
+                                <div class="alert alert-success mt-3">
+                                    <?php echo $displayMessage; ?>
+                                </div>
+                            <?php endif; ?>
                             <form class="mt-5 mb-5" action="" method="post">
                                 <div class="mb-3">
                                     <div class="mb-3">
@@ -71,8 +92,8 @@ include '../../php/auth/auth_login.php';
                                     </div>
                                 </div>
 
-                                <a href="../../index.php" type="submit"
-                                    class="btn btn-primary w-100 p-2 mt-4 mb-2">Change Password</a>
+                                <button type="submit"
+                                    class="btn btn-primary w-100 p-2 mt-4 mb-2">Change Password</>
 
                             </form>
                         </div>
