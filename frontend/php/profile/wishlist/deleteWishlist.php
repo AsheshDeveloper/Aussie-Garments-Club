@@ -17,7 +17,7 @@ if (isset($_GET['card_id']) && is_numeric($_GET['card_id'])) {
     }
 
     // Prepare and execute query to delete the card
-    $query = "DELETE FROM cards WHERE cardID = ?";
+    $query = "DELETE FROM wishlist WHERE id = ?";
     $stmt = mysqli_prepare($connect, $query);
     mysqli_stmt_bind_param($stmt, "i", $cardID);
     mysqli_stmt_execute($stmt);
@@ -26,7 +26,7 @@ if (isset($_GET['card_id']) && is_numeric($_GET['card_id'])) {
     if (mysqli_affected_rows($connect) > 0) {
         // Redirect back to the page where the delete button was clicked
         header('Location: ' . $_SERVER['HTTP_REFERER']. '?success=1'); // Redirect back to the referring page
-        $success[] = "Card deleted successfully";
+        $success[] = "Item Deleted";
         exit();
     } else {
         header('Location: ' . $_SERVER['HTTP_REFERER'] . '?error=1');
@@ -36,6 +36,6 @@ if (isset($_GET['card_id']) && is_numeric($_GET['card_id'])) {
     mysqli_stmt_close($stmt);
     mysqli_close($connect);
 } else {
-    echo "Error: Invalid card ID.";
+    echo "Error: Invalid item ID.";
 }
 ?>

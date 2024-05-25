@@ -88,53 +88,57 @@ if ($results && mysqli_num_rows($results) > 0) {
 </head>
 
 <body>
-<!-- navigation  -->
-<nav class="nav-wrapper">
-    <!-- top navigation -->
-    <?php
+    <!-- navigation  -->
+    <nav class="nav-wrapper">
+        <!-- top navigation -->
+        <?php
     include '../../includes/nav_top.php';
     ?>
-    <!-- main nav bar -->
-    <?php
+        <!-- main nav bar -->
+        <?php
     include '../../includes/nav_main.php';
     ?>
-</nav>
+    </nav>
 
-<div class="container-fluid">
-    <div class="container product-filter-container mt-4 bg-light py-3">
-        <div class="row">
-            <div class="col text-end">
-                <div class="d-flex align-items-center justify-content-between">
-                    <h5>Our Products</h5>
+    <div class="container-fluid">
+        <div class="container product-filter-container mt-4 bg-light py-3">
+            <div class="row">
+                <div class="col text-end">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h5>Our Products</h5>
 
-                    <div class="d-flex align-items-center">
-                        <div class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle me-2 py-2" type="button"
+                        <div class="d-flex align-items-center">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle me-2 py-2" type="button"
                                     id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                Sort By
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item" href="?sort=Price ASC">Price Low to High</a></li>
-                                <li><a class="dropdown-item" href="?sort=Price DESC">Price High to Low</a></li>
-                                <li><a class="dropdown-item" href="?sort=Rating DESC">Highest Rating</a></li>
-                                <li><a class="dropdown-item" href="?sort=Rating ASC">Lowest Rating</a></li>
-                                <li><a class="dropdown-item" href="?sort=MainCategory&MainCategory='Men'">Men</a></li>
-                                <li><a class="dropdown-item" href="?sort=MainCategory&MainCategory='Women'">Women</a></li>
-                                <li><a class="dropdown-item" href="?sort=MainCategory&MainCategory='Kids'">Kids</a></li>
-                                <li><a class="dropdown-item" href="?sort=MainCategory&MainCategory='Baby'">Baby</a></li>
-                            </ul>
-                        </div>
+                                    Sort By
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <li><a class="dropdown-item" href="?sort=Price ASC">Price Low to High</a></li>
+                                    <li><a class="dropdown-item" href="?sort=Price DESC">Price High to Low</a></li>
+                                    <li><a class="dropdown-item" href="?sort=Rating DESC">Highest Rating</a></li>
+                                    <li><a class="dropdown-item" href="?sort=Rating ASC">Lowest Rating</a></li>
+                                    <li><a class="dropdown-item" href="?sort=MainCategory&MainCategory='Men'">Men</a>
+                                    </li>
+                                    <li><a class="dropdown-item"
+                                            href="?sort=MainCategory&MainCategory='Women'">Women</a></li>
+                                    <li><a class="dropdown-item" href="?sort=MainCategory&MainCategory='Kids'">Kids</a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="?sort=MainCategory&MainCategory='Baby'">Baby</a>
+                                    </li>
+                                </ul>
+                            </div>
 
-                        <button class="btn btn-outline-primary py-2" data-bs-toggle="modal"
+                            <button class="btn btn-outline-primary py-2" data-bs-toggle="modal"
                                 data-bs-target="#filterModal">
-                            <i class="fas fa-filter"></i>
-                        </button>
+                                <i class="fas fa-filter"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <?php if ($products_found) { ?>
+        <?php if ($products_found) { ?>
         <div class="container mt-4 mb-4 section-for-men">
 
             <div class="row section-for-men-row mb-4">
@@ -219,101 +223,103 @@ if ($results && mysqli_num_rows($results) > 0) {
                 </div>
             </div>
         </div>
-    <?php } else { ?>
+        <?php } else { ?>
         <div class="container mt-4 mb-4 section-for-men">
             <h5 class="for-men-heading mb-4">No products found.</h5>
         </div>
-    <?php } ?>
+        <?php } ?>
 
-    <!-- Filter Modal -->
-    <div class="modal fade product-filter-modal" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-end">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="filterModalLabel">Filter Options</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form method="POST" action="">
-                    <div class="modal-body">
-                        <div class="container">
-                            <!-- Filter Options -->
-                            <div class="row">
-                                <div class="col">
-                                    <div class="mt-3">
-                                        <!-- Product for -->
-                                        <div class="mb-3">
+        <!-- Filter Modal -->
+        <div class="modal fade product-filter-modal" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-end">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="filterModalLabel">Filter Options</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="POST" action="">
+                        <div class="modal-body">
+                            <div class="container">
+                                <!-- Filter Options -->
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mt-3">
+                                            <!-- Product for -->
                                             <div class="mb-3">
-                                                <label class="form-label">Product For:</label>
-                                                <select class="form-select" name="product_for">
-                                                    <option selected value="0">Select</option>
-                                                    <option value="Men">Men</option>
-                                                    <option value="Women">Women</option>
-                                                    <option value="Kids">Kids</option>
-                                                    <option value="Baby">Baby</option>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Product For:</label>
+                                                    <select class="form-select" name="product_for">
+                                                        <option selected value="0">Select</option>
+                                                        <option value="Men">Men</option>
+                                                        <option value="Women">Women</option>
+                                                        <option value="Kids">Kids</option>
+                                                        <option value="Baby">Baby</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <!-- Filter by price -->
+                                            <div class="mb-3">
+                                                <label class="form-label">Filter by price:</label>
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control" placeholder="Min"
+                                                        name="min_price" />
+
+                                                    <input type="number" class="form-control" placeholder="Max"
+                                                        name="max_price" />
+                                                </div>
+                                            </div>
+
+                                            <!-- Categories -->
+                                            <div class="mb-3">
+                                                <label class="form-label">Categories:</label>
+                                                <select class="form-select" name="category">
+                                                    <option selected>Select Category</option>
+                                                    <option value="1">Category 1</option>
+                                                    <option value="2">Category 2</option>
                                                 </select>
                                             </div>
-                                        </div>
 
-                                        <!-- Filter by price -->
-                                        <div class="mb-3">
-                                            <label class="form-label">Filter by price:</label>
-                                            <div class="input-group">
-                                                <input type="number" class="form-control" placeholder="Min" name="min_price" />
-
-                                                <input type="number" class="form-control" placeholder="Max" name="max_price" />
+                                            <!-- By Brands -->
+                                            <div class="mb-3">
+                                                <label class="form-label">By Brands:</label>
+                                                <select class="form-select" name="brand">
+                                                    <option selected>Select Brand</option>
+                                                    <option value="1">Brand 1</option>
+                                                    <option value="2">Brand 2</option>
+                                                </select>
                                             </div>
-                                        </div>
 
-                                        <!-- Categories -->
-                                        <div class="mb-3">
-                                            <label class="form-label">Categories:</label>
-                                            <select class="form-select" name ="category">
-                                                <option selected>Select Category</option>
-                                                <option value="1">Category 1</option>
-                                                <option value="2">Category 2</option>
-                                            </select>
-                                        </div>
-
-                                        <!-- By Brands -->
-                                        <div class="mb-3">
-                                            <label class="form-label">By Brands:</label>
-                                            <select class="form-select" name = "brand">
-                                                <option selected>Select Brand</option>
-                                                <option value="1">Brand 1</option>
-                                                <option value="2">Brand 2</option>
-                                            </select>
-                                        </div>
-
-                                        <!-- By Size -->
-                                        <div class="mb-3">
-                                            <label class="form-label">By Size:</label>
-                                            <select class="form-select" name = "size">
-                                                <option selected>Select Size</option>
-                                                <option value="1">X</option>
-                                                <option value="2">XL</option>
-                                                <option value="2">XXL</option>
-                                                <option value="2">XXL</option>
-                                            </select>
+                                            <!-- By Size -->
+                                            <div class="mb-3">
+                                                <label class="form-label">By Size:</label>
+                                                <select class="form-select" name="size">
+                                                    <option selected>Select Size</option>
+                                                    <option value="1">X</option>
+                                                    <option value="2">XL</option>
+                                                    <option value="2">XXL</option>
+                                                    <option value="2">XXL</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" name = "apply_filter">Apply Filter</button>
-                    </div>
-                </form>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" name="apply_filter">Apply Filter</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
 
-    <?php
+        <?php
     // Include footer
     include '../../includes/footer.php';
     ?>
-    <!-- Optional JavaScript -->
+        <!-- Optional JavaScript -->
 
 </body>
 
