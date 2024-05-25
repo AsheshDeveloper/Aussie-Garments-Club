@@ -70,7 +70,7 @@ require_once("../../php/profile/editprofile.php");
             <div class="row">
                 <div class="col-md-7">
 
-                    <form class="mb-5" action="" method="post" enctype="multipart/form-data">
+                    <!-- <form class="mb-5" action="" method="post" enctype="multipart/form-data">
                         <?php if (!empty($row['user_image'])): ?>
                         <div class="mb-3">
                             <div class="d-flex">
@@ -151,6 +151,71 @@ require_once("../../php/profile/editprofile.php");
                         </div>
 
                         <button type="submit" name="submit" class="btn btn-primary p-2">Update Your Profile</button>
+                    </form> -->
+
+                    <form class="mb-5" action="" method="post" enctype="multipart/form-data">
+                        <?php if (!empty($row['user_image'])): ?>
+                        <div class="mb-3">
+                            <div class="d-flex">
+                                <label class="form-check-label mb-1">Current Profile Image</label>
+                            </div>
+                            <img class="class-table-image" src="../../images/uploads/<?php echo $row['user_image']; ?>"
+                                alt="Profile Image" style="max-width: 150px; max-height: 150px;">
+                        </div>
+                        <?php endif; ?>
+                        <div class="mb-3">
+                            <label class="form-check-label mb-1" for="user_image">Profile Image</label>
+                            <div class="input-group">
+                                <input type="file" class="form-control" name="user_image" id="user_image">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-check-label mb-1" for="email">Email Address</label>
+                            <input type="email" class="form-control" name="email" id="email"
+                                value="<?php echo isset($row['email']) ? htmlspecialchars($row['email']) : ''; ?>"
+                                required>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex">
+                                <label class="form-check-label mb-1" for="address">Address</label>
+                            </div>
+                            <div class="input-group">
+                                <?php
+                                    if (isset($row['aptUnitSuit'], $row['street'], $row['citySuburb'], $row['stateTerritory'], $row['Postcode'])) {
+                                        echo '<input type="text" class="form-control" name="address" id="address" value="' . $row['aptUnitSuit'] . ' ' . $row['street'] . ' ' . $row['citySuburb'] . ' ' . $row['stateTerritory'] . ' ' . $row['Postcode'] . '" disabled />';
+                                    } else {
+                                        echo '<input type="text" class="form-control" name="address" id="address" value="Address Not Available" disabled />';
+                                    }
+                                ?>
+                            </div>
+                            <a href="./address.php" class="text-info">you can update your address in address
+                                section(click here)</a>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-check-label mb-1" for="birthday">Date of Birth</label>
+                            <input type="date" class="form-control" name="birthday" id="birthday"
+                                value="<?php echo isset($row['birthday']) ? htmlspecialchars($row['birthday']) : ''; ?>"
+                                required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-check-label mb-1" for="phone">Phone Number</label>
+                            <input type="text" class="form-control" name="phone" id="phone"
+                                value="<?php echo isset($row['contact']) ? htmlspecialchars($row['contact']) : ''; ?>"
+                                required>
+                        </div>
+                        <!-- Add other user information fields similarly -->
+                        <div class="mb-3">
+                            <label class="form-check-label mb-1" for="gender">Gender</label>
+                            <select class="form-control" name="gender" id="gender">
+                                <option value="Male"
+                                    <?php echo (isset($row['gender']) && $row['gender'] === 'Male') ? 'selected' : ''; ?>>
+                                    Male</option>
+                                <option value="Female"
+                                    <?php echo (isset($row['gender']) && $row['gender'] === 'Female') ? 'selected' : ''; ?>>
+                                    Female</option>
+                            </select>
+                        </div>
+                        <button type="submit" name="submit" class="btn btn-primary">Update Profile</button>
                     </form>
                 </div>
 

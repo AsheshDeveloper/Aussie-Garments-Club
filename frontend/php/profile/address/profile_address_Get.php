@@ -1,10 +1,16 @@
 <?php 
+    session_start();
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
 
     // Establish database connection
     $connect = mysqli_connect('localhost', 'root', '', 'the_garments_club');
 
+    $userID = $_SESSION['userId'];
+    if (!isset($_SESSION['userId'])) {
+        die("User ID not found in session.");
+    }
+    
     // Check connection
     if (!$connect) {
         header('HTTP/1.1 500 Internal Server Error');
@@ -12,7 +18,7 @@
     }
 
     // Query section
-    $query = "SELECT * FROM `address`";
+    $query = "SELECT * FROM `address` WHERE id =  $userID";
     $result = mysqli_query($connect, $query);
 
     // Check if query execution was successful

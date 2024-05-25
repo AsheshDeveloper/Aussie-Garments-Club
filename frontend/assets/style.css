@@ -159,8 +159,15 @@ footer hr {
 }
 
 .shadowed-card .google-icon {
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+}
+
+.shadowed-card .facebook-icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
 }
 
 /* User profile */
@@ -268,6 +275,14 @@ footer hr {
 
 .description-container .button-fav:hover {
   color: #ffd700;
+}
+
+.description-container .button-remove-fav {
+  display: none;
+}
+
+.description-container .button-remove-fav:hover {
+  color: #ea3d4b !important;
 }
 
 /* popup */

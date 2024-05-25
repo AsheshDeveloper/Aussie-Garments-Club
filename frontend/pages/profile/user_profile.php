@@ -143,7 +143,7 @@ require_once("../../php/profile/loadprofile.php");
                                         <?php echo (!empty($row['aptUnitSuit']) ? $row['aptUnitSuit'] . " " : "") . (!empty($row['street']) ? $row['street'] . ", " : "") . (!empty($row['citySuburb']) ? $row['citySuburb'] . " " : "") . (!empty($row['stateTerritory']) ? $row['stateTerritory'] . " " : "") . (!empty($row['Postcode']) ? $row['Postcode'] : ""); ?>
                                     </p>
                                     <?php else: ?>
-                                    <p class="text-muted">Address not specified</p>
+                                    <p class="text-muted">Address not specify</p>
                                     <?php endif; ?>
                                 </div>
                                 <div class="mb-3">
@@ -153,7 +153,7 @@ require_once("../../php/profile/loadprofile.php");
                                 <div class="mb-3">
                                     <span class="label text-primary">Birth Day</span>
                                     <p class="text-muted">
-                                        <?php echo !empty($row['birthday']) ? $row['birthday'] : "edit to specified"; ?>
+                                        <?php echo !empty($row['birthday']) ? $row['birthday'] : "edit to specify"; ?>
                                     </p>
                                 </div>
                                 <div class="mb-3">
@@ -163,7 +163,7 @@ require_once("../../php/profile/loadprofile.php");
                                 <div class="mb-3">
                                     <span class="label text-primary">Gender</span>
                                     <p class="text-muted">
-                                        <?php echo !empty($row['gender']) ? $row['gender'] : "edit to specified"; ?>
+                                        <?php echo !empty($row['gender']) ? $row['gender'] : "edit to specify"; ?>
                                     </p>
                                 </div>
 

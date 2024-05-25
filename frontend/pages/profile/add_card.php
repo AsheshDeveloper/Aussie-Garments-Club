@@ -1,3 +1,8 @@
+<?php
+session_start();
+include_once("../../php/profile/card/addCard.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,36 +46,66 @@
                     <div class="card p-2 mt-4 mb-5">
                         <div class="card-body">
                             <form class="" action="" method="post">
+                                <!-- error message -->
+                                <?php 
+                                        if(isset($errors)) 
+                                        { 
+                                        foreach($errors as $error){ 
+                                    ?>
+                                <div class="alert alert-danger" role="alert">
+                                    <?=$error ?>
+                                </div>
+                                <?php } 
+                                    
+                                    } 
+                                    ?>
+
+                                <!-- success message -->
+                                <?php 
+                                        if(isset($success)) 
+                                        { 
+                                        foreach($success as $success){ 
+                                    ?>
+                                <div class="alert alert-success" role="alert">
+                                    <?=$success ?>
+                                </div>
+                                <?php } 
+                                    
+                                    } 
+                                    ?>
+
                                 <div class="mb-3">
-                                    <label class="form-check-label mb-1" for="fullName"> Card Number</label>
-                                    <input type="number" class="form-control" name="fullName" id="fullName"
+                                    <label class="form-check-label mb-1" for="cardNumber"> Card Number</label>
+                                    <input type="number" class="form-control" name="cardNumber" id="cardNumber"
                                         placeholder="eg: 4567 XXXX XXXX XXXX" required />
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-check-label mb-1" for="fullName"> Name on card</label>
-                                    <input type="text" class="form-control" name="fullName" id="fullName"
+                                    <label class="form-check-label mb-1" for="nameOnCard"> Name on card</label>
+                                    <input type="text" class="form-control" name="nameOnCard" id="nameOnCard"
                                         placeholder="eg: samir samir" required />
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-check-label mb-1" for="fullName"> Expiration date</label>
-                                    <input type="date" class="form-control" name="fullName" id="fullName"
+                                    <label class="form-check-label mb-1" for="expirationDate"> Expiration date</label>
+                                    <input type="date" class="form-control" name="expirationDate" id="expirationDate"
                                         placeholder="eg: 4567 XXXX XXXX XXXX" required />
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-check-label mb-1" for="fullName">Security code(CVV/CVC)</label>
-                                    <input type="number" class="form-control" name="fullName" id="fullName"
+                                    <label class="form-check-label mb-1" for="securityCode">Security
+                                        code(CVV/CVC)</label>
+                                    <input type="number" class="form-control" name="securityCode" id="securityCode"
                                         placeholder="eg: see back of your debit card" required />
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="defaultAddress" />
-                                    <label class="form-check-label" for="defaultAddress">Use as my default
+                                    <input class="form-check-input" type="checkbox" id="default" name="default" />
+                                    <label class="form-check-label" for="default">Use as my default
                                         payment</label>
                                 </div>
 
-                                <a href="./card.html" type="submit" type="button"
-                                    class="btn btn-primary w-100 p-2 mb-3 mt-4">Add Card</a>
+                                <button type="submit" name="submit" type="button"
+                                    class="btn btn-primary w-100 p-2 mb-3 mt-4">Add
+                                    Card</button>
                             </form>
                         </div>
                     </div>

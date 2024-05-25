@@ -43,6 +43,11 @@ if(isset($_POST['submit'])) {
 
         mysqli_query($connect, $insert);
         $success[] = "Address added successfully";
+         echo '<script>
+                    setTimeout(function() {
+                        window.location.href = "../../pages/profile/address.php";
+                    }, 1000); // 3000 milliseconds = 3 seconds
+                  </script>';
     }
 }
 ?>

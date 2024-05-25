@@ -107,23 +107,24 @@
                                         <select name="countryRegion" class="form-select" id="countryRegion"
                                             aria-label="countryRegion">
                                             <option selected>Choose Country or Region</option>
+                                            <option value='Australia'>Australia</option>
                                             <?php
                                             // Fetching country data from the API
-                                            $api_url = 'https://restcountries.com/v3.1/all';
-                                            $response = file_get_contents($api_url);
-                                            $countries = json_decode($response, true);
+                                            // $api_url = 'https://restcountries.com/v3.1/all';
+                                            // $response = file_get_contents($api_url);
+                                            // $countries = json_decode($response, true);
 
                                             // Sorting countries by name
-                                            usort($countries, function($a, $b) {
-                                                return strcmp($a['name']['common'], $b['name']['common']);
-                                            });
+                                            // usort($countries, function($a, $b) {
+                                            //     return strcmp($a['name']['common'], $b['name']['common']);
+                                            // });
 
                                             // Loop through the sorted countries and populate the select dropdown
-                                            foreach ($countries as $country) {
-                                                $name = $country['name']['common'];
-                                                // $code = $country['cca2'];
-                                                echo "<option value='$name'>$name</option>";
-                                            }
+                                            // foreach ($countries as $country) {
+                                            //     $name = $country['name']['common'];
+                                            //     // $code = $country['cca2'];
+                                            //     echo "<option value='$name'>$name</option>";
+                                            // }
                                         ?>
                                         </select>
                                     </div>
