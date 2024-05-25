@@ -169,7 +169,7 @@ if ($results && mysqli_num_rows($results) > 0) {
                       <p class='text-muted'>$product_category</p>
                       <p class='text-muted'><span>$</span>$price</p>
                       <p>
-                          <a href='./pages/product/product_details.php?id=$product_id' class='btn btn-outline-primary'><i class='fas fa-arrow-right'></i></a>
+                          <a href='./product_details.php?id=$product_id' class='btn btn-outline-primary'><i class='fas fa-arrow-right'></i></a>
                       </p>
                   </div>";
 
