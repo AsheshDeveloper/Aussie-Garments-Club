@@ -185,23 +185,7 @@ if (!isset($_SESSION["username"])) {
                 </ul>
               </div>
             </li>
-            <li class="nav-item nav-category">Admin To Do</li>
-            <li class="nav-item nav-category">Product Info</li>
-
-            <!-- template menus -->
-            <li class="nav-item nav-category">Forms</li>
-            <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
-                <i class="menu-icon mdi mdi-card-text-outline"></i>
-                <span class="menu-title">Form elements</span>
-                <i class="menu-arrow"></i>
-              </a>
-              <div class="collapse" id="form-elements">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"><a class="nav-link" href="./pages/forms/basic_elements.html">Basic Elements</a></li>
-                </ul>
-              </div>
-            </li>
+            <!-- template menus -->            
           </ul>
         </nav>
         <!-- partial -->
