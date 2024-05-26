@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone = $_POST['phone'];
     $email = $_POST['email'];
     $sid = "AC240112cb42f42b094167c7f84708bfba";
-    $token = "02158e52706df3c9ad5c5be38fcbdd35";
+    $token = "013888904ddf204a433624a9147eaed5";
     if (!empty($phone)) {
         // Generate a verification code
         $verificationCode = rand(100000, 999999);
