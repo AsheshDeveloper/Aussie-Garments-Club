@@ -182,6 +182,7 @@ if (!isset($_SESSION["username"])) {
                   <li class="nav-item"><a class="nav-link" href="./pages/category/category.php">Category</a></li>
                   <li class="nav-item"><a class="nav-link" href="./pages/products/product.php">Product</a></li>
                   <li class="nav-item"><a class="nav-link" href="./pages/size/size.php">Size</a></li>
+                  <li class="nav-item"><a class="nav-link" href="./pages/order/order.php">Customer Order</a></li>
                 </ul>
               </div>
             </li>
