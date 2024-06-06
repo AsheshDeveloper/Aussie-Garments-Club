@@ -98,8 +98,8 @@ if(!empty($_SESSION['email'])){
                         <tr class="">
                             <td><input type="checkbox" /></td>
                             <td>
-                                <img src="data:image/jpeg;base64,<?php echo base64_encode($imageOne); ?>"
-                                    alt="Product Image" class="class-table-image rounded" />
+                                <img src="../../images/products/<?php echo $imageOne; ?>" alt="Product Image"
+                                    class="class-table-image rounded" />
                             </td>
                             <td>
                                 <h6><?php echo $product_name; ?></h6>
@@ -171,32 +171,36 @@ if(!empty($_SESSION['email'])){
         </div>
     </div>
 
-<!-- modal for search -->
-<div class="modal fade" id="guestModal" tabindex="-1" aria-labelledby="guestModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="guestModalLabel">Search</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="guestForm" method="post">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Enter First Name" name="guest_first_name"  />
-                        <input type="text" class="form-control" placeholder="Enter Middle Name" name="guest_middle_name"  />
-                        <input type="text" class="form-control" placeholder="Enter Last Name" name="guest_last_name"  />
-                        <input type="text" class="form-control" placeholder="Enter Email" name="guest_email"  />
-                        <input type="text" class="form-control" placeholder="Enter Contact Number" name="guest_contact"  />
-                        <input type="text" class="form-control" placeholder="Enter Address" name="guest_address"  />                        
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary modalButton" id="guestButton">Search</button>
+    <!-- modal for search -->
+    <div class="modal fade" id="guestModal" tabindex="-1" aria-labelledby="guestModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="guestModalLabel">Search</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="guestForm" method="post">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Enter First Name"
+                                name="guest_first_name" />
+                            <input type="text" class="form-control" placeholder="Enter Middle Name"
+                                name="guest_middle_name" />
+                            <input type="text" class="form-control" placeholder="Enter Last Name"
+                                name="guest_last_name" />
+                            <input type="text" class="form-control" placeholder="Enter Email" name="guest_email" />
+                            <input type="text" class="form-control" placeholder="Enter Contact Number"
+                                name="guest_contact" />
+                            <input type="text" class="form-control" placeholder="Enter Address" name="guest_address" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary modalButton" id="guestButton">Search</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
     <!-- suggestion for you -->
     <div class="container mt-5 mb-5 suggestion-container">
         <div class="row">
@@ -207,7 +211,7 @@ if(!empty($_SESSION['email'])){
 
                 <div class="row-suggestion-items">
                     <div class="row">
-                    <?php
+                        <?php
                         $fetch_product = "Select * from product Limit 2";
                         $results = mysqli_query($connect, $fetch_product);
                         while($row=mysqli_fetch_assoc($results) ){   
@@ -216,13 +220,14 @@ if(!empty($_SESSION['email'])){
                         $imageTwo = $row['ImageTwo'];
                         echo "<div class='col'>
                                 <a href='./product_details.php?id=$product_id'>                                        
-                                <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid' />
+                                <img src='../../../backend/src/pages/products/images/$imageOne' alt='Image 1' class='img-fluid' />
+                                
                                 </a> </div>";
                         }
                     ?>
                     </div>
                     <div class="row mt-3">
-                    <?php
+                        <?php
                         $fetch_product = "Select * from product Limit 2";
                         $results = mysqli_query($connect, $fetch_product);
                         while($row=mysqli_fetch_assoc($results) ){   
@@ -231,7 +236,7 @@ if(!empty($_SESSION['email'])){
                         $imageTwo = $row['ImageTwo'];
                         echo "<div class='col'>
                                 <a href='./product_details.php?id=$product_id'>                                        
-                                <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid' />
+                                <img src='../../../backend/src/pages/products/images/$imageOne' alt='Image 1' class='img-fluid' />
                                 </a> </div>";
                         }
                     ?>
@@ -243,7 +248,7 @@ if(!empty($_SESSION['email'])){
                 <h6 class="mb-4">Purchase again <img src="../../images/assets/clock 1.png" alt="Purchase" /></h6>
                 <div class="row-suggestion-items">
                     <div class="row">
-                    <?php
+                        <?php
                         $fetch_product = "Select * from product Limit 2";
                         $results = mysqli_query($connect, $fetch_product);
                         while($row=mysqli_fetch_assoc($results) ){   
@@ -252,13 +257,13 @@ if(!empty($_SESSION['email'])){
                         $imageTwo = $row['ImageTwo'];
                         echo "<div class='col'>
                                 <a href='./product_details.php?id=$product_id'>                                        
-                                <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid' />
+                               <img src='../../../backend/src/pages/products/images/$imageOne' alt='Image 1' class='img-fluid' />
                                 </a> </div>";
                         }
                     ?>
                     </div>
                     <div class="row mt-3">
-                    <?php
+                        <?php
                         $fetch_product = "Select * from product Limit 2";
                         $results = mysqli_query($connect, $fetch_product);
                         while($row=mysqli_fetch_assoc($results) ){   
@@ -267,7 +272,7 @@ if(!empty($_SESSION['email'])){
                         $imageTwo = $row['ImageTwo'];
                         echo "<div class='col'>
                                 <a href='./product_details.php?id=$product_id'>                                        
-                                <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid' />
+                                <img src='../../../backend/src/pages/products/images/$imageOne' alt='Image 1' class='img-fluid' />
                                 </a> </div>";
                         }
                     ?>

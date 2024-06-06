@@ -57,16 +57,16 @@ include '../../php/database_connect.php';
                     <div id="imageSlider" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner product-carousel">
                             <div class="carousel-item active">
-                                <img src="data:image/jpeg;base64,<?php echo base64_encode($imageOne); ?>"
-                                    class="d-block w-100 product-image" alt="Product Image 1" />
+                                <img src="../../images/products/<?php echo $imageOne; ?>" alt='Image 1'
+                                    class='d-block w-100 product-image' />
                             </div>
                             <div class="carousel-item">
-                                <img src="data:image/jpeg;base64,<?php echo base64_encode($imageTwo); ?>"
-                                    class="d-block w-100 product-image" alt="Product Image 2" />
+                                <img src="../../images/products/<?php echo $imageTwo; ?>" alt='Image 1'
+                                    class='d-block w-100 product-image' />
                             </div>
                             <div class="carousel-item">
-                                <img src="data:image/jpeg;base64,<?php echo base64_encode($imageThree); ?>"
-                                    class="d-block w-100 product-image" alt="Product Image 3" />
+                                <img src="../../images/products/<?php echo $imageThree; ?>" alt='Image 1'
+                                    class='d-block w-100 product-image' />
                             </div>
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#imageSlider"
@@ -82,11 +82,11 @@ include '../../php/database_connect.php';
                     </div>
                     <!-- Image Selector -->
                     <div class="mt-3 image-selector-container">
-                        <img src="data:image/jpeg;base64,<?php echo base64_encode($imageOne); ?>"
-                            class="d-inline-block image-selector" alt="Image Selector 1" />
-                        <img src="data:image/jpeg;base64,<?php echo base64_encode($imageTwo); ?>"
+                        <img src="../../images/products/<?php echo $imageOne; ?>" class="d-inline-block image-selector"
+                            alt="Image Selector 1" />
+                        <img src="../../images/products/<?php echo $imageTwo; ?>"
                             class="d-inline-block image-selector mx-2" alt="Image Selector 2" />
-                        <img src="data:image/jpeg;base64,<?php echo base64_encode($imageThree); ?>"
+                        <img src="../../images/products/<?php echo $imageThree; ?>"
                             class="d-inline-block image-selector mx-2" alt="Image Selector 2" />
                     </div>
                 </div>
@@ -94,12 +94,12 @@ include '../../php/database_connect.php';
                     <p id="response-container"></p>
                     <div class="description-container">
                         <!-- userID and productID here -->
-                    <?php 
+                        <?php 
                         if(!empty($_SESSION['userId'])){
                            echo" <input type='hidden' id='userID' value='{$_SESSION['userId']}'>
                                 <input type='hidden' id='productID' value='{$_GET['id']}'> ";
                         }
-                    ?>  
+                    ?>
                         <?php
                         require_once "../../php/database_connect.php";
                         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -369,7 +369,7 @@ include '../../php/database_connect.php';
 
                 <div class="row-suggestion-items">
                     <div class="row">
-                    <?php
+                        <?php
                                 $fetch_product = "Select * from product Limit 2";
                                 $results = mysqli_query($connect, $fetch_product);
                                 while($row=mysqli_fetch_assoc($results) ){   
@@ -378,13 +378,13 @@ include '../../php/database_connect.php';
                                 $imageTwo = $row['ImageTwo'];
                                 echo "<div class='col'>
                                         <a href='./product_details.php?id=$product_id'>                                        
-                                        <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid' />
+                                         <img src='../../images/products/$imageOne' alt='Image 1' class='img-fluid mb-3' />
                                         </a> </div>";
                                 }
                             ?>
                     </div>
                     <div class="row mt-3">
-                    <?php
+                        <?php
                         $fetch_product = "Select * from product Limit 2";
                         $results = mysqli_query($connect, $fetch_product);
                         while($row=mysqli_fetch_assoc($results) ){   
@@ -393,7 +393,7 @@ include '../../php/database_connect.php';
                         $imageTwo = $row['ImageTwo'];
                         echo "<div class='col'>
                                 <a href='./product_details.php?id=$product_id'>                                        
-                                <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid' />
+                                 <img src='../../images/products/$imageOne' alt='Image 1' class='img-fluid mb-3' />
                                 </a> </div>";
                         }
                     ?>
@@ -405,7 +405,7 @@ include '../../php/database_connect.php';
                 <h5 class="mb-4">Purchase again <img src="../../images/assets/clock 1.png" alt="Purchase" /></h5>
                 <div class="row-suggestion-items">
                     <div class="row">
-                    <?php
+                        <?php
                         $fetch_product = "Select * from product Limit 2";
                         $results = mysqli_query($connect, $fetch_product);
                         while($row=mysqli_fetch_assoc($results) ){   
@@ -414,13 +414,13 @@ include '../../php/database_connect.php';
                         $imageTwo = $row['ImageTwo'];
                         echo "<div class='col'>
                                 <a href='./product_details.php?id=$product_id'>                                        
-                                <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid' />
+                                 <img src='../../images/products/$imageOne' alt='Image 1' class='img-fluid mb-3' />
                                 </a> </div>";
                         }
                     ?>
                     </div>
                     <div class="row mt-3">
-                    <?php
+                        <?php
                         $fetch_product = "Select * from product Limit 2";
                         $results = mysqli_query($connect, $fetch_product);
                         while($row=mysqli_fetch_assoc($results) ){   
@@ -429,7 +429,7 @@ include '../../php/database_connect.php';
                         $imageTwo = $row['ImageTwo'];
                         echo "<div class='col'>
                                 <a href='./product_details.php?id=$product_id'>                                        
-                                <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid' />
+                                 <img src='../../images/products/$imageOne' alt='Image 1' class='img-fluid mb-3' />
                                 </a> </div>";
                         }
                     ?>

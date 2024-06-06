@@ -1,4 +1,7 @@
 <?php 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 if(isset($_POST['create'])){    
     require_once("../../php/database_connect.php");        
     $product_name = mysqli_real_escape_string($connect, $_POST['product_name']);

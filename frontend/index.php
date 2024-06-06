@@ -134,36 +134,32 @@ if (isset($_SESSION["email"])) {
                     <div class="row-suggestion-items">
                         <div class="row">
                             <?php
-                                $fetch_product = "Select * from product Limit 2";
-                                $results = mysqli_query($connect, $fetch_product);
+                                $results = mysqli_query($connect, $getData);
                                 while($row=mysqli_fetch_assoc($results) ){   
                                     $product_id = $row['ProductID'];               
                                 $imageOne = $row['ImageOne'];
                                 $imageTwo = $row['ImageTwo'];
                                 echo "<div class='col'>
-                                        <a href='./pages/product/product_details.php?id=$product_id'>                                        
-                                        <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid' />
-                                        </a> </div>";
+                                <img src='../backend/src/pages/products/images/$imageOne' alt='Image 1' class='img-fluid' />
+                                </div>";
                                 }
                             ?>
 
                         </div>
                         <div class="row mt-3">
                             <?php 
-                                $fetch_product = "Select * from product Limit 2";
-                                $results = mysqli_query($connect, $fetch_product);
+                                $results = mysqli_query($connect, $getData);
                                 while($row=mysqli_fetch_assoc($results) ){         
                                     $product_id = $row['ProductID'];         
                                 $imageOne = $row['ImageOne'];
                                 $imageTwo = $row['ImageTwo'];
                                 echo "<div class='col'>
-                                        <a href='./pages/product/product_details.php?id=$product_id'>                                        
-                                        <img src='data:image/jpeg;base64," .base64_encode($imageTwo)."' alt='Image 1' class='img-fluid' />
-                                        </a> </div>";
+                                        <img src='../backend/src/pages/products/images/$imageOne' alt='Image 3' class='img-fluid' />
+                                        </div>";
                                 }
                             ?>
                         </div>
-                        <p class="mt-3"><a href="./pages/product/products.php">More in suggestions</a></p>
+                        <p class="mt-3"><a href="#more-suggestions">More in suggestions</a></p>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -178,9 +174,8 @@ if (isset($_SESSION["email"])) {
                                 $imageOne = $row['ImageOne'];
                                 $imageTwo = $row['ImageTwo'];
                                 echo "<div class='col'>
-                                        <a href='./pages/product/product_details.php?id=$product_id'>                                        
-                                        <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid' />
-                                        </a> </div>";
+                                <img src='../backend/src/pages/products/images/$imageOne' alt='Image 1' class='img-fluid' />
+                                </div>";
                                 }
                             ?>
                         </div>
@@ -193,13 +188,12 @@ if (isset($_SESSION["email"])) {
                                 $imageOne = $row['ImageOne'];
                                 $imageTwo = $row['ImageTwo'];
                                 echo "<div class='col'>
-                                        <a href='./pages/product/product_details.php?id=$product_id'>                                        
-                                        <img src='data:image/jpeg;base64," .base64_encode($imageTwo)."' alt='Image 1' class='img-fluid' />
-                                        </a> </div>";
+                                        <img src='../backend/src/pages/products/images/$imageOne' alt='Image 3' class='img-fluid' />
+                                        </div>";
                                 }
                             ?>
                         </div>
-                        <p class="mt-3"><a href="./pages/product/products.php">More in purchase again</a></p>
+                        <p class="mt-3"><a href="#more-purchases">More in purchase again</a></p>
                     </div>
                 </div>
             </div>
@@ -212,23 +206,22 @@ if (isset($_SESSION["email"])) {
             <h5 class="for-men-heading mb-4">For Men<img src="./images/assets/bussiness-man.png" alt="Heading" /></h5>
             <div class="row section-for-men-row">
                 <?php 
-                $fetch_product = "SELECT * FROM product WHERE mainCategory = 'men' LIMIT 4";
+                $fetch_product = "Select * from product Limit 4";
                 $results = mysqli_query($connect, $fetch_product);
                 while($row=mysqli_fetch_assoc($results) ){  
                     $product_id = $row['ProductID'];
                   $product_name = $row['Name']; 
-                  $product_category = $row['MainCategory'];
                   $price = $row['Price'];              
                   $imageOne = $row['ImageOne'];
                   $imageTwo = $row['ImageTwo'];
                   
                   echo "<div class='col' style='position: relative'>
                             <a href='./pages/product/product_details.php?id=$product_id'>
-                                <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid mb-3' />
+                                <img src='../backend/src/pages/products/images/$imageOne' alt='Image 1' class='img-fluid mb-3' />
                                 <div class='badge text-bg-success badge-floating-stock'>50/100</div>
                             </a>
-                            <h5>$product_name</h5>
-                            <p class='text-muted'>$product_category</p>
+                            <h5>Suit Set</h5>
+                            <p class='text-muted'>$product_name</p>
                             <p class='text-muted'><span>$</span>$price</p>
                             <p>
                                 <a href='./pages/product/product_details.php?id=$product_id' class='btn btn-outline-primary'><i class='fas fa-arrow-right'></i></a>
@@ -244,19 +237,18 @@ if (isset($_SESSION["email"])) {
             <h5 class="for-men-heading mb-4">For Women<img src="./images/assets/businesswoman.png" alt="Heading" /></h5>
             <div class="row section-for-men-row">
                 <?php 
-                $fetch_product = "SELECT * FROM product WHERE mainCategory = 'women' LIMIT 4";
+                $fetch_product = "Select * from product Limit 4";
                 $results = mysqli_query($connect, $fetch_product);
                 while($row=mysqli_fetch_assoc($results) ){  
                     $product_id = $row['ProductID'];
                   $product_name = $row['Name']; 
-                  $product_category = $row['MainCategory'];
                   $price = $row['Price'];              
                   $imageOne = $row['ImageOne'];
                   $imageTwo = $row['ImageTwo'];
                   echo "<div class='col'>
-                          <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid mb-3' />
-                          <h5>$product_name</h5>
-                          <p class='text-muted'>$product_category</p>
+                          <img src='../backend/src/pages/products/images/$imageOne' alt='Image 1' class='img-fluid mb-3' />
+                          <h5>Suit Set</h5>
+                          <p class='text-muted'>$product_name</p>
                           <p class='text-muted'><span>$</span>$price</p>
                           <p>
                             <a href='./pages/product/product_details.php?id=$product_id' class='btn btn-outline-primary'><i class='fas fa-arrow-right'></i></a>
@@ -271,19 +263,18 @@ if (isset($_SESSION["email"])) {
             <h5 class="for-men-heading mb-4">For Kids<img src="./images/assets/boy 1.png" alt="Heading" /></h5>
             <div class="row section-for-men-row">
                 <?php 
-                $fetch_product = "SELECT * FROM product WHERE mainCategory = 'kids' LIMIT 4";
+                $fetch_product = "Select * from product Limit 4";
                 $results = mysqli_query($connect, $fetch_product);
                 while($row=mysqli_fetch_assoc($results) ){  
                     $product_id = $row['ProductID'];
                   $product_name = $row['Name']; 
-                  $product_category = $row['MainCategory'];
                   $price = $row['Price'];              
                   $imageOne = $row['ImageOne'];
                   $imageTwo = $row['ImageTwo'];
                   echo "<div class='col'>
-                          <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid mb-3' />
-                          <h5>$product_name</h5>
-                          <p class='text-muted'>$product_category</p>
+                          <img src='../backend/src/pages/products/images/$imageOne' alt='Image 1' class='img-fluid mb-3' />
+                          <h5>Suit Set</h5>
+                          <p class='text-muted'>$product_name</p>
                           <p class='text-muted'><span>$</span>$price</p>
                           <p>
                             <a href='./pages/product/product_details.php?id=$product_id' class='btn btn-outline-primary'><i class='fas fa-arrow-right'></i></a>
@@ -298,19 +289,18 @@ if (isset($_SESSION["email"])) {
             <h5 class="for-men-heading mb-4">For Baby<img src="./images/assets/baby-boy 1.png" alt="Heading" /></h5>
             <div class="row section-for-men-row">
                 <?php 
-                $fetch_product = "SELECT * FROM product WHERE mainCategory = 'baby' LIMIT 4";
+                $fetch_product = "Select * from product Limit 4";
                 $results = mysqli_query($connect, $fetch_product);
                 while($row=mysqli_fetch_assoc($results) ){  
                     $product_id = $row['ProductID'];
                   $product_name = $row['Name']; 
-                  $product_category = $row['MainCategory'];
                   $price = $row['Price'];              
                   $imageOne = $row['ImageOne'];
                   $imageTwo = $row['ImageTwo'];
                   echo "<div class='col'>
-                          <img src='data:image/jpeg;base64," .base64_encode($imageOne)."' alt='Image 1' class='img-fluid mb-3' />
-                          <h5>$product_name</h5>
-                          <p class='text-muted'>$product_category</p>
+                          <img src='../backend/src/pages/products/images/$imageOne' alt='Image 1' class='img-fluid mb-3' />
+                          <h5>Suit Set</h5>
+                          <p class='text-muted'>$product_name</p>
                           <p class='text-muted'><span>$</span>$price</p>
                           <p>
                             <a href='./pages/product/product_details.php?id=$product_id' class='btn btn-outline-primary'><i class='fas fa-arrow-right'></i></a>
